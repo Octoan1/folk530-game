@@ -25,6 +25,7 @@ folder_colors={
 "res://Assets/": "green",
 "res://Autoloads/": "pink",
 "res://Components/": "gray",
+"res://Data/": "purple",
 "res://Entities/": "yellow",
 "res://Scenes/": "blue",
 "res://UI/": "teal"
