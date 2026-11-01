@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2l763jsqwh6y"
-path="res://.godot/imported/Road copiar.png-be315b874533e33cc567344dea1d5cf5.ctex"
+uid="uid://ctt1ybbcxk72h"
+path="res://.godot/imported/Fence's copiar.png-54a8f95ddb049cb48bd32937c698bfe6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tileset/Objects/Road copiar.png"
-dest_files=["res://.godot/imported/Road copiar.png-be315b874533e33cc567344dea1d5cf5.ctex"]
+source_file="res://Assets/Objects/Fence's copiar.png"
+dest_files=["res://.godot/imported/Fence's copiar.png-54a8f95ddb049cb48bd32937c698bfe6.ctex"]
 
 [params]
 

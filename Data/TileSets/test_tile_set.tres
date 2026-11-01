@@ -1,10 +1,10 @@
 [gd_resource type="TileSet" format=3 uid="uid://c01s0xnf4gmg5"]
 
-[ext_resource type="Texture2D" uid="uid://b7q63dilr5sc1" path="res://Assets/Tileset/Tileset Grass Spring.png" id="1_asn0u"]
-[ext_resource type="Texture2D" uid="uid://2l763jsqwh6y" path="res://Assets/Tileset/Objects/Road copiar.png" id="2_m1p6u"]
+[ext_resource type="Texture2D" uid="uid://b7q63dilr5sc1" path="res://Assets/Terrain/Tileset Grass Spring.png" id="1_aau6k"]
+[ext_resource type="Texture2D" uid="uid://2l763jsqwh6y" path="res://Assets/Objects/Road copiar.png" id="2_5pdqe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2a37t"]
-texture = ExtResource("1_asn0u")
+texture = ExtResource("1_aau6k")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -54,7 +54,7 @@ texture = ExtResource("1_asn0u")
 11:3/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_55fa0"]
-texture = ExtResource("2_m1p6u")
+texture = ExtResource("2_5pdqe")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bt723r2kgl2ou"
-path="res://.godot/imported/Spring Crops.png-aa33c9606121289c4601c2ba49020aa8.ctex"
+uid="uid://2l763jsqwh6y"
+path="res://.godot/imported/Road copiar.png-92c02501d212ed9d0396ac4b228d8561.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tileset/Objects/Spring Crops.png"
-dest_files=["res://.godot/imported/Spring Crops.png-aa33c9606121289c4601c2ba49020aa8.ctex"]
+source_file="res://Assets/Objects/Road copiar.png"
+dest_files=["res://.godot/imported/Road copiar.png-92c02501d212ed9d0396ac4b228d8561.ctex"]
 
 [params]
 

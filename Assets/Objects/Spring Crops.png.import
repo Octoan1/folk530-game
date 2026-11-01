@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://l0c5uw3lbnf"
-path="res://.godot/imported/chest.png-c77d44644caea49303ec2457e0234040.ctex"
+uid="uid://bt723r2kgl2ou"
+path="res://.godot/imported/Spring Crops.png-9fda56da37af236e1463dcf061a98f50.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tileset/Objects/chest.png"
-dest_files=["res://.godot/imported/chest.png-c77d44644caea49303ec2457e0234040.ctex"]
+source_file="res://Assets/Objects/Spring Crops.png"
+dest_files=["res://.godot/imported/Spring Crops.png-9fda56da37af236e1463dcf061a98f50.ctex"]
 
 [params]
 

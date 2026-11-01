@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctt1ybbcxk72h"
-path="res://.godot/imported/Fence's copiar.png-2ebb4f668ee1f15f966fe84048fd2994.ctex"
+uid="uid://b7q63dilr5sc1"
+path="res://.godot/imported/Tileset Grass Spring.png-30a92a08043d10718a42752cb0d30d0f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Tileset/Objects/Fence's copiar.png"
-dest_files=["res://.godot/imported/Fence's copiar.png-2ebb4f668ee1f15f966fe84048fd2994.ctex"]
+source_file="res://Assets/Terrain/Tileset Grass Spring.png"
+dest_files=["res://.godot/imported/Tileset Grass Spring.png-30a92a08043d10718a42752cb0d30d0f.ctex"]
 
 [params]
 
