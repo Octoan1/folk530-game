@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cw4hlduopm81i"]
 
 [ext_resource type="Texture2D" uid="uid://cn48ghww7qai3" path="res://Entities/Player/Idle.png" id="1_3uyv8"]
+[ext_resource type="Script" uid="uid://e22uweg133ur" path="res://Entities/Player/player.gd" id="1_lu8i8"]
 [ext_resource type="Texture2D" uid="uid://cja7gobrjg2wr" path="res://Entities/Player/Walk.png" id="2_lu8i8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0t4wu"]
@@ -249,12 +250,16 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1918191900]
+collision_mask = 2
+script = ExtResource("1_lu8i8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1991393817]
+scale = Vector2(0.56000006, 0.56)
 shape = SubResource("RectangleShape2D_0t4wu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=779112047]
+position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_0t4wu")
-animation = &"WalkUp"
+animation = &"IdleDown"
 autoplay = "IdleSide"
-frame_progress = 0.23614274
+frame_progress = 0.17493415
