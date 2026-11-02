@@ -16,4 +16,4 @@ tile_set = ExtResource("1_phepx")
 [node name="Player" parent="." unique_id=1918191900 node_paths=PackedStringArray("map", "wall_map") instance=ExtResource("2_1njcr")]
 map = NodePath("../FloorLayer")
 wall_map = NodePath("../WallLayer")
-grid_position = Vector2i(3, 3)
+grid_position = Vector2i(3, 2)
