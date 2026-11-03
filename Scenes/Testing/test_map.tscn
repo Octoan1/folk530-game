@@ -2,6 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://c01s0xnf4gmg5" path="res://Data/TileSets/test_tile_set.tres" id="1_phepx"]
 [ext_resource type="PackedScene" uid="uid://vv40gfq7vlvh" path="res://Entities/Player/player.tscn" id="2_1njcr"]
+[ext_resource type="PackedScene" uid="uid://pw47f5bomorg" path="res://Entities/Cow/cow.tscn" id="3_tfjqa"]
 
 [node name="TestMap" type="Node2D" unique_id=1270691615]
 
@@ -18,3 +19,14 @@ position = Vector2(129.77322, 64.583694)
 map = NodePath("../FloorLayer")
 wall_map = NodePath("../WallLayer")
 grid_position = Vector2i(2, 3)
+
+[node name="Cow" parent="." unique_id=1938260570 node_paths=PackedStringArray("map", "wall_map") instance=ExtResource("3_tfjqa")]
+map = NodePath("../FloorLayer")
+wall_map = NodePath("../WallLayer")
+grid_position = Vector2i(3, 4)
+
+[node name="Cow2" parent="." unique_id=1630202754 node_paths=PackedStringArray("map", "wall_map") instance=ExtResource("3_tfjqa")]
+map = NodePath("../FloorLayer")
+wall_map = NodePath("../WallLayer")
+grid_position = Vector2i(11, 1)
+facing = 3

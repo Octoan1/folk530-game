@@ -1,8 +1,6 @@
 class_name Player
 extends Entity
 
-const SPEED: float = 0.1
-
 var active_tween: Tween
 var is_moving: bool = false
 
@@ -47,12 +45,6 @@ func _get_direction(event: InputEvent) -> Vector2i:
 	if event.is_action_pressed("player_down"):
 		return Vector2i(0, 1)
 	return Vector2i.ZERO
-
-## Returns whether the player is allowed to step into the given cell.
-## [param cell] The grid coordinate to test.
-## [return] True if the cell is free to walk on, false if it is blocked.
-func is_walkable(cell: Vector2i) -> bool:
-	return wall_map.get_cell_source_id(cell) == -1
 
 ## Slides this node to the given world position over a fixed duration.
 ## [param target] The world position to slide to.

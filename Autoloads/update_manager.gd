@@ -14,4 +14,13 @@ func unregister(entity: Entity) -> void:
 
 ## Runs one world turn, calling take_turn() on every tracked entity in priority order.
 func run_turn() -> void:
-	pass
+	entities.sort_custom(_compare_priority)
+	for entity: Entity in entities:
+		entity.take_turn()
+
+## Returns whether entity a should act before entity b.
+## [param a] The first entity to compare.
+## [param b] The second entity to compare.
+## [return] True if a has a lower priority number than b.
+func _compare_priority(a: Entity, b: Entity) -> bool:
+	return a.priority < b.priority
