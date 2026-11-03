@@ -15,7 +15,6 @@ tile_map_data = PackedByteArray("AAADAAcAAQAAAAAAAAAEAAcAAQAAAAAAAAAGAAEAAQAAAAA
 tile_set = ExtResource("1_phepx")
 
 [node name="Player" parent="." unique_id=605168488 node_paths=PackedStringArray("map", "wall_map") instance=ExtResource("2_1njcr")]
-position = Vector2(129.77322, 64.583694)
 map = NodePath("../FloorLayer")
 wall_map = NodePath("../WallLayer")
 grid_position = Vector2i(2, 3)
