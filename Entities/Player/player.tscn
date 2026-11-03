@@ -173,9 +173,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_01a4e")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"IdleDown",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -287,5 +287,5 @@ script = ExtResource("1_kk56y")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=222711314]
 position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_bd4fl")
-animation = &"WalkRight"
+animation = &"IdleDown"
 autoplay = "WalkRight"

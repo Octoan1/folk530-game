@@ -45,7 +45,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	
 	if event.is_action_pressed("player_attack") and not event.is_echo():
-		sprite.play("Attack")
+		sprite.play("IdleDown")
 		var attack_cell: Vector2i = grid_position + DIRECTION_VECTORS[facing]
 		attack.visible = true
 		attack.position = GridWorld.cell_to_world(attack_cell)
