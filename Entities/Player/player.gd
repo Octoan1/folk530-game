@@ -1,6 +1,15 @@
 class_name Player
 extends Entity
 
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+const DIRECTION_ANIMATIONS: Dictionary = {
+	Direction.LEFT: "WalkLeft",
+	Direction.RIGHT: "WalkRight",
+	Direction.UP: "WalkUp",
+	Direction.DOWN: "WalkDown"
+}
+
 ## True if the player is in the middle of moving, false otherwise
 var is_moving: bool = false
 
@@ -11,6 +20,7 @@ func _init() -> void:
 ## Snaps the player to its starting grid cell.
 func _ready() -> void:
 	position = GridWorld.cell_to_world(grid_position)
+	update_animation()
 
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
@@ -35,12 +45,16 @@ func _get_direction(event: InputEvent) -> Vector2i:
 	if event.is_echo():
 		return Vector2i.ZERO
 	if event.is_action_pressed("player_left"):
+		facing = Direction.LEFT
 		return Vector2i(-1, 0)
 	if event.is_action_pressed("player_right"):
+		facing = Direction.RIGHT
 		return Vector2i(1, 0)
 	if event.is_action_pressed("player_up"):
+		facing = Direction.UP
 		return Vector2i(0, -1)
 	if event.is_action_pressed("player_down"):
+		facing = Direction.DOWN
 		return Vector2i(0, 1)
 	return Vector2i.ZERO
 
@@ -51,6 +65,16 @@ func slide_to(target: Vector2, duration: float) -> void:
 	is_moving = true
 	super.slide_to(target, duration)
 	active_tween.finished.connect(_on_tween_end)
+
+func update_animation() -> void:
+	var anim_name: String = DIRECTION_ANIMATIONS[facing]
+	if anim_name == "WalkLeft":
+		sprite.flip_h = true
+		sprite.play("WalkRight")
+	else:
+		if sprite.flip_h:
+			sprite.flip_h = false
+		sprite.play(anim_name)
 
 ## Unlocks input once the slide has finished.
 func _on_tween_end() -> void:
