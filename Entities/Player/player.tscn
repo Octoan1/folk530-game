@@ -1,8 +1,25 @@
 [gd_scene format=3 uid="uid://vv40gfq7vlvh"]
 
 [ext_resource type="Script" uid="uid://dxha5v6r8hmus" path="res://Entities/Player/player.gd" id="1_kk56y"]
+[ext_resource type="Texture2D" uid="uid://cnxv4ij8htgca" path="res://Entities/Player/Chicken Red.png" id="2_tekja"]
 [ext_resource type="Texture2D" uid="uid://cn48ghww7qai3" path="res://Entities/Player/Idle.png" id="2_xtut5"]
 [ext_resource type="Texture2D" uid="uid://cja7gobrjg2wr" path="res://Entities/Player/Walk.png" id="3_yd2kf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l3oqu"]
+atlas = ExtResource("2_tekja")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_53w1c"]
+atlas = ExtResource("2_tekja")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_siu7b"]
+atlas = ExtResource("2_tekja")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0fwy"]
+atlas = ExtResource("2_tekja")
+region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tekja"]
 atlas = ExtResource("2_xtut5")
@@ -128,6 +145,23 @@ region = Rect2(160, 32, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_l3oqu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_53w1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_siu7b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c0fwy")
+}],
+"loop": 0,
+"name": &"Attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_tekja")
 }, {
 "duration": 1.0,
@@ -247,7 +281,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player2" type="Node2D" unique_id=605168488]
+[node name="Player" type="Node2D" unique_id=605168488]
 script = ExtResource("1_kk56y")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=222711314]

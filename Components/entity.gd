@@ -29,6 +29,9 @@ const DIRECTION_VECTORS: Dictionary = {
 ## The player turns this off, since it acts from input instead.
 var takes_turns: bool = true
 
+## True if the player can attack them, false otherwise
+var is_killable: bool = false
+
 ## The [Vector2i] that corresponds to the entity's [member facing]
 var direction_vector: Vector2i:
 	get:
@@ -39,11 +42,13 @@ var active_tween: Tween
 
 ## Registers this entity with the UpdateManager when it enters the scene tree.
 func _enter_tree() -> void:
+	GridWorld.place_entity(self, grid_position)
 	if takes_turns:
 		UpdateManager.register(self)
 
 ## Unregisters this entity from the UpdateManager when it leaves the scene tree.
 func _exit_tree() -> void:
+	GridWorld.remove_entity(self)
 	UpdateManager.unregister(self)
 
 ## Called once per world turn. Subclasses override this with their own behavior.

@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://cdc5vhddemqcw"]
-
-[ext_resource type="Texture2D" uid="uid://beshnn0wxeg08" path="res://Assets/icon.svg" id="1_gx40d"]
-
-[node name="PlayerAttack" type="Node2D" unique_id=449539442]
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=541260813]
-texture = ExtResource("1_gx40d")

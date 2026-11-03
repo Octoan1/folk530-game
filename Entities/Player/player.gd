@@ -2,6 +2,8 @@ class_name Player
 extends Entity
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@export var attack_scene: PackedScene
+var attack: Node2D
 
 const DIRECTION_ANIMATIONS: Dictionary = {
 	Direction.LEFT: "WalkLeft",
@@ -20,7 +22,10 @@ func _init() -> void:
 ## Snaps the player to its starting grid cell.
 func _ready() -> void:
 	position = GridWorld.cell_to_world(grid_position)
+	attack = attack_scene.instantiate()
+	add_sibling.call_deferred(attack)
 	update_animation()
+	sprite.animation_finished.connect(update_animation)
 
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
@@ -31,12 +36,25 @@ func _unhandled_input(event: InputEvent) -> void:
 	var direction: Vector2i = _get_direction(event)
 	if direction != Vector2i.ZERO:
 		var target_cell: Vector2i = grid_position + direction
-		if not GridWorld.is_walkable(target_cell):
+		if not GridWorld.can_enter(target_cell):
 			return
 
-		grid_position = target_cell
+		GridWorld.move_entity(self, target_cell)
 		slide_to(GridWorld.cell_to_world(grid_position), SPEED)
 		UpdateManager.run_turn()
+		
+	
+	if event.is_action_pressed("player_attack") and not event.is_echo():
+		sprite.play("Attack")
+		var attack_cell: Vector2i = grid_position + DIRECTION_VECTORS[facing]
+		attack.visible = true
+		attack.position = GridWorld.cell_to_world(attack_cell)
+		var entity_status: Entity = GridWorld.get_entity_at(attack_cell)
+		if entity_status != null and entity_status.is_killable:
+			GridWorld.remove_entity(entity_status)
+			entity_status.queue_free()
+		UpdateManager.run_turn()
+		
 
 ## Converts an input event into a grid direction.
 ## [param event] The input event to interpret.
@@ -67,6 +85,7 @@ func slide_to(target: Vector2, duration: float) -> void:
 	active_tween.finished.connect(_on_tween_end)
 
 func update_animation() -> void:
+	attack.visible = false
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]
 	if anim_name == "WalkLeft":
 		sprite.flip_h = true

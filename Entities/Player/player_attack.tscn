@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dfop2xbvm74h3"]
+
+[ext_resource type="Texture2D" uid="uid://cnxv4ij8htgca" path="res://Entities/Player/Chicken Red.png" id="1_ehgqn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13rqx"]
+atlas = ExtResource("1_ehgqn")
+region = Rect2(0, 16, 16, 16)
+
+[node name="PlayerAttack" type="Node2D" unique_id=2033589436]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=120875722]
+position = Vector2(0, -8)
+texture = SubResource("AtlasTexture_13rqx")

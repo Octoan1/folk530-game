@@ -13,6 +13,7 @@ const DIRECTION_ANIMATIONS: Dictionary = {
 ## Sets the cow to act from turn list instead of input
 func _init() -> void:
 	takes_turns = true
+	is_killable = true
 
 ## Snaps the player to its starting grid cell.
 func _ready() -> void:
@@ -21,11 +22,11 @@ func _ready() -> void:
 
 func take_turn() -> void:
 	var target_cell: Vector2i = grid_position + direction_vector
-	if not GridWorld.is_walkable(target_cell):
+	if not GridWorld.can_enter(target_cell):
 		facing = get_opposite_direction(facing)
 		return
 	
-	grid_position = target_cell
+	GridWorld.move_entity(self, target_cell)
 	slide_to(GridWorld.cell_to_world(grid_position), SPEED)
 
 func update_animation() -> void:
