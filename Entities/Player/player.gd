@@ -19,11 +19,13 @@ func _physics_process(_delta: float) -> void:
 		return
 	
 	if Input.is_action_just_pressed("player_left") or Input.is_action_just_pressed("player_right"):
+		UpdateManager.update.emit()
 		var h_dir: int = Input.get_axis("player_left", "player_right") as int
 		if is_walkable(grid_position + Vector2i(h_dir, 0)):
 			grid_position += Vector2i(h_dir, 0)
 			slide_to(cell_to_world(grid_position), SPEED)
 	elif Input.is_action_just_pressed("player_up") or Input.is_action_just_pressed("player_down"):
+		UpdateManager.update.emit()
 		var v_dir: int = Input.get_axis("player_up", "player_down") as int
 		if is_walkable(grid_position + Vector2i(0, v_dir)):
 			grid_position += Vector2i(0, v_dir)
