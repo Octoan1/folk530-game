@@ -1,42 +1,58 @@
 class_name Player
-extends CharacterBody2D
-
+extends Entity
 
 const SPEED: float = 0.1
-
-@export var map: TileMapLayer
-@export var wall_map: TileMapLayer
-@export var grid_position: Vector2i = Vector2i(0, 0)
 
 var active_tween: Tween
 var is_moving: bool = false
 
+## Sets the player to act from input instead of from the turn list.
+func _init() -> void:
+	takes_turns = false
+
+## Snaps the player to its starting grid cell.
 func _ready() -> void:
 	position = cell_to_world(grid_position)
 
-func _physics_process(_delta: float) -> void:
+## Handles input: validates a step, commits it, then advances the world.
+## [param event] The input event received this frame.
+func _unhandled_input(event: InputEvent) -> void:
 	if is_moving:
 		return
-	
-	if Input.is_action_just_pressed("player_left") or Input.is_action_just_pressed("player_right"):
-		UpdateManager.update.emit()
-		var h_dir: int = Input.get_axis("player_left", "player_right") as int
-		if is_walkable(grid_position + Vector2i(h_dir, 0)):
-			grid_position += Vector2i(h_dir, 0)
-			slide_to(cell_to_world(grid_position), SPEED)
-	elif Input.is_action_just_pressed("player_up") or Input.is_action_just_pressed("player_down"):
-		UpdateManager.update.emit()
-		var v_dir: int = Input.get_axis("player_up", "player_down") as int
-		if is_walkable(grid_position + Vector2i(0, v_dir)):
-			grid_position += Vector2i(0, v_dir)
-			slide_to(cell_to_world(grid_position), SPEED)
 
-## Converts a grid coordinate into the world position of that tile's center.
-## [param cell] The grid coordinate to convert.
-## [return] The world-space position of the cell's center.
-func cell_to_world(cell: Vector2i) -> Vector2:
-	var world_position: Vector2 = map.map_to_local(cell)
-	return world_position
+	var direction: Vector2i = _get_direction(event)
+	if direction == Vector2i.ZERO:
+		return
+
+	var target_cell: Vector2i = grid_position + direction
+	if not is_walkable(target_cell):
+		return
+
+	grid_position = target_cell
+	slide_to(cell_to_world(grid_position), SPEED)
+	UpdateManager.run_turn()
+
+## Converts an input event into a grid direction.
+## [param event] The input event to interpret.
+## [return] A direction vector, or Vector2i.ZERO if the event isn't a move.
+func _get_direction(event: InputEvent) -> Vector2i:
+	if event.is_echo():
+		return Vector2i.ZERO
+	if event.is_action_pressed("player_left"):
+		return Vector2i(-1, 0)
+	if event.is_action_pressed("player_right"):
+		return Vector2i(1, 0)
+	if event.is_action_pressed("player_up"):
+		return Vector2i(0, -1)
+	if event.is_action_pressed("player_down"):
+		return Vector2i(0, 1)
+	return Vector2i.ZERO
+
+## Returns whether the player is allowed to step into the given cell.
+## [param cell] The grid coordinate to test.
+## [return] True if the cell is free to walk on, false if it is blocked.
+func is_walkable(cell: Vector2i) -> bool:
+	return wall_map.get_cell_source_id(cell) == -1
 
 ## Slides this node to the given world position over a fixed duration.
 ## [param target] The world position to slide to.
@@ -45,14 +61,8 @@ func slide_to(target: Vector2, duration: float) -> void:
 	is_moving = true
 	active_tween = create_tween()
 	active_tween.tween_property(self, "position", target, duration)
-	if not active_tween.finished.is_connected(_on_tween_end):
-		active_tween.finished.connect(_on_tween_end)
+	active_tween.finished.connect(_on_tween_end)
 
-## Returns whether the player is allowed to step into the given cell.
-## [param cell] The grid coordinate to test.
-## [return] True if the cell is free to walk on, false if it is blocked.
-func is_walkable(cell: Vector2i) -> bool:
-	return wall_map.get_cell_source_id(cell) == -1
-
+## Unlocks input once the slide has finished.
 func _on_tween_end() -> void:
 	is_moving = false
