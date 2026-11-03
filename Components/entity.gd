@@ -12,9 +12,17 @@ const DIRECTION_VECTORS: Dictionary = {
 
 ## Lower numbers act first when UpdateManager runs a turn.
 @export var priority: int = 0
+
+## The movable ground
 @export var map: TileMapLayer
+
+## The map of tiles that are not walkable
 @export var wall_map: TileMapLayer
+
+## The position of the entity in relation to the map
 @export var grid_position: Vector2i = Vector2i(0, 0)
+
+## The direction that the player is facing
 @export var facing: Direction = Direction.RIGHT:
 	set(value):
 			facing = value  # 1. Update the actual value first
@@ -26,9 +34,14 @@ const DIRECTION_VECTORS: Dictionary = {
 ## Whether UpdateManager should call take_turn() on this entity.
 ## The player turns this off, since it acts from input instead.
 var takes_turns: bool = true
+
+## The [Vector2i] that corresponds to the entity's [member facing]
 var direction_vector: Vector2i:
 	get:
 		return DIRECTION_VECTORS[facing]
+
+## The entity's active tween
+var active_tween: Tween
 
 ## Registers this entity with the UpdateManager when it enters the scene tree.
 func _enter_tree() -> void:
@@ -54,11 +67,22 @@ func cell_to_world(cell: Vector2i) -> Vector2:
 ## [param cell] The grid coordinate to test.
 ## [return] True if the cell is free to walk on, false if it is blocked.
 func is_walkable(cell: Vector2i) -> bool:
-	return wall_map.get_cell_source_id(cell) == -1
+	return wall_map.get_cell_source_id(cell) == -1 and map.get_cell_source_id(cell) != -1
 
+## Slides the entity to the given target cell
+## [param target] The cell that the entity will move to
+## [param duration] How long the slide will take
+func slide_to(target: Vector2, duration: float) -> void:
+	active_tween = create_tween()
+	active_tween.tween_property(self, "position", target, duration)
+
+## Updates the animation of the entity
 func update_animation() -> void:
 	pass
 
+## Returns the opposite direction of the given direction
+## [param dir] The direction you want the opposite of
+## [return] The opposite direction: Left<-->Right and Up<-->Down
 func get_opposite_direction(dir: Direction) -> Direction:
 	match dir:
 		Direction.LEFT:

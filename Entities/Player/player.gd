@@ -1,7 +1,7 @@
 class_name Player
 extends Entity
 
-var active_tween: Tween
+## True if the player is in the middle of moving, false otherwise
 var is_moving: bool = false
 
 ## Sets the player to act from input instead of from the turn list.
@@ -51,8 +51,7 @@ func _get_direction(event: InputEvent) -> Vector2i:
 ## [param duration] How long the slide takes, in seconds.
 func slide_to(target: Vector2, duration: float) -> void:
 	is_moving = true
-	active_tween = create_tween()
-	active_tween.tween_property(self, "position", target, duration)
+	super.slide_to(target, duration)
 	active_tween.finished.connect(_on_tween_end)
 
 ## Unlocks input once the slide has finished.

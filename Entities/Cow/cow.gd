@@ -3,8 +3,6 @@ extends Entity
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-var active_tween: Tween
-
 const DIRECTION_ANIMATIONS: Dictionary = {
 	Direction.LEFT: "MoveLeft",
 	Direction.RIGHT: "MoveRight",
@@ -29,10 +27,6 @@ func take_turn() -> void:
 	
 	grid_position = target_cell
 	slide_to(cell_to_world(grid_position), SPEED)
-
-func slide_to(target: Vector2, duration: float) -> void:
-	active_tween = create_tween()
-	active_tween.tween_property(self, "position", target, duration)
 
 func update_animation() -> void:
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]
