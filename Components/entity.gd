@@ -10,14 +10,10 @@ const DIRECTION_VECTORS: Dictionary = {
 	Direction.DOWN: Vector2i(0, 1)
 }
 
-## Lower numbers act first when UpdateManager runs a turn.
-@export var priority: int = 0
 
-## The position of the entity in relation to the map
-@export var grid_position: Vector2i = Vector2i(0, 0)
-
-## The direction that the player is facing
-@export var facing: Direction = Direction.RIGHT:
+@export var priority: int = 0 ## Lower numbers act first when UpdateManager runs a turn.
+@export var grid_position: Vector2i = Vector2i(0, 0) ## The position of the entity in relation to the map
+@export var facing: Direction = Direction.RIGHT: ## The direction that the player is facing
 	set(value):
 			facing = value  # 1. Update the actual value first
 			
@@ -25,20 +21,12 @@ const DIRECTION_VECTORS: Dictionary = {
 			if is_node_ready(): 
 				update_animation()
 
-## Whether UpdateManager should call take_turn() on this entity.
-## The player turns this off, since it acts from input instead.
-var takes_turns: bool = true
-
-## True if the player can attack them, false otherwise
-var is_killable: bool = false
-
-## The [Vector2i] that corresponds to the entity's [member facing]
-var direction_vector: Vector2i:
+var takes_turns: bool = true ## Whether UpdateManager should call take_turn() on this entity.The player turns this off, since it acts from input instead.
+var is_killable: bool = false ## True if the player can attack them, false otherwise
+var active_tween: Tween ## The entity's active tween
+var direction_vector: Vector2i: ## The [Vector2i] that corresponds to the entity's [member facing]
 	get:
 		return DIRECTION_VECTORS[facing]
-
-## The entity's active tween
-var active_tween: Tween
 
 ## Registers this entity with the UpdateManager when it enters the scene tree.
 func _enter_tree() -> void:
@@ -80,3 +68,8 @@ func get_opposite_direction(dir: Direction) -> Direction:
 		Direction.DOWN:
 			return Direction.UP
 	return Direction.LEFT
+
+## Removes the entity from the scene
+func die() -> void:
+	GridWorld.remove_entity(self)
+	self.queue_free()

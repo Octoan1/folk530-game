@@ -16,7 +16,7 @@ func unregister(entity: Entity) -> void:
 func run_turn() -> void:
 	var entities_copy: Array[Entity] = entities.duplicate()
 	for entity: Entity in entities_copy:
-		if is_instance_valid(entity):
+		if is_instance_valid(entity) and not entity.is_queued_for_deletion():
 			entity.take_turn()
 
 ## Returns whether entity a should act before entity b.
