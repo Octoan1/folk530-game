@@ -19,16 +19,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	var direction: Vector2i = _get_direction(event)
-	if direction == Vector2i.ZERO:
-		return
+	if direction != Vector2i.ZERO:
+		var target_cell: Vector2i = grid_position + direction
+		if not GridWorld.is_walkable(target_cell):
+			return
 
-	var target_cell: Vector2i = grid_position + direction
-	if not GridWorld.is_walkable(target_cell):
-		return
-
-	grid_position = target_cell
-	slide_to(GridWorld.cell_to_world(grid_position), SPEED)
-	UpdateManager.run_turn()
+		grid_position = target_cell
+		slide_to(GridWorld.cell_to_world(grid_position), SPEED)
+		UpdateManager.run_turn()
 
 ## Converts an input event into a grid direction.
 ## [param event] The input event to interpret.
