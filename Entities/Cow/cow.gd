@@ -16,17 +16,17 @@ func _init() -> void:
 
 ## Snaps the player to its starting grid cell.
 func _ready() -> void:
-	position = cell_to_world(grid_position)
+	position = GridWorld.cell_to_world(grid_position)
 	update_animation()
 
 func take_turn() -> void:
 	var target_cell: Vector2i = grid_position + direction_vector
-	if not is_walkable(target_cell):
+	if not GridWorld.is_walkable(target_cell):
 		facing = get_opposite_direction(facing)
 		return
 	
 	grid_position = target_cell
-	slide_to(cell_to_world(grid_position), SPEED)
+	slide_to(GridWorld.cell_to_world(grid_position), SPEED)
 
 func update_animation() -> void:
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]

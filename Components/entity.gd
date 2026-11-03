@@ -13,12 +13,6 @@ const DIRECTION_VECTORS: Dictionary = {
 ## Lower numbers act first when UpdateManager runs a turn.
 @export var priority: int = 0
 
-## The movable ground
-@export var map: TileMapLayer
-
-## The map of tiles that are not walkable
-@export var wall_map: TileMapLayer
-
 ## The position of the entity in relation to the map
 @export var grid_position: Vector2i = Vector2i(0, 0)
 
@@ -55,19 +49,6 @@ func _exit_tree() -> void:
 ## Called once per world turn. Subclasses override this with their own behavior.
 func take_turn() -> void:
 	pass
-
-## Converts a grid coordinate into the world position of that tile's center.
-## [param cell] The grid coordinate to convert.
-## [return] The world-space position of the cell's center.
-func cell_to_world(cell: Vector2i) -> Vector2:
-	var world_position: Vector2 = map.map_to_local(cell)
-	return world_position
-
-## Returns whether the player is allowed to step into the given cell.
-## [param cell] The grid coordinate to test.
-## [return] True if the cell is free to walk on, false if it is blocked.
-func is_walkable(cell: Vector2i) -> bool:
-	return wall_map.get_cell_source_id(cell) == -1 and map.get_cell_source_id(cell) != -1
 
 ## Slides the entity to the given target cell
 ## [param target] The cell that the entity will move to

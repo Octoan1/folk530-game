@@ -10,7 +10,7 @@ func _init() -> void:
 
 ## Snaps the player to its starting grid cell.
 func _ready() -> void:
-	position = cell_to_world(grid_position)
+	position = GridWorld.cell_to_world(grid_position)
 
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
@@ -23,11 +23,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	var target_cell: Vector2i = grid_position + direction
-	if not is_walkable(target_cell):
+	if not GridWorld.is_walkable(target_cell):
 		return
 
 	grid_position = target_cell
-	slide_to(cell_to_world(grid_position), SPEED)
+	slide_to(GridWorld.cell_to_world(grid_position), SPEED)
 	UpdateManager.run_turn()
 
 ## Converts an input event into a grid direction.

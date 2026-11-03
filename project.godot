@@ -18,6 +18,7 @@ config/icon="res://Assets/icon.svg"
 [autoload]
 
 UpdateManager="*uid://cindl5dmpx5dh"
+GridWorld="*uid://fdfwvsv5aq38"
 
 [debug]
 
