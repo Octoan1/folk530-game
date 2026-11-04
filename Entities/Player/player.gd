@@ -12,9 +12,6 @@ const DIRECTION_ANIMATIONS: Dictionary = {
 	Direction.DOWN: "WalkDown"
 }
 
-## True if the player is in the middle of moving, false otherwise
-var is_moving: bool = false
-
 ## Sets the player to act from input instead of from the turn list.
 func _init() -> void:
 	takes_turns = false
@@ -30,7 +27,7 @@ func _ready() -> void:
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
 func _unhandled_input(event: InputEvent) -> void:
-	if is_moving:
+	if UpdateManager.is_busy():
 		return
 
 	var direction: Vector2i = _get_direction(event)
@@ -39,17 +36,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("player_attack") and not event.is_echo():
 		try_attack()
-
-## Locks input, then animates along the path. Unlocks when the whole slide ends.
-## [param path] The cells to pass through, in order.
-## [param step_duration] How long each single-cell step takes, in seconds.
-func slide_along(path: Array[Vector2i], step_duration: float) -> void:
-	if path.is_empty():
-		return
-	is_moving = true
-	super.slide_along(path, step_duration)
-	if not active_tween.finished.is_connected(_on_tween_end):
-		active_tween.finished.connect(_on_tween_end)
 
 func update_animation() -> void:
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]
@@ -87,7 +73,7 @@ func try_move(direction: Vector2i) -> void:
 ## The player attacks the tile right next to them
 ## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]
 func try_attack() -> void:
-	is_moving = true
+	_set_animating(true)
 	var attack_cell: Vector2i = grid_position + DIRECTION_VECTORS[facing]
 	play_attack_animation(attack_cell)
 	var entity_status: Entity = GridWorld.get_entity_at(attack_cell)
@@ -115,14 +101,10 @@ func _get_direction(event: InputEvent) -> Vector2i:
 		return Vector2i(0, 1)
 	return Vector2i.ZERO
 
-## Unlocks input once the slide has finished.
-func _on_tween_end() -> void:
-	is_moving = false
-
 ## Unlocks input and and hides attack when the attack animation ends
 func _on_attack_finish() -> void:
 	if sprite.animation == "IdleDown":
-		is_moving = false
+		_set_animating(false)
 		attack.end_attack()
 		update_animation()
 	

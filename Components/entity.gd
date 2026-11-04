@@ -24,6 +24,7 @@ const DIRECTION_VECTORS: Dictionary = {
 
 var takes_turns: bool = true ## Whether UpdateManager should call take_turn() on this entity.The player turns this off, since it acts from input instead.
 var is_killable: bool = false ## True if the player can attack them, false otherwise
+var is_animating: bool = false
 var active_tween: Tween ## The entity's active tween
 var direction_vector: Vector2i: ## The [Vector2i] that corresponds to the entity's [member facing]
 	get:
@@ -39,6 +40,7 @@ func _enter_tree() -> void:
 func _exit_tree() -> void:
 	GridWorld.remove_entity(self)
 	UpdateManager.unregister(self)
+	_set_animating(false)
 
 ## Called once per world turn. Subclasses override this with their own behavior.
 func take_turn() -> void:
@@ -54,10 +56,17 @@ func slide_along(path: Array[Vector2i], step_duration: float) -> void:
 	if active_tween != null and active_tween.is_valid():
 		active_tween.kill()
 	active_tween = create_tween()
+	_set_animating(true)
 	active_tween.set_trans(Tween.TRANS_LINEAR)
 	for cell: Vector2i in path:
 		var target: Vector2 = GridWorld.cell_to_world(cell)
 		active_tween.tween_property(self, "position", target, step_duration)
+	if not active_tween.finished.is_connected(_on_tween_end):
+		active_tween.finished.connect(_on_tween_end)
+
+## Unlocks input once the slide has finished.
+func _on_tween_end() -> void:
+	_set_animating(false)
 
 ## Updates the animation of the entity
 func update_animation() -> void:
@@ -111,3 +120,15 @@ func get_slide_path(start: Vector2i, direction: Vector2i) -> Array[Vector2i]:
 		if not GridWorld.is_ice(current):
 			break
 	return cells
+
+## Updates this entity's animating flag and keeps UpdateManager's count in sync.
+## Only reports when the value actually changes, so it can't double count.
+## [param value] Whether this entity is now animating.
+func _set_animating(value: bool) -> void:
+	if value == is_animating:
+		return
+	is_animating = value
+	if value:
+		UpdateManager.animation_started()
+	else:
+		UpdateManager.animation_finished()

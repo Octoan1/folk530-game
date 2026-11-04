@@ -1,6 +1,7 @@
 extends Node
 
 var entities: Array[Entity] = []
+var active_animations: int = 0
 
 ## Adds an entity to the list of things that act each turn.
 ## [param entity] The entity to start tracking.
@@ -25,3 +26,16 @@ func run_turn() -> void:
 ## [return] True if a has a lower priority number than b.
 func _compare_priority(a: Entity, b: Entity) -> bool:
 	return a.priority < b.priority
+
+## Records that an entity has started animating.
+func animation_started() -> void:
+	active_animations += 1
+
+## Records that an entity has finished animating.
+func animation_finished() -> void:
+	active_animations -= 1
+
+## Returns whether any entity is still animating.
+## [return] True if input should stay locked.
+func is_busy() -> bool:
+	return active_animations > 0
