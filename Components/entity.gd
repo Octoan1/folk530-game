@@ -3,6 +3,7 @@ extends Node2D
 
 enum Direction { LEFT, RIGHT, UP, DOWN }
 const SPEED: float = 0.15
+const MAX_SLIDE_LENGTH: int = 100
 const DIRECTION_VECTORS: Dictionary = {
 	Direction.LEFT: Vector2i(-1, 0),
 	Direction.RIGHT: Vector2i(1, 0),
@@ -43,12 +44,20 @@ func _exit_tree() -> void:
 func take_turn() -> void:
 	pass
 
-## Slides the entity to the given target cell
-## [param target] The cell that the entity will move to
-## [param duration] How long the slide will take
-func slide_to(target: Vector2, duration: float) -> void:
+## Animates this entity along a path of cells, one tween step per cell.
+## Visual only: the caller must already have committed the move in GridWorld.
+## [param path] The cells to pass through, in order, ending at the final cell.
+## [param step_duration] How long each single-cell step takes, in seconds.
+func slide_along(path: Array[Vector2i], step_duration: float) -> void:
+	if path.is_empty():
+		return
+	if active_tween != null and active_tween.is_valid():
+		active_tween.kill()
 	active_tween = create_tween()
-	active_tween.tween_property(self, "position", target, duration)
+	active_tween.set_trans(Tween.TRANS_LINEAR)
+	for cell: Vector2i in path:
+		var target: Vector2 = GridWorld.cell_to_world(cell)
+		active_tween.tween_property(self, "position", target, step_duration)
 
 ## Updates the animation of the entity
 func update_animation() -> void:
@@ -84,3 +93,21 @@ func die() -> void:
 ## [return] True if this entity vacated its cell, so the bumper may enter.
 func on_bumped(_direction: Vector2i) -> bool:
 	return false
+
+## Works out where an entity ends up after stepping in a direction,
+## including any sliding on ice.
+## [param start] The cell the entity is leaving.
+## [param direction] The direction of the step.
+## [return] Every cell passed through, in order. Empty if the first step is blocked.
+func get_slide_path(start: Vector2i, direction: Vector2i) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	var current: Vector2i = start
+	for i: int in range(MAX_SLIDE_LENGTH):
+		var next_cell: Vector2i = current + direction
+		if not GridWorld.can_enter(next_cell):
+			break
+		cells.append(next_cell)
+		current = next_cell
+		if not GridWorld.is_ice(current):
+			break
+	return cells

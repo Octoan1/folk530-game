@@ -68,3 +68,14 @@ func remove_entity(entity: Entity) -> void:
 	var cell: Vector2i = entity.grid_position
 	if occupants.get(cell, null) == entity:
 		occupants.erase(cell)
+
+## Returns whether the ground at the given cell is slippery.
+## [param cell] The grid coordinate to test.
+## [return] True if the cell has a ground tile marked as ice.
+func is_ice(cell: Vector2i) -> bool:
+	var tile: TileData = map.get_cell_tile_data(cell)
+	if tile == null:
+		return false
+	if tile.get_custom_data("is_ice"):
+		return true
+	return false

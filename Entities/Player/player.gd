@@ -40,13 +40,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("player_attack") and not event.is_echo():
 		try_attack()
 
-## Slides this node to the given world position over a fixed duration.
-## [param target] The world position to slide to.
-## [param duration] How long the slide takes, in seconds.
-func slide_to(target: Vector2, duration: float) -> void:
+## Locks input, then animates along the path. Unlocks when the whole slide ends.
+## [param path] The cells to pass through, in order.
+## [param step_duration] How long each single-cell step takes, in seconds.
+func slide_along(path: Array[Vector2i], step_duration: float) -> void:
+	if path.is_empty():
+		return
 	is_moving = true
-	super.slide_to(target, duration)
-	active_tween.finished.connect(_on_tween_end)
+	super.slide_along(path, step_duration)
+	if not active_tween.finished.is_connected(_on_tween_end):
+		active_tween.finished.connect(_on_tween_end)
 
 func update_animation() -> void:
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]
@@ -62,17 +65,23 @@ func play_attack_animation(cell: Vector2i) -> void:
 	sprite.play("IdleDown")
 	attack.play_at(cell)
 
-## Moves the player to an open tile.
-## If there is a wall, the player will not move into that spot
-## [param direction] The direction that the player is trying to move
+## Moves the player one step, sliding further if the path includes ice.
+## If the step is blocked, nothing happens and no turn is spent.
+## If an entity is in the way, it is asked to move aside first (e.g. a pushable rock).
+## [param direction] The direction the player is trying to move.
 func try_move(direction: Vector2i) -> void:
 	var target_cell: Vector2i = grid_position + direction
-	var entity: Entity = GridWorld.get_entity_at(target_cell)
-	if (entity != null and not entity.on_bumped(direction)) or not GridWorld.can_enter(target_cell):
+	var blocker: Entity = GridWorld.get_entity_at(target_cell)
+	if blocker != null:
+		if not blocker.on_bumped(direction):
+			return
+
+	var path: Array[Vector2i] = get_slide_path(grid_position, direction)
+	if path.is_empty():
 		return
 
-	GridWorld.move_entity(self, target_cell)
-	slide_to(GridWorld.cell_to_world(grid_position), SPEED)
+	GridWorld.move_entity(self, path.back())
+	slide_along(path, SPEED)
 	UpdateManager.run_turn()
 
 ## The player attacks the tile right next to them

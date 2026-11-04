@@ -17,8 +17,12 @@ func on_bumped(direction: Vector2i) -> bool:
 	# then move_entity + slide_to. Return whether it moved.
 	var target_cell: Vector2i = grid_position + direction
 	if GridWorld.can_enter(target_cell):
-		GridWorld.move_entity(self, target_cell)
-		slide_to(GridWorld.cell_to_world(grid_position), SPEED)
+		var path: Array[Vector2i] = get_slide_path(grid_position, direction)
+		if path.is_empty():
+			return false
+
+		GridWorld.move_entity(self, path.back())
+		slide_along(path, SPEED)
 		return true
 	
 	return false
