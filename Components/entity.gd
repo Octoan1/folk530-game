@@ -69,7 +69,18 @@ func get_opposite_direction(dir: Direction) -> Direction:
 			return Direction.UP
 	return Direction.LEFT
 
+## How the entity reacts to taking a hit
+func take_hit() -> void:
+	pass
+
 ## Removes the entity from the scene
 func die() -> void:
 	GridWorld.remove_entity(self)
 	self.queue_free()
+
+## Called when another entity tries to walk into this one.
+## Subclasses override this to be pushable, open, etc.
+## [param direction] The direction the bumping entity is moving.
+## [return] True if this entity vacated its cell, so the bumper may enter.
+func on_bumped(_direction: Vector2i) -> bool:
+	return false

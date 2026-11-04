@@ -67,7 +67,8 @@ func play_attack_animation(cell: Vector2i) -> void:
 ## [param direction] The direction that the player is trying to move
 func try_move(direction: Vector2i) -> void:
 	var target_cell: Vector2i = grid_position + direction
-	if not GridWorld.can_enter(target_cell):
+	var entity: Entity = GridWorld.get_entity_at(target_cell)
+	if (entity != null and not entity.on_bumped(direction)) or not GridWorld.can_enter(target_cell):
 		return
 
 	GridWorld.move_entity(self, target_cell)
@@ -82,7 +83,7 @@ func try_attack() -> void:
 	play_attack_animation(attack_cell)
 	var entity_status: Entity = GridWorld.get_entity_at(attack_cell)
 	if entity_status != null and entity_status.is_killable:
-		entity_status.die()
+		entity_status.take_hit()
 	UpdateManager.run_turn()
 
 ## Converts an input event into a grid direction.

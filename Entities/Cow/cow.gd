@@ -38,3 +38,6 @@ func update_animation() -> void:
 		if sprite.flip_h:
 			sprite.flip_h = false
 		sprite.play(anim_name)
+
+func take_hit() -> void:
+	die()
