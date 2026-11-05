@@ -19,6 +19,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	_apply_camera_limits()
+	player.restart.connect(restart_level)
 
 func _exit_tree() -> void:
 	GridWorld.clear()
@@ -38,3 +39,6 @@ func _apply_camera_limits() -> void:
 	player.camera.limit_top = int(top_left.y)
 	player.camera.limit_right = int(bottom_right.x)
 	player.camera.limit_bottom = int(bottom_right.y)
+
+func restart_level() -> void:
+	get_tree().reload_current_scene()

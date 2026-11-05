@@ -5,6 +5,7 @@ extends Entity
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @export var attack_scene: PackedScene
 var attack: Attack
+signal restart
 
 const DIRECTION_ANIMATIONS: Dictionary = {
 	Direction.LEFT: "WalkLeft",
@@ -111,4 +112,4 @@ func _on_attack_finish() -> void:
 		update_animation()
 
 func die() -> void:
-	get_tree().reload_current_scene()
+	restart.emit()
