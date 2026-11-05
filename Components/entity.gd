@@ -2,7 +2,7 @@ class_name Entity
 extends Node2D
 
 enum Direction { LEFT, RIGHT, UP, DOWN }
-const SPEED: float = 0.15
+const SPEED: float = 0.1
 const MAX_SLIDE_LENGTH: int = 100
 const DIRECTION_VECTORS: Dictionary = {
 	Direction.LEFT: Vector2i(-1, 0),
@@ -21,6 +21,7 @@ const DIRECTION_VECTORS: Dictionary = {
 			if is_node_ready(): 
 				update_animation()
 
+var health_component: HealthComponent
 var grid_position: Vector2i = Vector2i(0, 0) ## The position of the entity in relation to the map
 var takes_turns: bool = true ## Whether UpdateManager should call take_turn() on this entity.The player turns this off, since it acts from input instead.
 var is_killable: bool = false ## True if the player can attack them, false otherwise
@@ -36,6 +37,8 @@ func _enter_tree() -> void:
 	GridWorld.place_entity(self, grid_position)
 	if takes_turns:
 		UpdateManager.register(self)
+	health_component = HealthComponent.new()
+	health_component.died.connect(die)
 
 ## Unregisters this entity from the UpdateManager when it leaves the scene tree.
 func _exit_tree() -> void:
@@ -90,7 +93,7 @@ func get_opposite_direction(dir: Direction) -> Direction:
 
 ## How the entity reacts to taking a hit
 func take_hit() -> void:
-	pass
+	health_component.damage_health(1)
 
 ## Removes the entity from the scene
 func die() -> void:

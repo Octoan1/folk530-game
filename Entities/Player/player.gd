@@ -1,6 +1,7 @@
 class_name Player
 extends Entity
 
+@onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @export var attack_scene: PackedScene
 var attack: Attack
@@ -15,6 +16,7 @@ const DIRECTION_ANIMATIONS: Dictionary = {
 ## Sets the player to act from input instead of from the turn list.
 func _init() -> void:
 	takes_turns = false
+	is_killable = true
 
 ## Snaps the player to its starting grid cell.
 func _ready() -> void:
@@ -107,4 +109,6 @@ func _on_attack_finish() -> void:
 		_set_animating(false)
 		attack.end_attack()
 		update_animation()
-	
+
+func die() -> void:
+	get_tree().reload_current_scene()

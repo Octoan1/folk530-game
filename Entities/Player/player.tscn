@@ -294,3 +294,6 @@ autoplay = "WalkRight"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2140788422]
 texture = ExtResource("5_5c2io")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1388904716]
+limit_smoothed = true
