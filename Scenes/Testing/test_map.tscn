@@ -8,6 +8,13 @@
 [ext_resource type="PackedScene" uid="uid://bpvqntfbtepja" path="res://Entities/Rocks/Movable Rock/movable_rock.tscn" id="6_1ed1e"]
 [ext_resource type="PackedScene" uid="uid://b6enjovf3vwl8" path="res://Entities/Rocks/Breakable Rock/breakable_rock.tscn" id="7_mqm71"]
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_mqm71"]
+scenes/1/scene = ExtResource("7_mqm71")
+scenes/2/scene = ExtResource("6_1ed1e")
+
+[sub_resource type="TileSet" id="TileSet_ncn0m"]
+sources/0 = SubResource("TileSetScenesCollectionSource_mqm71")
+
 [node name="TestMap" type="Node2D" unique_id=1270691615 node_paths=PackedStringArray("map", "wall_map")]
 script = ExtResource("1_gtn6y")
 map = NodePath("FloorLayer")
@@ -21,18 +28,14 @@ tile_set = ExtResource("1_phepx")
 tile_map_data = PackedByteArray("AAADAAcAAQAAAAAAAAAEAAcAAQAAAAAAAAAHAAIAAQAAAAAAAAANAAgAAQAAAAAAAAAAAAAAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAAgAAQAAAAAAAAABAAAAAQAAAAAAAAACAAAAAQAAAAAAAAACAAYAAQAAAAAAAAACAAcAAQAAAAAAAAADAAAAAQAAAAAAAAAEAAAAAQAAAAAAAAAFAAAAAQAAAAAAAAAGAAAAAQAAAAAAAAAGAAIAAQAAAAAAAAAHAAAAAQAAAAAAAAAIAAAAAQAAAAAAAAAJAAAAAQAAAAAAAAAKAAAAAQAAAAAAAAALAAAAAQAAAAAAAAAMAAAAAQAAAAAAAAAMAAgAAQAAAAAAAAANAAAAAQAAAAAAAAAOAAAAAQAAAAAAAAAPAAAAAQAAAAAAAAABAAgAAQAAAAAAAAACAAgAAQAAAAAAAAADAAgAAQAAAAAAAAAEAAgAAQAAAAAAAAAFAAgAAQAAAAAAAAAGAAgAAQAAAAAAAAAHAAgAAQAAAAAAAAAIAAgAAQAAAAAAAAAJAAgAAQAAAAAAAAAKAAgAAQAAAAAAAAALAAgAAQAAAAAAAAAOAAgAAQAAAAAAAAAPAAgAAQAAAAAAAAAPAAcAAQAAAAAAAAAPAAYAAQAAAAAAAAAPAAUAAQAAAAAAAAAPAAQAAQAAAAAAAAAPAAMAAQAAAAAAAAAPAAIAAQAAAAAAAAAPAAEAAQAAAAAAAAAJAAcAAQAAAAAAAAAJAAYAAQAAAAAAAAAKAAYAAQAAAAAAAAAKAAUAAQAAAAAAAAAKAAcAAQAAAAAAAAAKAAQAAQAAAAAAAAAKAAMAAQAAAAAAAAAMAAcAAQAAAAAAAAAOAAcAAQAAAAAAAAAOAAUAAQAAAAAAAAAMAAUAAQAAAAAAAAANAAIAAQAAAAAAAAANAAMAAQAAAAAAAAADAAMAAQAAAAAAAAA=")
 tile_set = ExtResource("1_phepx")
 
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=934940415]
+tile_map_data = PackedByteArray("AAAEAAMAAAAAAAAAAQAFAAMAAAAAAAAAAQAGAAMAAAAAAAAAAQAHAAMAAAAAAAAAAQAEAAUAAAAAAAAAAgAGAAUAAAAAAAAAAgA=")
+tile_set = SubResource("TileSet_ncn0m")
+
 [node name="Cow2" parent="." unique_id=1630202754 instance=ExtResource("3_tfjqa")]
 position = Vector2(204, 28)
-priority = 2
+priority = 1
 facing = 0
-
-[node name="MovableRock" parent="." unique_id=2006464266 instance=ExtResource("6_1ed1e")]
-position = Vector2(88, 55)
-priority = 3
-
-[node name="BreakableRock" parent="." unique_id=78769268 instance=ExtResource("7_mqm71")]
-position = Vector2(72, 57)
-priority = 4
 
 [node name="Player" parent="." unique_id=605168488 instance=ExtResource("2_1njcr")]
 position = Vector2(41, 58)

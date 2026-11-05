@@ -2,7 +2,7 @@ class_name Entity
 extends Node2D
 
 enum Direction { LEFT, RIGHT, UP, DOWN }
-const SPEED: float = 0.15
+const SPEED: float = 0.1
 const MAX_SLIDE_LENGTH: int = 100
 const DIRECTION_VECTORS: Dictionary = {
 	Direction.LEFT: Vector2i(-1, 0),
