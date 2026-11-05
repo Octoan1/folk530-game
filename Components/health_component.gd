@@ -1,35 +1,34 @@
-extends Node
 class_name HealthComponent
+extends RefCounted
 
-@export var debug_mode: bool = false
+signal died ## Emitted once when health first reaches zero.
+signal damaged ## Emitted every time damage is actually applied.
 
-var max_health: float = 3
-
+var max_health: float
 var health: float
+var is_dead: bool = false
 
+## Creates a component at full health.
+## [param starting_health] The maximum (and starting) health.
+func _init(starting_health: float = 3.0) -> void:
+	max_health = starting_health
+	health = starting_health
 
-signal died
-signal damaged
-
-func _init() -> void:
-	health = max_health
-	
-#func damage_health(attack: Attack):
-func damage_health(attack_damage: float) -> bool:
-	health -= attack_damage
-	if debug_mode:
-		print(owner.name + " health is now: "+ str(health))
-		
+## Subtracts health and emits died the first time it reaches zero.
+## Does nothing once the component is already dead.
+## [param amount] How much damage to apply.
+func damage_health(amount: float) -> void:
+	if is_dead:
+		return
+	health -= amount
 	damaged.emit()
-	
-	# death 
-	if health <= 0:
+	if health <= 0.0:
+		is_dead = true
 		died.emit()
-	return true
-	
 
-func heal_health(heal_amount: float) -> void:
-	health += heal_amount
-	
-	if health >= max_health:
-		health = max_health
+## Restores health up to the maximum. Dead components can't be healed.
+## [param amount] How much health to restore.
+func heal_health(amount: float) -> void:
+	if is_dead:
+		return
+	health = minf(health + amount, max_health)

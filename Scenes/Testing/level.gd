@@ -12,7 +12,7 @@ extends Node2D
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("level_restart"):
-		get_tree().reload_current_scene()
+		restart_level()
 
 func _enter_tree() -> void:
 	GridWorld.setup(map, wall_map)

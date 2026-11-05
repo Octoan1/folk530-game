@@ -4,7 +4,7 @@ extends Node2D
 enum Direction { LEFT, RIGHT, UP, DOWN }
 const SPEED: float = 0.1
 const MAX_SLIDE_LENGTH: int = 100
-const DIRECTION_VECTORS: Dictionary = {
+const DIRECTION_VECTORS: Dictionary[Direction, Vector2i] = {
 	Direction.LEFT: Vector2i(-1, 0),
 	Direction.RIGHT: Vector2i(1, 0),
 	Direction.UP: Vector2i(0, -1),
@@ -33,10 +33,13 @@ var direction_vector: Vector2i: ## The [Vector2i] that corresponds to the entity
 
 ## Registers this entity with the UpdateManager when it enters the scene tree.
 func _enter_tree() -> void:
-	grid_position = GridWorld.world_to_cell(position)
+	grid_position = GridWorld.world_to_cell(global_position)
 	GridWorld.place_entity(self, grid_position)
 	if takes_turns:
 		UpdateManager.register(self)
+	
+## Sets up HealthComponent
+func _init() -> void:
 	health_component = HealthComponent.new()
 	health_component.died.connect(die)
 
@@ -68,7 +71,7 @@ func slide_along(path: Array[Vector2i], step_duration: float) -> void:
 	if not active_tween.finished.is_connected(_on_tween_end):
 		active_tween.finished.connect(_on_tween_end)
 
-## Unlocks input once the slide has finished.
+## Updates the entity's animation status.
 func _on_tween_end() -> void:
 	_set_animating(false)
 
@@ -115,7 +118,7 @@ func on_bumped(_direction: Vector2i) -> bool:
 func get_slide_path(start: Vector2i, direction: Vector2i) -> Array[Vector2i]:
 	var cells: Array[Vector2i] = []
 	var current: Vector2i = start
-	for i: int in range(MAX_SLIDE_LENGTH):
+	for _i: int in range(MAX_SLIDE_LENGTH):
 		var next_cell: Vector2i = current + direction
 		if not GridWorld.can_enter(next_cell):
 			break
