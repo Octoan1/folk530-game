@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://pw47f5bomorg" path="res://Entities/Cow/cow.tscn" id="5_sos87"]
 [ext_resource type="PackedScene" uid="uid://vv40gfq7vlvh" path="res://Entities/Player/player.tscn" id="6_qsoc6"]
 [ext_resource type="PackedScene" uid="uid://dfop2xbvm74h3" path="res://Entities/Player/Attack/player_attack.tscn" id="7_mq2d2"]
+[ext_resource type="FontFile" uid="uid://bk05fq260avks" path="res://UI/Fonts/UndeadPixelLight8/Undead Pixel 8.ttf" id="8_f5bqe"]
+[ext_resource type="PackedScene" uid="uid://c5rvjj5xhh2ch" path="res://Entities/Raven/raven.tscn" id="8_fsic1"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_mqm71"]
 scenes/1/scene = ExtResource("3_f6tfk")
@@ -14,6 +16,11 @@ scenes/2/scene = ExtResource("4_32yp0")
 
 [sub_resource type="TileSet" id="TileSet_ncn0m"]
 sources/0 = SubResource("TileSetScenesCollectionSource_mqm71")
+
+[sub_resource type="LabelSettings" id="LabelSettings_61hl2"]
+font = ExtResource("8_f5bqe")
+font_size = 8
+shadow_size = 0
 
 [node name="TestMap" type="Node2D" unique_id=1270691615 node_paths=PackedStringArray("map", "wall_map")]
 script = ExtResource("1_yom6g")
@@ -40,3 +47,16 @@ facing = 0
 [node name="Player" parent="." unique_id=605168488 instance=ExtResource("6_qsoc6")]
 position = Vector2(41, 58)
 attack_scene = ExtResource("7_mq2d2")
+
+[node name="Label" type="Label" parent="." unique_id=523424598]
+offset_left = 75.0
+offset_top = 18.0
+offset_right = 164.0
+offset_bottom = 95.0
+text = "Go Helgi, get revenge on the Hunding clan"
+label_settings = SubResource("LabelSettings_61hl2")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Raven" parent="." unique_id=78769268 instance=ExtResource("8_fsic1")]
+position = Vector2(73, 40)
