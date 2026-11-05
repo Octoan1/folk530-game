@@ -13,7 +13,6 @@ const DIRECTION_VECTORS: Dictionary = {
 
 
 @export var priority: int = 0 ## Lower numbers act first when UpdateManager runs a turn.
-@export var grid_position: Vector2i = Vector2i(0, 0) ## The position of the entity in relation to the map
 @export var facing: Direction = Direction.RIGHT: ## The direction that the player is facing
 	set(value):
 			facing = value  # 1. Update the actual value first
@@ -22,6 +21,7 @@ const DIRECTION_VECTORS: Dictionary = {
 			if is_node_ready(): 
 				update_animation()
 
+var grid_position: Vector2i = Vector2i(0, 0) ## The position of the entity in relation to the map
 var takes_turns: bool = true ## Whether UpdateManager should call take_turn() on this entity.The player turns this off, since it acts from input instead.
 var is_killable: bool = false ## True if the player can attack them, false otherwise
 var is_animating: bool = false
@@ -32,6 +32,7 @@ var direction_vector: Vector2i: ## The [Vector2i] that corresponds to the entity
 
 ## Registers this entity with the UpdateManager when it enters the scene tree.
 func _enter_tree() -> void:
+	grid_position = GridWorld.world_to_cell(position)
 	GridWorld.place_entity(self, grid_position)
 	if takes_turns:
 		UpdateManager.register(self)

@@ -22,18 +22,18 @@ tile_map_data = PackedByteArray("AAADAAcAAQAAAAAAAAAEAAcAAQAAAAAAAAAHAAIAAQAAAAA
 tile_set = ExtResource("1_phepx")
 
 [node name="Cow2" parent="." unique_id=1630202754 instance=ExtResource("3_tfjqa")]
+position = Vector2(204, 28)
 priority = 2
-grid_position = Vector2i(12, 1)
 facing = 0
 
 [node name="MovableRock" parent="." unique_id=2006464266 instance=ExtResource("6_1ed1e")]
+position = Vector2(88, 55)
 priority = 3
-grid_position = Vector2i(5, 2)
-
-[node name="Player" parent="." unique_id=605168488 instance=ExtResource("2_1njcr")]
-attack_scene = ExtResource("5_t3psr")
-grid_position = Vector2i(2, 3)
 
 [node name="BreakableRock" parent="." unique_id=78769268 instance=ExtResource("7_mqm71")]
+position = Vector2(72, 57)
 priority = 4
-grid_position = Vector2i(1, 6)
+
+[node name="Player" parent="." unique_id=605168488 instance=ExtResource("2_1njcr")]
+position = Vector2(41, 58)
+attack_scene = ExtResource("5_t3psr")

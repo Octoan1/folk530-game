@@ -25,6 +25,14 @@ func cell_to_world(cell: Vector2i) -> Vector2:
 	var world_position: Vector2 = map.map_to_local(cell)
 	return world_position
 
+## Converts a world position into the grid cell that contains it.
+## [param world_position] The position to convert.
+## [return] The cell containing that position.
+func world_to_cell(world_position: Vector2) -> Vector2i:
+	assert(map != null)
+	var cell: Vector2i = map.local_to_map(map.to_local(world_position))
+	return cell
+
 ## Returns whether the player is allowed to step into the given cell.
 ## [param cell] The grid coordinate to test.
 ## [return] True if the cell is free to walk on, false if it is blocked.
