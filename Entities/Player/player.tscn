@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://vv40gfq7vlvh"]
 
 [ext_resource type="Script" uid="uid://dxha5v6r8hmus" path="res://Entities/Player/player.gd" id="1_kk56y"]
-[ext_resource type="Texture2D" uid="uid://cnxv4ij8htgca" path="res://Entities/Player/Chicken Red.png" id="2_tekja"]
+[ext_resource type="Texture2D" uid="uid://cnxv4ij8htgca" path="res://Entities/Player/Attack/Chicken Red.png" id="2_tekja"]
 [ext_resource type="Texture2D" uid="uid://cn48ghww7qai3" path="res://Entities/Player/Idle.png" id="2_xtut5"]
 [ext_resource type="Texture2D" uid="uid://cja7gobrjg2wr" path="res://Entities/Player/Walk.png" id="3_yd2kf"]
 

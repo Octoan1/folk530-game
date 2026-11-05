@@ -26,8 +26,12 @@ func take_turn() -> void:
 		facing = get_opposite_direction(facing)
 		return
 	
-	GridWorld.move_entity(self, target_cell)
-	slide_to(GridWorld.cell_to_world(grid_position), SPEED)
+	var path: Array[Vector2i] = get_slide_path(grid_position, direction_vector)
+	if path.is_empty():
+		return
+	
+	GridWorld.move_entity(self, path.back())
+	slide_along(path, SPEED)
 
 func update_animation() -> void:
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]
@@ -38,3 +42,6 @@ func update_animation() -> void:
 		if sprite.flip_h:
 			sprite.flip_h = false
 		sprite.play(anim_name)
+
+func take_hit() -> void:
+	die()
