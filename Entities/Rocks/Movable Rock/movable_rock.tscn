@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://bpvqntfbtepja"]
 
-[ext_resource type="Texture2D" uid="uid://2l763jsqwh6y" path="res://Assets/Objects/Road copiar.png" id="1_1i0fk"]
 [ext_resource type="Script" uid="uid://dnb7fm0se7c66" path="res://Entities/Rocks/Movable Rock/movable_rock.gd" id="1_qh3s1"]
+[ext_resource type="Texture2D" uid="uid://cpsj16m3jbqx7" path="res://Assets/Terrain/tileset.png" id="2_qh3s1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o52rp"]
-atlas = ExtResource("1_1i0fk")
-region = Rect2(16, 16, 16, 16)
+atlas = ExtResource("2_qh3s1")
+region = Rect2(32, 48, 16, 16)
 
 [node name="MovableRock" type="Node2D" unique_id=2006464266]
 script = ExtResource("1_qh3s1")
