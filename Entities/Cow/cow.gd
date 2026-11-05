@@ -22,6 +22,11 @@ func _ready() -> void:
 
 func take_turn() -> void:
 	var target_cell: Vector2i = grid_position + direction_vector
+	var entity: Entity = GridWorld.get_entity_at(target_cell)
+	if entity != null and entity.is_killable:
+		entity.take_hit()
+		return
+	
 	if not GridWorld.can_enter(target_cell):
 		facing = get_opposite_direction(facing)
 		return
@@ -42,6 +47,3 @@ func update_animation() -> void:
 		if sprite.flip_h:
 			sprite.flip_h = false
 		sprite.play(anim_name)
-
-func take_hit() -> void:
-	die()
