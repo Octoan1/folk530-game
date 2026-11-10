@@ -96,6 +96,7 @@ func get_opposite_direction(dir: Direction) -> Direction:
 
 ## How the entity reacts to taking a hit
 func take_hit() -> void:
+	print("Took Hit")
 	health_component.damage_health(1)
 
 ## Removes the entity from the scene

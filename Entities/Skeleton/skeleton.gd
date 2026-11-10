@@ -1,7 +1,7 @@
-class_name Cow
+class_name Skeleton
 extends Entity
 
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite: Sprite2D = $Sprite2D
 
 const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
 	Direction.LEFT: "MoveLeft",
@@ -12,6 +12,7 @@ const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
 
 ## Sets the cow to act from turn list instead of input
 func _init() -> void:
+	super()
 	takes_turns = true
 	is_killable = true
 
@@ -21,17 +22,21 @@ func _ready() -> void:
 	update_animation()
 
 func take_turn() -> void:
+	
 	var target_cell: Vector2i = grid_position + direction_vector
 	var entity: Entity = GridWorld.get_entity_at(target_cell)
+	print("Is there something?", entity)
 	if entity != null and entity is Player:
 		entity.take_hit()
 		return
 	
-	var path: Array[Vector2i] = get_slide_path(grid_position, direction_vector)
+	try_move()
 	
-	if path.is_empty():
+	if not GridWorld.can_enter(grid_position + direction_vector) and not GridWorld.get_entity_at(grid_position + direction_vector) is Player:
 		facing = get_opposite_direction(facing)
-		return
+
+func try_move() -> void:
+	var path: Array[Vector2i] = get_slide_path(grid_position, direction_vector)
 	
 	if path.is_empty():
 		return
@@ -40,11 +45,7 @@ func take_turn() -> void:
 	slide_along(path, SPEED)
 
 func update_animation() -> void:
-	var anim_name: String = DIRECTION_ANIMATIONS[facing]
-	if anim_name == "MoveRight":
+	if facing == Direction.LEFT:
 		sprite.flip_h = true
-		sprite.play("MoveLeft")
-	else:
-		if sprite.flip_h:
-			sprite.flip_h = false
-		sprite.play(anim_name)
+	if facing == Direction.RIGHT:
+		sprite.flip_h = false

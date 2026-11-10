@@ -18,6 +18,7 @@ const DIRECTION_ANIMATIONS: Dictionary = {
 
 ## Sets the player to act from input instead of from the turn list.
 func _init() -> void:
+	super()
 	takes_turns = false
 
 ## Snaps the player to its starting grid cell.
