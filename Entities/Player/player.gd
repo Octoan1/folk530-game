@@ -4,7 +4,10 @@ extends Entity
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @export var attack_scene: PackedScene
+
 var attack: Attack
+
+signal restart
 
 const DIRECTION_ANIMATIONS: Dictionary = {
 	Direction.LEFT: "WalkLeft",
@@ -16,12 +19,11 @@ const DIRECTION_ANIMATIONS: Dictionary = {
 ## Sets the player to act from input instead of from the turn list.
 func _init() -> void:
 	takes_turns = false
-	is_killable = true
 
 ## Snaps the player to its starting grid cell.
 func _ready() -> void:
 	position = GridWorld.cell_to_world(grid_position)
-	attack = attack_scene.instantiate()
+	attack = attack_scene.instantiate() as Attack
 	add_sibling.call_deferred(attack)
 	update_animation()
 	sprite.animation_finished.connect(_on_attack_finish)
@@ -29,7 +31,7 @@ func _ready() -> void:
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
 func _unhandled_input(event: InputEvent) -> void:
-	if UpdateManager.is_busy():
+	if health_component.is_dead or UpdateManager.is_busy():
 		return
 
 	var direction: Vector2i = _get_direction(event)
@@ -111,4 +113,5 @@ func _on_attack_finish() -> void:
 		update_animation()
 
 func die() -> void:
-	get_tree().reload_current_scene()
+	health_component.is_dead = true
+	restart.emit()

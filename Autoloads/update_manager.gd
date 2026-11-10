@@ -15,6 +15,7 @@ func unregister(entity: Entity) -> void:
 
 ## Runs one world turn, calling take_turn() on every tracked entity in priority order.
 func run_turn() -> void:
+	entities.sort_custom(_compare_priority)
 	var entities_copy: Array[Entity] = entities.duplicate()
 	for entity: Entity in entities_copy:
 		if is_instance_valid(entity) and not entity.is_queued_for_deletion():
@@ -33,7 +34,9 @@ func animation_started() -> void:
 
 ## Records that an entity has finished animating.
 func animation_finished() -> void:
-	active_animations -= 1
+	if active_animations - 1 < 0:
+		push_warning("The amount of active animations tried to go below 0!")
+	active_animations = maxi(0, active_animations - 1)
 
 ## Returns whether any entity is still animating.
 ## [return] True if input should stay locked.

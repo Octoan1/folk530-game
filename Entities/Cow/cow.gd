@@ -3,7 +3,7 @@ extends Entity
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-const DIRECTION_ANIMATIONS: Dictionary = {
+const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
 	Direction.LEFT: "MoveLeft",
 	Direction.RIGHT: "MoveRight",
 	Direction.UP: "MoveUp",
@@ -15,7 +15,7 @@ func _init() -> void:
 	takes_turns = true
 	is_killable = true
 
-## Snaps the player to its starting grid cell.
+## Snaps the entity to its starting grid cell.
 func _ready() -> void:
 	position = GridWorld.cell_to_world(grid_position)
 	update_animation()
@@ -23,15 +23,16 @@ func _ready() -> void:
 func take_turn() -> void:
 	var target_cell: Vector2i = grid_position + direction_vector
 	var entity: Entity = GridWorld.get_entity_at(target_cell)
-	if entity != null and entity.is_killable:
+	if entity != null and entity is Player:
 		entity.take_hit()
 		return
 	
-	if not GridWorld.can_enter(target_cell):
+	var path: Array[Vector2i] = get_slide_path(grid_position, direction_vector)
+	
+	if path.is_empty():
 		facing = get_opposite_direction(facing)
 		return
 	
-	var path: Array[Vector2i] = get_slide_path(grid_position, direction_vector)
 	if path.is_empty():
 		return
 	

@@ -10,11 +10,16 @@ extends Node2D
 ## The player, used to reach the camera and to listen for death
 @export var player: Player
 
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event.is_action_pressed("level_restart"):
+		restart_level()
+
 func _enter_tree() -> void:
 	GridWorld.setup(map, wall_map)
 
 func _ready() -> void:
 	_apply_camera_limits()
+	player.restart.connect(restart_level)
 
 func _exit_tree() -> void:
 	GridWorld.clear()
@@ -34,3 +39,6 @@ func _apply_camera_limits() -> void:
 	player.camera.limit_top = int(top_left.y)
 	player.camera.limit_right = int(bottom_right.x)
 	player.camera.limit_bottom = int(bottom_right.y)
+
+func restart_level() -> void:
+	get_tree().reload_current_scene()
