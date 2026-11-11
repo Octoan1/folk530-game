@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://dexrbkkkyxvhe"]
 
 [ext_resource type="Script" uid="uid://btjwciv4o2f0l" path="res://Components/attack.gd" id="1_b5udt"]
+[ext_resource type="Texture2D" uid="uid://dbsddxpd7l6ku" path="res://Entities/Skeleton/Attack/attack.png" id="2_bhdcp"]
 
 [node name="TileAttack" type="Node2D" unique_id=1396235517]
+visible = false
 script = ExtResource("1_b5udt")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=799168875]
+texture = ExtResource("2_bhdcp")

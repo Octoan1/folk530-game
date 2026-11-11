@@ -18,21 +18,31 @@ func _init() -> void:
 
 ## Snaps the entity to its starting grid cell.
 func _ready() -> void:
+	attack = attack_scene.instantiate() as Attack
+	add_sibling.call_deferred(attack)
 	position = GridWorld.cell_to_world(grid_position)
 	update_animation()
 
 func take_turn() -> void:
 	
+	if attack.visible:
+		var ent: Entity = GridWorld.get_entity_at(GridWorld.world_to_cell(attack.position))
+		if ent is Player:
+			ent.take_hit()
+			if ent.health_component.is_dead:
+				return
+		attack.end_attack()
+	try_move()
+	
 	var target_cell: Vector2i = grid_position + direction_vector
 	var entity: Entity = GridWorld.get_entity_at(target_cell)
 	print("Is there something?", entity)
 	if entity != null and entity is Player:
-		entity.take_hit()
+		attack.play_at(target_cell)
 		return
 	
-	try_move()
 	
-	if not GridWorld.can_enter(grid_position + direction_vector) and not GridWorld.get_entity_at(grid_position + direction_vector) is Player:
+	if not GridWorld.can_enter(grid_position + direction_vector) and not attack.visible:
 		facing = get_opposite_direction(facing)
 
 func try_move() -> void:

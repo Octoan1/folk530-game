@@ -3,9 +3,6 @@ extends Entity
 
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@export var attack_scene: PackedScene
-
-var attack: Attack
 
 signal restart
 
