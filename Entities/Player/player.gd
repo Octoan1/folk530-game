@@ -6,7 +6,7 @@ extends Entity
 
 signal restart
 
-const DIRECTION_ANIMATIONS: Dictionary = {
+const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
 	Direction.LEFT: "WalkLeft",
 	Direction.RIGHT: "WalkRight",
 	Direction.UP: "WalkUp",
@@ -113,3 +113,6 @@ func _on_attack_finish() -> void:
 func die() -> void:
 	health_component.is_dead = true
 	restart.emit()
+
+func play_take_damage() -> void:
+	
