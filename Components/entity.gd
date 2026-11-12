@@ -13,6 +13,7 @@ const DIRECTION_VECTORS: Dictionary[Direction, Vector2i] = {
 
 
 @export var priority: int = 0 ## Lower numbers act first when UpdateManager runs a turn.
+@export var attack_scene: PackedScene
 @export var facing: Direction = Direction.RIGHT: ## The direction that the player is facing
 	set(value):
 			facing = value  # 1. Update the actual value first
@@ -22,6 +23,7 @@ const DIRECTION_VECTORS: Dictionary[Direction, Vector2i] = {
 				update_animation()
 
 var health_component: HealthComponent
+var attack: Attack
 var grid_position: Vector2i = Vector2i(0, 0) ## The position of the entity in relation to the map
 var takes_turns: bool = true ## Whether UpdateManager should call take_turn() on this entity.The player turns this off, since it acts from input instead.
 var is_killable: bool = false ## True if the player can attack them, false otherwise

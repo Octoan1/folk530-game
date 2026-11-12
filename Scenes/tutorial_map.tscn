@@ -4,8 +4,9 @@
 [ext_resource type="TileSet" uid="uid://c01s0xnf4gmg5" path="res://Data/TileSets/test_tile_set.tres" id="2_evvlx"]
 [ext_resource type="PackedScene" uid="uid://b6enjovf3vwl8" path="res://Entities/Rocks/Breakable Rock/breakable_rock.tscn" id="3_f6tfk"]
 [ext_resource type="PackedScene" uid="uid://bpvqntfbtepja" path="res://Entities/Rocks/Movable Rock/movable_rock.tscn" id="4_32yp0"]
-[ext_resource type="PackedScene" uid="uid://pw47f5bomorg" path="res://Entities/Cow/cow.tscn" id="5_sos87"]
+[ext_resource type="PackedScene" uid="uid://pw47f5bomorg" path="res://Entities/Skeleton/skeleton.tscn" id="5_sos87"]
 [ext_resource type="PackedScene" uid="uid://vv40gfq7vlvh" path="res://Entities/Player/player.tscn" id="6_qsoc6"]
+[ext_resource type="PackedScene" uid="uid://dexrbkkkyxvhe" path="res://Entities/Skeleton/Attack/TileAttack.tscn" id="6_scca2"]
 [ext_resource type="PackedScene" uid="uid://dfop2xbvm74h3" path="res://Entities/Player/Attack/player_attack.tscn" id="7_mq2d2"]
 [ext_resource type="FontFile" uid="uid://bk05fq260avks" path="res://UI/Fonts/UndeadPixelLight8/Undead Pixel 8.ttf" id="8_f5bqe"]
 [ext_resource type="PackedScene" uid="uid://c5rvjj5xhh2ch" path="res://Entities/Raven/raven.tscn" id="8_fsic1"]
@@ -44,6 +45,7 @@ tile_set = SubResource("TileSet_ncn0m")
 [node name="Cow2" parent="." unique_id=1630202754 instance=ExtResource("5_sos87")]
 position = Vector2(475, 26)
 priority = 1
+attack_scene = ExtResource("6_scca2")
 facing = 0
 
 [node name="Player" parent="." unique_id=605168488 instance=ExtResource("6_qsoc6")]
@@ -184,8 +186,10 @@ autowrap_mode = 2
 
 [node name="Cow" parent="." unique_id=1938260570 instance=ExtResource("5_sos87")]
 position = Vector2(1444, 90)
+attack_scene = ExtResource("6_scca2")
 facing = 3
 
 [node name="Cow3" parent="." unique_id=313131455 instance=ExtResource("5_sos87")]
 position = Vector2(1429, 76)
+attack_scene = ExtResource("6_scca2")
 facing = 2

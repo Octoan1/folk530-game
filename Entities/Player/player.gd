@@ -3,13 +3,11 @@ extends Entity
 
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@export var attack_scene: PackedScene
-
-var attack: Attack
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 signal restart
 
-const DIRECTION_ANIMATIONS: Dictionary = {
+const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
 	Direction.LEFT: "WalkLeft",
 	Direction.RIGHT: "WalkRight",
 	Direction.UP: "WalkUp",
@@ -18,6 +16,7 @@ const DIRECTION_ANIMATIONS: Dictionary = {
 
 ## Sets the player to act from input instead of from the turn list.
 func _init() -> void:
+	super()
 	takes_turns = false
 
 ## Snaps the player to its starting grid cell.
@@ -112,6 +111,13 @@ func _on_attack_finish() -> void:
 		attack.end_attack()
 		update_animation()
 
+func take_hit() -> void:
+	super()
+	play_take_damage()
+
 func die() -> void:
 	health_component.is_dead = true
 	restart.emit()
+
+func play_take_damage() -> void:
+	anim_player.play("TakeDamage")
