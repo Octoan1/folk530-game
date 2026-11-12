@@ -3,7 +3,6 @@ extends Entity
 
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 signal restart
 
@@ -26,6 +25,8 @@ func _ready() -> void:
 	add_sibling.call_deferred(attack)
 	update_animation()
 	sprite.animation_finished.connect(_on_attack_finish)
+	anim_player = $AnimationPlayer
+	anim_player.play("RESET")
 
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
@@ -53,6 +54,8 @@ func update_animation() -> void:
 func play_attack_animation(cell: Vector2i) -> void:
 	sprite.play("IdleDown")
 	attack.play_at(cell)
+	await get_tree().create_timer(0.1).timeout
+	attack.end_attack()
 
 ## Moves the player one step, sliding further if the path includes ice.
 ## If the step is blocked, nothing happens and no turn is spent.
@@ -108,16 +111,8 @@ func _get_direction(event: InputEvent) -> Vector2i:
 func _on_attack_finish() -> void:
 	if sprite.animation == "IdleDown":
 		_set_animating(false)
-		attack.end_attack()
 		update_animation()
-
-func take_hit() -> void:
-	super()
-	play_take_damage()
 
 func die() -> void:
 	health_component.is_dead = true
 	restart.emit()
-
-func play_take_damage() -> void:
-	anim_player.play("TakeDamage")

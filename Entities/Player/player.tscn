@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cn48ghww7qai3" path="res://Entities/Player/Idle.png" id="2_xtut5"]
 [ext_resource type="Texture2D" uid="uid://cja7gobrjg2wr" path="res://Entities/Player/Walk.png" id="3_yd2kf"]
 [ext_resource type="Texture2D" uid="uid://bdvxb1cxioje5" path="res://icon.png" id="5_5c2io"]
+[ext_resource type="AnimationLibrary" uid="uid://cnomtpl6jd7ib" path="res://Data/EntityAnimation.res" id="6_4wf4l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l3oqu"]
 atlas = ExtResource("2_tekja")
@@ -282,43 +283,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_5c2io"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_4wf4l"]
-resource_name = "TakeDamage"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lu8i8"]
-_data = {
-&"RESET": SubResource("Animation_5c2io"),
-&"TakeDamage": SubResource("Animation_4wf4l")
-}
-
 [node name="Player" type="Node2D" unique_id=605168488]
 script = ExtResource("1_kk56y")
 
@@ -336,4 +300,4 @@ texture = ExtResource("5_5c2io")
 limit_smoothed = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=441530534]
-libraries/ = SubResource("AnimationLibrary_lu8i8")
+libraries/ = ExtResource("6_4wf4l")

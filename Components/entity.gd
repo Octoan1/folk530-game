@@ -11,9 +11,10 @@ const DIRECTION_VECTORS: Dictionary[Direction, Vector2i] = {
 	Direction.DOWN: Vector2i(0, 1)
 }
 
+var anim_player: AnimationPlayer
 
 @export var priority: int = 0 ## Lower numbers act first when UpdateManager runs a turn.
-@export var attack_scene: PackedScene
+@export var attack_scene: PackedScene ## The entity's attack sprite
 @export var facing: Direction = Direction.RIGHT: ## The direction that the player is facing
 	set(value):
 			facing = value  # 1. Update the actual value first
@@ -99,6 +100,7 @@ func get_opposite_direction(dir: Direction) -> Direction:
 ## How the entity reacts to taking a hit
 func take_hit() -> void:
 	health_component.damage_health(1)
+	play_take_damage()
 
 ## Removes the entity from the scene
 func die() -> void:
@@ -141,3 +143,6 @@ func _set_animating(value: bool) -> void:
 		UpdateManager.animation_started()
 	else:
 		UpdateManager.animation_finished()
+
+func play_take_damage() -> void:
+	anim_player.play("TakeDamage")
