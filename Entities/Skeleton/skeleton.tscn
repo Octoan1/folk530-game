@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dwcwrl1w88xhl" path="res://Entities/Skeleton/skeleton.gd" id="1_2bl1k"]
 [ext_resource type="Texture2D" uid="uid://ckfqnsylggrm0" path="res://Entities/Skeleton/skeleton.png" id="3_66cgh"]
-[ext_resource type="AnimationLibrary" uid="uid://cnomtpl6jd7ib" path="res://Data/EntityAnimation.res" id="3_wlf70"]
+[ext_resource type="AnimationLibrary" uid="uid://cnomtpl6jd7ib" path="res://Data/Animations/EntityAnimation.res" id="3_wlf70"]
 
 [node name="Skeleton" type="Node2D" unique_id=1938260570]
 script = ExtResource("1_2bl1k")

@@ -7,10 +7,10 @@ extends Entity
 signal restart
 
 const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
-	Direction.LEFT: "WalkLeft",
-	Direction.RIGHT: "WalkRight",
-	Direction.UP: "WalkUp",
-	Direction.DOWN: "WalkDown"
+	Direction.LEFT: "IdleLeft",
+	Direction.RIGHT: "IdleRight",
+	Direction.UP: "IdleUp",
+	Direction.DOWN: "IdleDown"
 }
 
 ## Sets the player to act from input instead of from the turn list.
@@ -43,16 +43,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func update_animation() -> void:
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]
-	if anim_name == "WalkLeft":
-		sprite.flip_h = true
-		sprite.play("WalkRight")
-	else:
-		if sprite.flip_h:
-			sprite.flip_h = false
-		sprite.play(anim_name)
+	sprite.play(anim_name)
 
 func play_attack_animation(cell: Vector2i) -> void:
-	sprite.play("IdleDown")
+	sprite.play("Attack")
 	attack.play_at(cell)
 	await get_tree().create_timer(0.1).timeout
 	attack.end_attack()
@@ -113,7 +107,7 @@ func _get_direction(event: InputEvent) -> Vector2i:
 
 ## Unlocks input and and hides attack when the attack animation ends
 func _on_attack_finish() -> void:
-	if sprite.animation == "IdleDown":
+	if sprite.animation == "Attack":
 		_set_animating(false)
 		update_animation()
 
