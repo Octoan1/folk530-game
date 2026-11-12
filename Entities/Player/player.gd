@@ -54,6 +54,8 @@ func update_animation() -> void:
 func play_attack_animation(cell: Vector2i) -> void:
 	sprite.play("IdleDown")
 	attack.play_at(cell)
+	await get_tree().create_timer(0.1).timeout
+	attack.end_attack()
 
 ## Moves the player one step, sliding further if the path includes ice.
 ## If the step is blocked, nothing happens and no turn is spent.
@@ -109,7 +111,6 @@ func _get_direction(event: InputEvent) -> Vector2i:
 func _on_attack_finish() -> void:
 	if sprite.animation == "IdleDown":
 		_set_animating(false)
-		attack.end_attack()
 		update_animation()
 
 func die() -> void:

@@ -294,11 +294,10 @@ animation = &"WalkDown"
 autoplay = "WalkRight"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2140788422]
-modulate = Color(1, 0, 0, 1)
 texture = ExtResource("5_5c2io")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1388904716]
 limit_smoothed = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=441530534]
-libraries/EntityAnimation = ExtResource("6_4wf4l")
+libraries/ = ExtResource("6_4wf4l")

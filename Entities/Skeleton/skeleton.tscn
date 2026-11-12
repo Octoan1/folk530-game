@@ -11,4 +11,4 @@ script = ExtResource("1_2bl1k")
 texture = ExtResource("3_66cgh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1762049537]
-libraries/EntityAnimation = ExtResource("3_wlf70")
+libraries/ = ExtResource("3_wlf70")
