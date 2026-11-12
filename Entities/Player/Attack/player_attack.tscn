@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dfop2xbvm74h3"]
+
+[ext_resource type="Script" uid="uid://btjwciv4o2f0l" path="res://Components/attack.gd" id="1_13rqx"]
+[ext_resource type="Texture2D" uid="uid://b0kava3017gvc" path="res://Entities/Player/Attack/sword.png" id="2_qlnce"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13rqx"]
+atlas = ExtResource("2_qlnce")
+region = Rect2(0, 0, 16, 16)
+
+[node name="PlayerAttack" type="Node2D" unique_id=2033589436]
+visible = false
+script = ExtResource("1_13rqx")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=120875722]
+texture = SubResource("AtlasTexture_13rqx")

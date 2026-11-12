@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b6enjovf3vwl8"]
+
+[ext_resource type="Script" uid="uid://cv6atdrcehpp" path="res://Entities/Rocks/Breakable Rock/breakable_rock.gd" id="1_e847i"]
+[ext_resource type="Texture2D" uid="uid://cpsj16m3jbqx7" path="res://Assets/Terrain/tileset.png" id="2_e847i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aarvk"]
+atlas = ExtResource("2_e847i")
+region = Rect2(32, 16, 16, 16)
+
+[node name="BreakableRock" type="Node2D" unique_id=78769268]
+script = ExtResource("1_e847i")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1596359149]
+texture = SubResource("AtlasTexture_aarvk")
