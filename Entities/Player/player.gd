@@ -3,7 +3,6 @@ extends Entity
 
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 signal restart
 
@@ -26,6 +25,8 @@ func _ready() -> void:
 	add_sibling.call_deferred(attack)
 	update_animation()
 	sprite.animation_finished.connect(_on_attack_finish)
+	anim_player = $AnimationPlayer
+	anim_player.play("RESET")
 
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
@@ -111,13 +112,6 @@ func _on_attack_finish() -> void:
 		attack.end_attack()
 		update_animation()
 
-func take_hit() -> void:
-	super()
-	play_take_damage()
-
 func die() -> void:
 	health_component.is_dead = true
 	restart.emit()
-
-func play_take_damage() -> void:
-	anim_player.play("TakeDamage")

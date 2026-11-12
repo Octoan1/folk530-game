@@ -22,6 +22,8 @@ func _ready() -> void:
 	add_sibling.call_deferred(attack)
 	position = GridWorld.cell_to_world(grid_position)
 	update_animation()
+	anim_player = $AnimationPlayer
+	anim_player.play("RESET")
 
 func take_turn() -> void:
 	
@@ -36,7 +38,6 @@ func take_turn() -> void:
 	
 	var target_cell: Vector2i = grid_position + direction_vector
 	var entity: Entity = GridWorld.get_entity_at(target_cell)
-	print("Is there something?", entity)
 	if entity != null and entity is Player:
 		attack.play_at(target_cell)
 		return
