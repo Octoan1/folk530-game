@@ -2,7 +2,8 @@ class_name Player
 extends Entity
 
 @onready var camera: Camera2D = $Camera2D
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 signal restart
 
@@ -24,7 +25,6 @@ func _ready() -> void:
 	attack = attack_scene.instantiate() as Attack
 	add_sibling.call_deferred(attack)
 	update_animation()
-	sprite.animation_finished.connect(_on_attack_finish)
 
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
@@ -40,17 +40,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		try_attack()
 
 func update_animation() -> void:
-	var anim_name: String = DIRECTION_ANIMATIONS[facing]
-	if anim_name == "WalkLeft":
-		sprite.flip_h = true
-		sprite.play("WalkRight")
-	else:
-		if sprite.flip_h:
-			sprite.flip_h = false
-		sprite.play(anim_name)
+	pass
 
 func play_attack_animation(cell: Vector2i) -> void:
-	sprite.play("IdleDown")
 	attack.play_at(cell)
 
 ## Moves the player one step, sliding further if the path includes ice.
@@ -114,5 +106,9 @@ func die() -> void:
 	health_component.is_dead = true
 	restart.emit()
 
+func take_hit() -> void:
+	super()
+	play_take_damage()
+
 func play_take_damage() -> void:
-	
+	anim_player.play("TakeDamage")
