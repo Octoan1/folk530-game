@@ -60,3 +60,7 @@ func update_animation() -> void:
 		sprite.flip_h = true
 	if facing == Direction.RIGHT:
 		sprite.flip_h = false
+
+func die() -> void:
+	attack.queue_free()
+	super()
