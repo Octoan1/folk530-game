@@ -19,6 +19,8 @@ config/icon="res://Assets/icon.svg"
 
 UpdateManager="*uid://cindl5dmpx5dh"
 GridWorld="*uid://fdfwvsv5aq38"
+AudioManager="*uid://f74c65moa21c"
+UiManager="*uid://cfkv8wpufqbck"
 
 [debug]
 
