@@ -72,6 +72,10 @@ func try_move(direction: Vector2i) -> void:
 	if path.is_empty():
 		return
 
+	if GridWorld.is_checkpoint(path.back()):
+		CheckpointManager.set_checkpoint(path.back())
+		health_component.heal_health(health_component.max_health)
+	
 	GridWorld.move_entity(self, path.back())
 	slide_along(path, SPEED)
 	UpdateManager.run_turn()

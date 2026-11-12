@@ -87,3 +87,14 @@ func is_ice(cell: Vector2i) -> bool:
 	if tile.get_custom_data("is_ice"):
 		return true
 	return false
+
+## Returns whether the ground at the given cell is a checkpoint.
+## [param cell] The grid coordinate to test.
+## [return] True if the cell has a ground tile marked as checkpoint.
+func is_checkpoint(cell: Vector2i) -> bool:
+	var tile: TileData = map.get_cell_tile_data(cell)
+	if tile == null:
+		return false
+	if tile.get_custom_data("is_checkpoint"):
+		return true
+	return false

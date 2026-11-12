@@ -19,6 +19,7 @@ config/icon="res://Assets/icon.svg"
 
 UpdateManager="*uid://cindl5dmpx5dh"
 GridWorld="*uid://fdfwvsv5aq38"
+CheckpointManager="*uid://ihy6tub24i71"
 
 [debug]
 
