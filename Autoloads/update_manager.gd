@@ -18,7 +18,7 @@ func run_turn() -> void:
 	entities.sort_custom(_compare_priority)
 	var entities_copy: Array[Entity] = entities.duplicate()
 	for entity: Entity in entities_copy:
-		if is_instance_valid(entity) and not entity.is_queued_for_deletion():
+		if is_instance_valid(entity) and entity.is_inside_tree() and not entity.is_queued_for_deletion():
 			entity.take_turn()
 
 ## Returns whether entity a should act before entity b.

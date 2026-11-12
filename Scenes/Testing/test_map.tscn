@@ -35,7 +35,13 @@ tile_map_data = PackedByteArray("AAAEAAMAAAAAAAAAAQAFAAMAAAAAAAAAAQAGAAMAAAAAAAA
 tile_set = SubResource("TileSet_ncn0m")
 
 [node name="Cow2" parent="." unique_id=1630202754 instance=ExtResource("3_tfjqa")]
-position = Vector2(204, 28)
+position = Vector2(231, 40)
+priority = 1
+attack_scene = ExtResource("6_hqjqb")
+facing = 2
+
+[node name="Cow3" parent="." unique_id=1938260570 instance=ExtResource("3_tfjqa")]
+position = Vector2(56, 39)
 priority = 1
 attack_scene = ExtResource("6_hqjqb")
 facing = 0

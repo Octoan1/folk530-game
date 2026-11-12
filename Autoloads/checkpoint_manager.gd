@@ -14,4 +14,4 @@ func set_checkpoint(cell: Vector2i) -> void:
 ## Returns whether a saved checkpoint applies to the level that is currently loaded.
 ## [return] True if there is a checkpoint saved for this level.
 func has_checkpoint_here() -> bool:
-	return checkpoint_cell != null and level_path == get_tree().current_scene.scene_file_path
+	return has_checkpoint and level_path == get_tree().current_scene.scene_file_path
