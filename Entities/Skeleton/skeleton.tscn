@@ -4,8 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://ckfqnsylggrm0" path="res://Entities/Skeleton/skeleton.png" id="3_66cgh"]
 [ext_resource type="AnimationLibrary" uid="uid://cnomtpl6jd7ib" path="res://Data/Animations/EntityAnimation.res" id="3_wlf70"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_0t4wu"]
+
 [node name="Skeleton" type="Node2D" unique_id=1938260570]
 script = ExtResource("1_2bl1k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1785529960]
+visible = false
+sprite_frames = SubResource("SpriteFrames_0t4wu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=444457281]
 texture = ExtResource("3_66cgh")
