@@ -65,9 +65,6 @@ func try_move(direction: Vector2i) -> void:
 	var path: Array[Vector2i] = get_slide_path(grid_position, direction)
 	if path.is_empty():
 		return
-	
-	if GridWorld.is_goal(path.back()):
-		LevelManager.next_level()
 
 	if GridWorld.is_checkpoint(path.back()):
 		CheckpointManager.set_checkpoint(path.back())
@@ -76,6 +73,10 @@ func try_move(direction: Vector2i) -> void:
 	GridWorld.move_entity(self, path.back())
 	slide_along(path, SPEED)
 	UpdateManager.run_turn()
+	
+	if GridWorld.is_goal(path.back()):
+		LevelManager.next_level()
+		return
 
 ## The player attacks the tile right next to them
 ## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]

@@ -10,7 +10,7 @@ var is_transitioning: bool = false
 ## Returns the loaded level's position in LEVELS, or -1 if it isn't listed.
 ## [return] The index of the current level.
 func get_current_index() -> int:
-	var curr_level: String = get_tree().current_scene.get_path()
+	var curr_level: String = get_tree().current_scene.scene_file_path
 	return LEVELS.find(curr_level)
 
 ## Loads the next level in the list, or handles reaching the end.
