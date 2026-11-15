@@ -26,6 +26,7 @@ GridWorld="*uid://fdfwvsv5aq38"
 CheckpointManager="*uid://ihy6tub24i71"
 AudioManager="*uid://f74c65moa21c"
 UiManager="*uid://cfkv8wpufqbck"
+LevelManager="*uid://l3xwyfbqdnqu"
 
 [debug]
 

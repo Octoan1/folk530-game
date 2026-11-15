@@ -65,6 +65,9 @@ func try_move(direction: Vector2i) -> void:
 	var path: Array[Vector2i] = get_slide_path(grid_position, direction)
 	if path.is_empty():
 		return
+	
+	if GridWorld.is_goal(path.back()):
+		LevelManager.next_level()
 
 	if GridWorld.is_checkpoint(path.back()):
 		CheckpointManager.set_checkpoint(path.back())
