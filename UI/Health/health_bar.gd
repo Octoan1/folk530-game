@@ -8,6 +8,7 @@ var health_component: HealthComponent
 ## Finds the parent entity's health component and starts listening to it.
 func _ready() -> void:
 	var parent: Entity = get_parent() as Entity
+	assert(parent != null)
 	health_component = parent.health_component
 	health_component.health_changed.connect(_refresh)
 	
