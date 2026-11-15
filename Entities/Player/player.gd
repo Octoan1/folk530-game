@@ -75,8 +75,10 @@ func try_move(direction: Vector2i) -> void:
 	UpdateManager.run_turn()
 	
 	if GridWorld.is_goal(path.back()):
-		LevelManager.next_level()
-		return
+		await active_tween.finished
+		if not health_component.is_dead:
+			CheckpointManager.has_checkpoint = false
+			LevelManager.next_level()
 
 ## The player attacks the tile right next to them
 ## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]
