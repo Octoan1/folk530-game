@@ -2,7 +2,7 @@ class_name HealthComponent
 extends RefCounted
 
 signal died ## Emitted once when health first reaches zero.
-signal damaged ## Emitted every time damage is actually applied.
+signal health_changed ## Emitted when [member health] is changed
 
 var max_health: float
 var health: float
@@ -21,7 +21,7 @@ func damage_health(amount: float) -> void:
 	if is_dead:
 		return
 	health -= amount
-	damaged.emit()
+	health_changed.emit()
 	if health <= 0.0:
 		is_dead = true
 		died.emit()
@@ -32,3 +32,4 @@ func heal_health(amount: float) -> void:
 	if is_dead:
 		return
 	health = minf(health + amount, max_health)
+	health_changed.emit()

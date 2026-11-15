@@ -20,6 +20,10 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	_apply_camera_limits()
 	player.restart.connect(restart_level)
+	if CheckpointManager.has_checkpoint_here():
+		GridWorld.move_entity(player, CheckpointManager.checkpoint_cell)
+		player.position = GridWorld.cell_to_world(player.grid_position)
+		player.camera.reset_smoothing()
 
 func _exit_tree() -> void:
 	GridWorld.clear()
@@ -41,4 +45,4 @@ func _apply_camera_limits() -> void:
 	player.camera.limit_bottom = int(bottom_right.y)
 
 func restart_level() -> void:
-	get_tree().reload_current_scene()
+	get_tree().reload_current_scene.call_deferred()

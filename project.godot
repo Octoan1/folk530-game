@@ -15,10 +15,17 @@ run/main_scene="uid://6lleoe8shpt1"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://Assets/icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://Data/Audio/default_bus_layout.tres"
+
 [autoload]
 
 UpdateManager="*uid://cindl5dmpx5dh"
 GridWorld="*uid://fdfwvsv5aq38"
+CheckpointManager="*uid://ihy6tub24i71"
+AudioManager="*uid://f74c65moa21c"
+UiManager="*uid://cfkv8wpufqbck"
 
 [debug]
 

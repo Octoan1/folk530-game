@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://bcvvv3fsgbe4"]
+
+[ext_resource type="FontFile" uid="uid://bk05fq260avks" path="res://UI/Fonts/UndeadPixelLight8/Undead Pixel 8.ttf" id="1_it55r"]
+
+[resource]
+default_font = ExtResource("1_it55r")
