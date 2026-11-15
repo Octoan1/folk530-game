@@ -2,13 +2,27 @@
 
 [ext_resource type="Script" uid="uid://dwcwrl1w88xhl" path="res://Entities/Skeleton/skeleton.gd" id="1_2bl1k"]
 [ext_resource type="Texture2D" uid="uid://ckfqnsylggrm0" path="res://Entities/Skeleton/skeleton.png" id="3_66cgh"]
-[ext_resource type="AnimationLibrary" uid="uid://cnomtpl6jd7ib" path="res://Data/EntityAnimation.res" id="3_wlf70"]
+[ext_resource type="AnimationLibrary" uid="uid://cnomtpl6jd7ib" path="res://Data/Animations/EntityAnimation.res" id="3_wlf70"]
+[ext_resource type="PackedScene" uid="uid://b6ofspxi4atgv" path="res://UI/Health/health_bar.tscn" id="4_g67ed"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0t4wu"]
 
 [node name="Skeleton" type="Node2D" unique_id=1938260570]
 script = ExtResource("1_2bl1k")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1785529960]
+visible = false
+sprite_frames = SubResource("SpriteFrames_0t4wu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=444457281]
 texture = ExtResource("3_66cgh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1762049537]
 libraries/ = ExtResource("3_wlf70")
+
+[node name="HealthBar" parent="." unique_id=896749661 instance=ExtResource("4_g67ed")]
+offset_left = -8.0
+offset_top = -13.0
+offset_right = -8.0
+offset_bottom = -13.0
+scale = Vector2(0.5, 0.5)
