@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://0ijff727r4ad"]
+
+[ext_resource type="Script" uid="uid://cihkaexnwwmk3" path="res://Autoloads/Black Fade/black_fade.gd" id="1_8tlbf"]
+
+[node name="BlackFade" type="CanvasLayer" unique_id=1217026584]
+layer = 100
+script = ExtResource("1_8tlbf")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1287354281]
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 260.0
+offset_bottom = 148.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
