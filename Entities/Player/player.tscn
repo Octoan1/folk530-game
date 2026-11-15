@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://vv40gfq7vlvh"]
 
 [ext_resource type="Script" uid="uid://dxha5v6r8hmus" path="res://Entities/Player/player.gd" id="1_kk56y"]
+[ext_resource type="PackedScene" uid="uid://dfop2xbvm74h3" path="res://Entities/Player/Attack/player_attack.tscn" id="2_5c2io"]
 [ext_resource type="Texture2D" uid="uid://cl43cjoivfvmm" path="res://Entities/Player/player-Sheet.png" id="3_5c2io"]
 [ext_resource type="Texture2D" uid="uid://bdvxb1cxioje5" path="res://Entities/Player/icon.png" id="5_5c2io"]
+[ext_resource type="PackedScene" uid="uid://b6ofspxi4atgv" path="res://UI/Health/health_bar.tscn" id="6_01a4e"]
 [ext_resource type="AnimationLibrary" uid="uid://cnomtpl6jd7ib" path="res://Data/Animations/EntityAnimation.res" id="6_4wf4l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tekja"]
@@ -70,6 +72,7 @@ animations = [{
 
 [node name="Player" type="Node2D" unique_id=605168488]
 script = ExtResource("1_kk56y")
+attack_scene = ExtResource("2_5c2io")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=222711314]
 sprite_frames = SubResource("SpriteFrames_bd4fl")
@@ -86,3 +89,10 @@ limit_smoothed = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=441530534]
 libraries/ = ExtResource("6_4wf4l")
+
+[node name="HealthBar" parent="." unique_id=896749661 instance=ExtResource("6_01a4e")]
+offset_left = -10.0
+offset_top = -13.0
+offset_right = -10.0
+offset_bottom = -13.0
+scale = Vector2(0.5, 0.5)
