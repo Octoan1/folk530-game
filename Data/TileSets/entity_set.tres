@@ -1,0 +1,11 @@
+[gd_resource type="TileSet" format=3 uid="uid://csl2mysee65vv"]
+
+[ext_resource type="PackedScene" uid="uid://b6enjovf3vwl8" path="res://Entities/Rocks/Breakable Rock/breakable_rock.tscn" id="1_h3ghx"]
+[ext_resource type="PackedScene" uid="uid://bpvqntfbtepja" path="res://Entities/Rocks/Movable Rock/movable_rock.tscn" id="2_7cnqj"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_mqm71"]
+scenes/1/scene = ExtResource("1_h3ghx")
+scenes/2/scene = ExtResource("2_7cnqj")
+
+[resource]
+sources/0 = SubResource("TileSetScenesCollectionSource_mqm71")
