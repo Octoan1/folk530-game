@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="AttackPattern" format=3 uid="uid://bskjj3jqfv1fa"]
+
+[ext_resource type="Script" uid="uid://dqvct5oo6moev" path="res://Components/attack_pattern.gd" id="1_i0qsv"]
+
+[resource]
+script = ExtResource("1_i0qsv")
+tiles = Array[Vector2i]([Vector2i(1, 0), Vector2i(2, 0)])
+metadata/_custom_type_script = "uid://dqvct5oo6moev"

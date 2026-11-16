@@ -1,71 +1,42 @@
 class_name Skeleton
-extends Entity
+extends Enemy
 
 @onready var sprite: Sprite2D = $Sprite2D
 
-## Tiles this enemy attacks, relative to where it is facing.
-## First number: tiles in front. Second number: tiles to the right.
-@export var attack_tiles: Array[Vector2i] = [Vector2i(1, 0)]
-
-const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
-	Direction.LEFT: "MoveLeft",
-	Direction.RIGHT: "MoveRight",
-	Direction.UP: "MoveUp",
-	Direction.DOWN: "MoveDown"
-}
-
-## Sets the cow to act from turn list instead of input
-func _init() -> void:
-	super()
-	takes_turns = true
-	is_killable = true
-
-## Snaps the entity to its starting grid cell.
+## Sets up the sprite and the animation player.
 func _ready() -> void:
-	attack = attack_scene.instantiate() as Attack
-	add_sibling.call_deferred(attack)
-	position = GridWorld.cell_to_world(grid_position)
+	super._ready()
 	update_animation()
 	anim_player = $AnimationPlayer
 	anim_player.play("RESET")
 
+## Resolves a pending attack, or moves and starts a new attack if the player is in front.
 func take_turn() -> void:
-	
-	if attack.visible:
-		var ent: Entity = GridWorld.get_entity_at(GridWorld.world_to_cell(attack.position))
-		if ent is Player:
-			ent.take_hit()
-			if ent.health_component.is_dead:
-				return
-		attack.end_attack()
+	if is_telegraphing():
+		resolve_telegraph()
 		return
+
 	try_move()
-	
+
 	var target_cell: Vector2i = grid_position + direction_vector
-	var entity: Entity = GridWorld.get_entity_at(target_cell)
-	if entity != null and entity is Player:
-		attack.play_at(target_cell)
+	var in_front: Entity = GridWorld.get_entity_at(target_cell)
+	if in_front is Player and start_telegraph():
 		return
-	
-	
-	if not GridWorld.can_enter(grid_position + direction_vector) and not attack.visible:
+
+	if not GridWorld.can_enter(target_cell):
 		facing = get_opposite_direction(facing)
 
+## Slides one step (or along ice) in the facing direction, if the path is open.
 func try_move() -> void:
 	var path: Array[Vector2i] = get_slide_path(grid_position, direction_vector)
-	
 	if path.is_empty():
 		return
-	
 	GridWorld.move_entity(self, path.back())
 	slide_along(path, SPEED)
 
+## Flips the sprite to match the facing direction.
 func update_animation() -> void:
 	if facing == Direction.LEFT:
 		sprite.flip_h = true
 	if facing == Direction.RIGHT:
 		sprite.flip_h = false
-
-func die() -> void:
-	attack.queue_free()
-	super()
