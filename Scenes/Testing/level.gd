@@ -18,7 +18,7 @@ func _enter_tree() -> void:
 	GridWorld.setup(map, wall_map)
 
 func _ready() -> void:
-	await BlackFade.fade_in(2)
+	BlackFade.fade_in(0.5)
 	_apply_camera_limits()
 	player.restart.connect(restart_level)
 	if CheckpointManager.has_checkpoint_here():

@@ -18,5 +18,5 @@ func next_level() -> void:
 	var curr_index: int = get_current_index()
 	if curr_index != -1:
 		var next_index: int = (curr_index + 1) % LEVELS.size()
-		await BlackFade.fade_out(2)
+		await BlackFade.fade_out(0.5)
 		get_tree().change_scene_to_file.call_deferred(LEVELS[next_index])
