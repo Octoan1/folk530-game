@@ -31,7 +31,7 @@ func _ready() -> void:
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
 func _unhandled_input(event: InputEvent) -> void:
-	if health_component.is_dead or UpdateManager.is_busy():
+	if health_component.is_dead or UpdateManager.is_busy() or LevelManager.is_transitioning:
 		return
 
 	var direction: Vector2i = _get_direction(event)

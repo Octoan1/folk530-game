@@ -18,7 +18,7 @@ func _enter_tree() -> void:
 	GridWorld.setup(map, wall_map)
 
 func _ready() -> void:
-	BlackFade.fade_in(0.5)
+	_play_intro()
 	_apply_camera_limits()
 	player.restart.connect(restart_level)
 	if CheckpointManager.has_checkpoint_here():
@@ -29,6 +29,9 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	GridWorld.clear()
 
+func _play_intro() -> void:
+	await BlackFade.fade_in(0.5)
+	LevelManager.is_transitioning = false
 ## Stops the player's camera from scrolling past the edge of the ground layer.
 func _apply_camera_limits() -> void:
 	var used_rect: Rect2i = map.get_used_rect()
