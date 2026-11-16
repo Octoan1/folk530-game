@@ -2,7 +2,7 @@ class_name Enemy
 extends Entity
 
 ## The attack pattern this enemy uses. Pick one from the list, or drag a pattern file in.
-@export var attack_pattern: AttackPattern
+@export var attack_pattern: AttackPattern = preload("res://Data/Attack Patterns/front_1.tres")
 
 ## The cells currently marked as dangerous. The attack lands on these next turn.
 var telegraphed_cells: Array[Vector2i] = []
