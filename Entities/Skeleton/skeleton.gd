@@ -3,6 +3,10 @@ extends Entity
 
 @onready var sprite: Sprite2D = $Sprite2D
 
+## Tiles this enemy attacks, relative to where it is facing.
+## First number: tiles in front. Second number: tiles to the right.
+@export var attack_tiles: Array[Vector2i] = [Vector2i(1, 0)]
+
 const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
 	Direction.LEFT: "MoveLeft",
 	Direction.RIGHT: "MoveRight",
