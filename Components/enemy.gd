@@ -1,14 +1,12 @@
 class_name Enemy
 extends Entity
 
-## The attack pattern this enemy uses. Pick one from the list, or drag a pattern file in.
-@export var attack_pattern: AttackPattern = preload("res://Data/Attack Patterns/front_1.tres")
 
-## The cells currently marked as dangerous. The attack lands on these next turn.
-var telegraphed_cells: Array[Vector2i] = []
+@export var attack_pattern: AttackPattern = preload("res://Data/Attack Patterns/front_1.tres") ## The attack pattern this enemy uses. Pick one from the list, or drag a pattern file in.
+@export var damage: int = 1 ## How much damage the enemy does
 
-## The marker nodes that draw the telegraphed cells.
-var attack_markers: Array[Attack] = []
+var telegraphed_cells: Array[Vector2i] = [] ## The cells currently marked as dangerous. The attack lands on these next turn.
+var attack_markers: Array[Attack] = [] ## The marker nodes that draw the telegraphed cells.
 
 ## Sets the enemy to act from the turn list and be hittable by the player.
 func _init() -> void:
@@ -58,7 +56,7 @@ func resolve_telegraph() -> void:
 	for cell: Vector2i in telegraphed_cells:
 		var target: Entity = GridWorld.get_entity_at(cell)
 		if target is Player:
-			target.take_hit()
+			target.take_hit(damage)
 			break
 	clear_telegraph()
 
