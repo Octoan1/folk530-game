@@ -4,6 +4,10 @@
 [ext_resource type="Script" uid="uid://bttj0vs1yqpdc" path="res://Scenes/Testing/level.gd" id="1_lwdg4"]
 [ext_resource type="TileSet" uid="uid://csl2mysee65vv" path="res://Data/TileSets/entity_set.tres" id="2_lwdg4"]
 [ext_resource type="PackedScene" uid="uid://vv40gfq7vlvh" path="res://Entities/Player/player.tscn" id="3_2c7mo"]
+[ext_resource type="PackedScene" uid="uid://pw47f5bomorg" path="res://Entities/Skeleton/skeleton.tscn" id="5_1lhqw"]
+[ext_resource type="Resource" uid="uid://bskjj3jqfv1fa" path="res://Data/Attack Patterns/line_2.tres" id="6_sr6ph"]
+[ext_resource type="PackedScene" uid="uid://dexrbkkkyxvhe" path="res://Entities/Skeleton/Attack/TileAttack.tscn" id="7_1erlr"]
+[ext_resource type="Resource" uid="uid://368y0ud5mhw8" path="res://Data/Attack Patterns/front_3.tres" id="8_kmnfs"]
 
 [node name="Aidan\'sFantasticalAdventure" type="Node2D" unique_id=2091785654 node_paths=PackedStringArray("map", "wall_map", "player")]
 script = ExtResource("1_lwdg4")
@@ -23,4 +27,17 @@ tile_set = ExtResource("1_bfuw2")
 tile_set = ExtResource("2_lwdg4")
 
 [node name="Player" parent="." unique_id=605168488 instance=ExtResource("3_2c7mo")]
+priority = null
+facing = 3
+
+[node name="Skeleton" parent="." unique_id=1938260570 instance=ExtResource("5_1lhqw")]
+position = Vector2(443, 96)
+attack_pattern = ExtResource("6_sr6ph")
+attack_scene = ExtResource("7_1erlr")
+facing = 2
+
+[node name="Skeleton2" parent="." unique_id=760467281 instance=ExtResource("5_1lhqw")]
+position = Vector2(289, 47)
+attack_pattern = ExtResource("8_kmnfs")
+attack_scene = ExtResource("7_1erlr")
 facing = 3
