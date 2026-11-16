@@ -34,6 +34,7 @@ func take_turn() -> void:
 			if ent.health_component.is_dead:
 				return
 		attack.end_attack()
+		return
 	try_move()
 	
 	var target_cell: Vector2i = grid_position + direction_vector
