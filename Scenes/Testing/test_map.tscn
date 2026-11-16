@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://bttj0vs1yqpdc" path="res://Scenes/Testing/level.gd" id="1_gtn6y"]
 [ext_resource type="TileSet" uid="uid://c01s0xnf4gmg5" path="res://Data/TileSets/test_tile_set.tres" id="1_phepx"]
 [ext_resource type="PackedScene" uid="uid://vv40gfq7vlvh" path="res://Entities/Player/player.tscn" id="2_1njcr"]
+[ext_resource type="TileSet" uid="uid://csl2mysee65vv" path="res://Data/TileSets/entity_set.tres" id="3_mqm71"]
 [ext_resource type="PackedScene" uid="uid://pw47f5bomorg" path="res://Entities/Skeleton/skeleton.tscn" id="3_tfjqa"]
 [ext_resource type="PackedScene" uid="uid://bpvqntfbtepja" path="res://Entities/Rocks/Movable Rock/movable_rock.tscn" id="6_1ed1e"]
+[ext_resource type="PackedScene" uid="uid://dfop2xbvm74h3" path="res://Entities/Player/Attack/player_attack.tscn" id="5_t3psr"]
 [ext_resource type="PackedScene" uid="uid://dexrbkkkyxvhe" path="res://Entities/Skeleton/Attack/TileAttack.tscn" id="6_hqjqb"]
 [ext_resource type="Resource" uid="uid://bskjj3jqfv1fa" path="res://Data/Attack Patterns/line_2.tres" id="6_wr4o1"]
 [ext_resource type="PackedScene" uid="uid://b6enjovf3vwl8" path="res://Entities/Rocks/Breakable Rock/breakable_rock.tscn" id="7_mqm71"]
@@ -39,7 +41,7 @@ tile_set = ExtResource("1_phepx")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=934940415]
 tile_map_data = PackedByteArray("AAAEAAMAAAAAAAAAAQAFAAMAAAAAAAAAAQAGAAMAAAAAAAAAAQAHAAMAAAAAAAAAAQAEAAUAAAAAAAAAAgAGAAUAAAAAAAAAAgA=")
-tile_set = SubResource("TileSet_ncn0m")
+tile_set = ExtResource("3_mqm71")
 
 [node name="Skeleton" parent="." unique_id=1630202754 instance=ExtResource("3_tfjqa")]
 position = Vector2(231, 40)
