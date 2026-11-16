@@ -51,6 +51,7 @@ facing = 2
 [node name="Skeleton2" parent="." unique_id=1938260570 instance=ExtResource("3_tfjqa")]
 position = Vector2(23, 39)
 attack_pattern = ExtResource("8_60cyn")
+damage = 2
 priority = 1
 attack_scene = ExtResource("6_hqjqb")
 
