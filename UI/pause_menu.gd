@@ -18,6 +18,9 @@ func _ready() -> void:
 	music_slider.value = AudioServer.get_bus_volume_linear(music_bus_index)
 	sfx_slider.value = AudioServer.get_bus_volume_linear(sfx_bus_index)
 	
+	#grab focus
+	resume_button.grab_focus()
+	
 func _on_resume_button_pressed() -> void:
 	UiManager.toggle_pause()
 	
