@@ -3,6 +3,7 @@ extends Entity
 
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+var step_left: bool = false
 
 signal restart
 
@@ -80,6 +81,17 @@ func try_move(direction: Vector2i) -> void:
 		if not health_component.is_dead:
 			CheckpointManager.has_checkpoint = false
 			LevelManager.next_level()
+			
+	if facing == Direction.DOWN:
+		sprite.play("StepDownLeft" if step_left else "StepDownRight")
+		step_left = not step_left
+	elif facing == Direction.UP:
+		sprite.play("StepUpLeft" if step_left else "StepUpRight")
+		step_left = not step_left
+	elif facing == Direction.LEFT:
+		sprite.play("StepLeft")
+	elif facing == Direction.RIGHT:
+		sprite.play("StepRight")
 
 ## The player attacks the tile right next to them
 ## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]
@@ -122,3 +134,16 @@ func _on_attack_finish() -> void:
 func die() -> void:
 	health_component.is_dead = true
 	restart.emit()
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	#var walk_anim: Array[String] = [
+		#"StepDownLeft",
+		#"StepDownRight"
+	#]
+	if sprite.animation.begins_with("Step"):
+		update_animation()
+		
+func slide_along(path: Array[Vector2i], step_duration: float) -> void: 
+	super(path, step_duration)
+	sprite.play("Slide")
