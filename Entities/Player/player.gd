@@ -81,17 +81,22 @@ func try_move(direction: Vector2i) -> void:
 		if not health_component.is_dead:
 			CheckpointManager.has_checkpoint = false
 			LevelManager.next_level()
-			
-	if facing == Direction.DOWN:
-		sprite.play("StepDownLeft" if step_left else "StepDownRight")
-		step_left = not step_left
-	elif facing == Direction.UP:
-		sprite.play("StepUpLeft" if step_left else "StepUpRight")
-		step_left = not step_left
-	elif facing == Direction.LEFT:
-		sprite.play("StepLeft")
-	elif facing == Direction.RIGHT:
-		sprite.play("StepRight")
+	
+	if path.size() > 1:
+		sprite.play("Slide")
+		await active_tween.finished
+		update_animation()
+	else:
+		if facing == Direction.DOWN:
+			sprite.play("StepDownLeft" if step_left else "StepDownRight")
+			step_left = not step_left
+		elif facing == Direction.UP:
+			sprite.play("StepUpLeft" if step_left else "StepUpRight")
+			step_left = not step_left
+		elif facing == Direction.LEFT:
+			sprite.play("StepLeft")
+		elif facing == Direction.RIGHT:
+			sprite.play("StepRight")
 
 ## The player attacks the tile right next to them
 ## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]
@@ -137,13 +142,5 @@ func die() -> void:
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	#var walk_anim: Array[String] = [
-		#"StepDownLeft",
-		#"StepDownRight"
-	#]
 	if sprite.animation.begins_with("Step"):
 		update_animation()
-		
-func slide_along(path: Array[Vector2i], step_duration: float) -> void: 
-	super(path, step_duration)
-	sprite.play("Slide")

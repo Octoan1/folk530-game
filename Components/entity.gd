@@ -100,7 +100,7 @@ func get_opposite_direction(dir: Direction) -> Direction:
 	return Direction.LEFT
 
 ## How the entity reacts to taking a hit
-func take_hit(damage: int = 1) -> void:
+func take_hit(_damage: int = 1) -> void:
 	health_component.damage_health(damage)
 	play_take_damage()
 

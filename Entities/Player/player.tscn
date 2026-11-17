@@ -172,7 +172,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"Slide",
-"speed": 4.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -249,8 +249,7 @@ attack_scene = ExtResource("2_5c2io")
 sprite_frames = SubResource("SpriteFrames_bd4fl")
 animation = &"Slide"
 autoplay = "IdleDown"
-frame = 1
-frame_progress = 0.7657484
+frame_progress = 0.5229284
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2140788422]
 visible = false
