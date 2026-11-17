@@ -16,7 +16,7 @@ func take_turn() -> void:
 		resolve_telegraph()
 		return
 
-	try_move()
+	await try_move()
 
 	var target_cell: Vector2i = grid_position + direction_vector
 	var in_front: Entity = GridWorld.get_entity_at(target_cell)
@@ -33,6 +33,7 @@ func try_move() -> void:
 		return
 	GridWorld.move_entity(self, path.back())
 	slide_along(path, SPEED)
+	await active_tween.finished
 
 ## Flips the sprite to match the facing direction.
 func update_animation() -> void:
