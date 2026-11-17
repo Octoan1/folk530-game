@@ -45,11 +45,12 @@ func update_animation() -> void:
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]
 	sprite.play(anim_name)
 
-func play_attack_animation(cell: Vector2i) -> void:
+func play_attack_animation(cells: Array[Vector2i]) -> void:
 	sprite.play("Attack")
-	attack.play_at(cell)
+	var attacks: Array[Attack] = spawn_attack_markers(cells)
 	await get_tree().create_timer(0.1).timeout
-	attack.end_attack()
+	for att: Attack in attacks:
+		att.end_attack()
 
 ## Moves the player one step, sliding further if the path includes ice.
 ## If the step is blocked, nothing happens and no turn is spent.
@@ -84,11 +85,12 @@ func try_move(direction: Vector2i) -> void:
 ## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]
 func try_attack() -> void:
 	_set_animating(true)
-	var attack_cell: Vector2i = grid_position + DIRECTION_VECTORS[facing]
-	var entity_status: Entity = GridWorld.get_entity_at(attack_cell)
-	if entity_status != null and entity_status.is_killable:
-		entity_status.take_hit()
-	await play_attack_animation(attack_cell)
+	var attack_cells: Array[Vector2i] = get_attack_cells()
+	for attack_cell: Vector2i in attack_cells:
+		var entity_status: Entity = GridWorld.get_entity_at(attack_cell)
+		if entity_status != null and entity_status.is_killable:
+			entity_status.take_hit()
+	await play_attack_animation(attack_cells)
 	UpdateManager.run_turn()
 
 ## Converts an input event into a grid direction.
