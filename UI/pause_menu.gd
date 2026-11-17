@@ -4,8 +4,8 @@ extends Control
 @export var music_slider: HSlider
 @export var sfx_slider: HSlider
 
-@onready var music_bus_index:int =  AudioServer.get_bus_index("MUSIC_BUS")
-@onready var sfx_bus_index:int =  AudioServer.get_bus_index("SFX_BUS")
+var music_bus_index:int =  AudioServer.get_bus_index("Music")
+var sfx_bus_index:int =  AudioServer.get_bus_index("SFX")
 
 func _ready() -> void:
 	#sets up sliders
@@ -14,12 +14,17 @@ func _ready() -> void:
 	sfx_slider.max_value = 2.0
 	sfx_slider.step = .2
 	
+	#set sliders to current bus volume
 	music_slider.value = AudioServer.get_bus_volume_linear(music_bus_index)
-	print(AudioServer.get_bus_volume_linear(music_bus_index))
 	sfx_slider.value = AudioServer.get_bus_volume_linear(sfx_bus_index)
-
-func _process(delta: float) -> void:
-	pass
+	
+func _on_resume_button_pressed() -> void:
+	UiManager.toggle_pause()
 	
 func _on_music_slider_value_changed(value: float) -> void:
-	pass # Replace with function body.
+	AudioManager.set_music_volume(snappedf(value,.20))
+	print("Music Vol = " + str(AudioServer.get_bus_volume_linear(music_bus_index)))
+
+func _on_sfx_slider_value_changed(value: float) -> void:
+	AudioManager.set_sfx_volume(snappedf(value,.20))
+	print("SFX Vol = " + str(AudioServer.get_bus_volume_linear(sfx_bus_index)))

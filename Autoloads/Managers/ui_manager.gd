@@ -11,18 +11,21 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		if paused:
+		toggle_pause()
+		
+func toggle_pause() -> void:
+	if paused:
 			paused = false
 			get_tree().paused = false
 			if current_pause_menu != null:
 				current_pause_menu.queue_free()
 				current_pause_menu = null
-		else:
-			current_pause_menu = pause_menu.instantiate()
-			add_child(current_pause_menu)
-			current_pause_menu.grab_focus()
-			paused = true
-			get_tree().paused = true
+	else:
+		current_pause_menu = pause_menu.instantiate()
+		add_child(current_pause_menu)
+		current_pause_menu.grab_focus()
+		paused = true
+		get_tree().paused = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
