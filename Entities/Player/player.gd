@@ -4,8 +4,6 @@ extends Entity
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
-@export var attack_pattern: AttackPattern = preload("res://Data/Attack Patterns/front_1.tres")
-
 signal restart
 
 const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {

@@ -54,3 +54,4 @@ attack_scene = ExtResource("6_hqjqb")
 
 [node name="Player" parent="." unique_id=605168488 instance=ExtResource("2_1njcr")]
 position = Vector2(41, 56)
+attack_pattern = ExtResource("8_60cyn")
