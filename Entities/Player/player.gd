@@ -3,6 +3,7 @@ extends Entity
 
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+var step_left: bool = false
 
 signal restart
 
@@ -79,6 +80,14 @@ func try_move(direction: Vector2i) -> void:
 		if not health_component.is_dead:
 			CheckpointManager.has_checkpoint = false
 			LevelManager.next_level()
+			
+	if facing == Direction.DOWN:
+		if step_left:
+			sprite.play("StepDownLeft")
+			step_left = not step_left
+		else:
+			sprite.play("StepDownRight")
+			step_left = not step_left
 
 ## The player attacks the tile right next to them
 ## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]
