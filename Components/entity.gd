@@ -152,11 +152,11 @@ func spawn_attack_markers(cells: Array[Vector2i]) -> Array[Attack]:
 	assert(attack_scene != null, "%s has no attack_scene assigned" % name)
 	var attack_markers: Array[Attack]
 	for cell: Vector2i in cells:
-		if not GridWorld.is_walkable(cell):
-			continue
+		#if not GridWorld.is_walkable(cell):
+			#continue
 		var marker: Attack = attack_scene.instantiate() as Attack
 		get_parent().add_child(marker)
-		marker.play_at(cell)
+		marker.play_at(cell, direction_vector)
 		attack_markers.append(marker)
 	return attack_markers
 

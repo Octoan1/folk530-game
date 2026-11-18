@@ -249,7 +249,7 @@ attack_scene = ExtResource("2_5c2io")
 sprite_frames = SubResource("SpriteFrames_bd4fl")
 animation = &"Slide"
 autoplay = "IdleDown"
-frame_progress = 0.5229284
+frame_progress = 0.42297325
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2140788422]
 visible = false

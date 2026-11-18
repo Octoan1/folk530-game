@@ -109,3 +109,16 @@ func is_goal(cell: Vector2i) -> bool:
 	if tile.get_custom_data("is_goal"):
 		return true
 	return false
+
+func can_see(from: Vector2i, to: Vector2i) -> bool:
+	if from.x != to.x and from.y != to.y:
+		return false
+	var distance: int = from.y - to.y if from.x == to.x else from.x - to.x
+	var vect: Vector2i = from - to
+	vect /= vect
+	var sig: int = sign(distance)
+	for i: int in range(distance):
+		var target: Vector2i = from - (vect * i * sig)
+		if wall_map.get_cell_tile_data(target) != null:
+			return false
+	return true

@@ -82,7 +82,7 @@ func try_move(direction: Vector2i) -> void:
 			CheckpointManager.has_checkpoint = false
 			LevelManager.next_level()
 	
-	if path.size() > 1:
+	if path.size() > 2:
 		sprite.play("Slide")
 		await active_tween.finished
 		update_animation()

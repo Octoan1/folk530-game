@@ -10,5 +10,5 @@ func _init() -> void:
 func _ready() -> void:
 	position = GridWorld.cell_to_world(grid_position)
 
-func take_hit(damage: int = 1) -> void:
+func take_hit(_damage: int = 1) -> void:
 	die()
