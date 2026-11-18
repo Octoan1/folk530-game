@@ -16,6 +16,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 func _enter_tree() -> void:
 	GridWorld.setup(map, wall_map)
+	GridWorld.player = player
 
 func _ready() -> void:
 	_play_intro()

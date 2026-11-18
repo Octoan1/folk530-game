@@ -1,4 +1,7 @@
+class_name FollowEnemy
 extends Skeleton
+
+@export var max_sight_range: int = 100
 
 ## Resolves a pending attack, or moves and starts a new attack if the player is in front.
 func take_turn() -> void:
@@ -12,8 +15,11 @@ func take_turn() -> void:
 	var in_front: Entity = GridWorld.get_entity_at(target_cell)
 	if in_front is Player and start_telegraph():
 		return
-
-	if not GridWorld.can_enter(target_cell):
+	
+	var player_dir: Vector2i = GridWorld.get_sight_direction(grid_position, GridWorld.player.grid_position, max_sight_range)
+	if player_dir != Vector2i.ZERO:
+		facing = DIRECTION_VECTORS.find_key(player_dir)
+	elif not GridWorld.can_enter(target_cell):
 		facing = get_opposite_direction(facing)
 
 ## Slides one step (or along ice) in the facing direction, if the path is open.
