@@ -8,6 +8,10 @@ func take_turn() -> void:
 	if is_telegraphing():
 		resolve_telegraph()
 		return
+	
+	var player_dir: Vector2i = GridWorld.get_sight_direction(grid_position, GridWorld.player.grid_position, max_sight_range)
+	if player_dir != Vector2i.ZERO:
+		facing = DIRECTION_VECTORS.find_key(player_dir)
 
 	await try_move()
 
@@ -16,10 +20,10 @@ func take_turn() -> void:
 	if in_front is Player and start_telegraph():
 		return
 	
-	var player_dir: Vector2i = GridWorld.get_sight_direction(grid_position, GridWorld.player.grid_position, max_sight_range)
+	player_dir = GridWorld.get_sight_direction(grid_position, GridWorld.player.grid_position, max_sight_range)
 	if player_dir != Vector2i.ZERO:
 		facing = DIRECTION_VECTORS.find_key(player_dir)
-	elif not GridWorld.can_enter(target_cell):
+	if not GridWorld.can_enter(target_cell):
 		facing = get_opposite_direction(facing)
 
 ## Slides one step (or along ice) in the facing direction, if the path is open.

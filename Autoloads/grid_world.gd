@@ -122,7 +122,7 @@ func get_sight_direction(from: Vector2i, to: Vector2i, max_range: int) -> Vector
 	var distance: int = abs(from.y - to.y) if from.x == to.x else abs(from.x - to.x)
 	if distance > max_range:
 		return Vector2i.ZERO
-	var direction: Vector2i = (from - to).sign()
+	var direction: Vector2i = (to - from).sign()
 	for i: int in range(distance):
 		var target: Vector2i = from + (direction * i)
 		if wall_map.get_cell_tile_data(target) != null:
