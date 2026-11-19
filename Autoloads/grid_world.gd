@@ -22,7 +22,7 @@ func clear() -> void:
 ## [param cell] The grid coordinate to convert.
 ## [return] The world-space position of the cell's center.
 func cell_to_world(cell: Vector2i) -> Vector2:
-	assert(map != null)
+	assert(map != null, "map is null! Make sure it is added to the levels export!")
 	var world_position: Vector2 = map.map_to_local(cell)
 	return world_position
 
@@ -30,7 +30,7 @@ func cell_to_world(cell: Vector2i) -> Vector2:
 ## [param world_position] The position to convert.
 ## [return] The cell containing that position.
 func world_to_cell(world_position: Vector2) -> Vector2i:
-	assert(map != null)
+	assert(map != null, "map is null! Make sure it is added to the levels export!")
 	var cell: Vector2i = map.local_to_map(map.to_local(world_position))
 	return cell
 
@@ -38,7 +38,7 @@ func world_to_cell(world_position: Vector2) -> Vector2i:
 ## [param cell] The grid coordinate to test.
 ## [return] True if the cell is free to walk on, false if it is blocked.
 func is_walkable(cell: Vector2i) -> bool:
-	assert(map != null and wall_map != null)
+	assert(map != null and wall_map != null, "map or wall_map is null! Make sure they are added to the levels exports!")
 	return wall_map.get_cell_source_id(cell) == -1 and map.get_cell_source_id(cell) != -1
 
 ## Returns the entity standing on the given cell, or null if the cell is empty.
@@ -67,7 +67,7 @@ func move_entity(entity: Entity, new_cell: Vector2i) -> void:
 ## [param entity] The entity to place.
 ## [param cell] The cell to claim.
 func place_entity(entity: Entity, cell: Vector2i) -> void:
-	assert(not occupants.has(cell), "Cell %s is already occupied" % cell)
+	assert(not occupants.has(cell), "Cell %s is already occupied!" % cell)
 	occupants[cell] = entity
 	entity.grid_position = cell
 

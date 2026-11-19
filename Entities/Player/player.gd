@@ -6,6 +6,7 @@ extends Entity
 var step_left: bool = false
 
 signal restart
+signal reached_goal
 
 const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
 	Direction.LEFT: "IdleLeft",
@@ -32,7 +33,7 @@ func _ready() -> void:
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
 func _unhandled_input(event: InputEvent) -> void:
-	if health_component.is_dead or UpdateManager.is_busy() or LevelManager.is_transitioning:
+	if health_component.is_dead or UpdateManager.is_busy():
 		return
 
 	var direction: Vector2i = _get_direction(event)
@@ -80,7 +81,7 @@ func try_move(direction: Vector2i) -> void:
 		await active_tween.finished
 		if not health_component.is_dead:
 			CheckpointManager.has_checkpoint = false
-			LevelManager.next_level()
+			reached_goal.emit()
 	
 	if path.size() > 2:
 		sprite.play("Slide")

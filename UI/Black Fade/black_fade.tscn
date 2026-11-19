@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://0ijff727r4ad"]
 
-[ext_resource type="Script" uid="uid://cihkaexnwwmk3" path="res://Autoloads/Black Fade/black_fade.gd" id="1_8tlbf"]
+[ext_resource type="Script" uid="uid://cihkaexnwwmk3" path="res://UI/Black Fade/black_fade.gd" id="1_8tlbf"]
 
 [node name="BlackFade" type="CanvasLayer" unique_id=1217026584]
 layer = 100

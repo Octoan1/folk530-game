@@ -1,3 +1,4 @@
+class_name BlackFade
 extends CanvasLayer
 
 @onready var rect: ColorRect = $ColorRect
