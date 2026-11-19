@@ -327,7 +327,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"StepLeft",
-"speed": 4.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -338,7 +338,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"StepRight",
-"speed": 4.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -370,7 +370,7 @@ attack_scene = ExtResource("2_5c2io")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=222711314]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_bd4fl")
-animation = &"IdleDown"
+animation = &"StepRight"
 autoplay = "IdleDown"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2140788422]
