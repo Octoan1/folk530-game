@@ -10,9 +10,9 @@ func _init() -> void:
 	takes_turns = true
 	is_killable = true
 
-## Snaps the enemy to its starting cell and warns about an empty attack list.
+## Snaps the enemy to its starting cell and warns about an empty attack pattern.
 func _ready() -> void:
-	position = GridWorld.cell_to_world(grid_position)
+	super()
 	if attack_pattern == null or attack_pattern.tiles.is_empty():
 		push_warning("%s has no attack_tiles, so it will never attack." % name)
 
@@ -21,7 +21,7 @@ func _ready() -> void:
 func is_telegraphing() -> bool:
 	return not telegraphed_cells.is_empty()
 
-## Marks every attack cell that has ground and no wall, and remembers them.
+## Marks every attack cell that has ground, and remembers them.
 ## [return] True if at least one tile was marked, false if there was nothing to attack.
 func start_telegraph() -> bool:
 	assert(attack_scene != null, "%s has no attack_scene assigned" % name)

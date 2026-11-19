@@ -1,16 +1,36 @@
 [gd_scene format=3 uid="uid://bga18orbjq57d"]
 
+[ext_resource type="Script" uid="uid://b4ic1w2dtf6kj" path="res://UI/pause_menu.gd" id="1_jfm1e"]
 [ext_resource type="Theme" uid="uid://bcvvv3fsgbe4" path="res://UI/ui_theme.tres" id="1_ltd3m"]
 
-[node name="PauseMenu" type="Control" unique_id=237532825]
+[node name="PauseMenu" type="Control" unique_id=237532825 node_paths=PackedStringArray("resume_button", "music_slider", "sfx_slider")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jfm1e")
+resume_button = NodePath("PauseContainer/ResumeButton")
+music_slider = NodePath("PauseContainer/MusicSlider")
+sfx_slider = NodePath("PauseContainer/SFXSlider")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=780390034]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1001814895]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -49.0
+offset_right = 38.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.19607843)
+
+[node name="PauseContainer" type="VBoxContainer" parent="." unique_id=780390034]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -25,20 +45,27 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ltd3m")
 
-[node name="ResumeButton" type="Button" parent="VBoxContainer" unique_id=132990176]
+[node name="PauseLabel" type="Label" parent="PauseContainer" unique_id=1644636843]
 layout_mode = 2
+theme = ExtResource("1_ltd3m")
+theme_type_variation = &"HeaderSmall"
+text = "Paused!"
+
+[node name="ResumeButton" type="Button" parent="PauseContainer" unique_id=132990176]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../MusicSlider")
+focus_next = NodePath("../MusicSlider")
+theme = ExtResource("1_ltd3m")
 text = "RESUME"
 
-[node name="MusicSlider" type="HSlider" parent="VBoxContainer" unique_id=2110935419]
+[node name="MusicSlider" type="HSlider" parent="PauseContainer" unique_id=2110935419]
+layout_mode = 2
+
+[node name="SFXSlider" type="HSlider" parent="PauseContainer" unique_id=1757931488]
+process_mode = 3
 layout_mode = 2
 step = 5.0
 
-[node name="SFXSlider" type="HSlider" parent="VBoxContainer" unique_id=1757931488]
-layout_mode = 2
-step = 5.0
-
-[node name="Button2" type="Button" parent="VBoxContainer" unique_id=1344768896]
-layout_mode = 2
-
-[node name="Button3" type="Button" parent="VBoxContainer" unique_id=1474314073]
-layout_mode = 2
+[connection signal="pressed" from="PauseContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="value_changed" from="PauseContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="PauseContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]

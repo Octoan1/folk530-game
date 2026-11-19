@@ -9,6 +9,8 @@ var active_sfx : int = 0
 var music_player: AudioStreamPlayer
 
 # Music Tracks
+const ICY_DEMO: AudioStreamWAV = preload("res://Assets/Sounds/Music/IcyDemo.wav")
+
 
 # Repeating SFX
 
@@ -18,6 +20,7 @@ func _ready() -> void:
 	music_player.bus = MUSIC_BUS
 	#music_player
 	add_child(music_player)
+	play_music(ICY_DEMO, .2)
 
 #region VOLUME
 
@@ -56,7 +59,8 @@ func _set_bus_muted(bus_name: String, muted: bool) -> void:
 #region MUSIC
 ## Plays given music [AudioStream]. [br]
 ## @Note: Node will save last played stream.
-func play_music(stream: AudioStream) -> void:
+func play_music(stream: AudioStream, volume_lin: float = 1.0) -> void:
+	music_player.volume_linear = volume_lin
 	music_player.stream = stream
 	music_player.play()
 

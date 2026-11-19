@@ -2,10 +2,12 @@ class_name Skeleton
 extends Enemy
 
 @onready var sprite: Sprite2D = $Sprite2D
+const SKELETON_DEATH: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SkeletonDeath.wav")
+const SKELETON_DAMAGED: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SkeletonDamaged.wav")
 
-## Sets up the sprite and the animation player.
+## preload("uid://typniyua3q75")Sets up the sprite and the animation player.
 func _ready() -> void:
-	super._ready()
+	super()
 	update_animation()
 	anim_player = $AnimationPlayer
 	anim_player.play("RESET")
@@ -16,7 +18,7 @@ func take_turn() -> void:
 		resolve_telegraph()
 		return
 
-	await try_move()
+	try_move()
 
 	var target_cell: Vector2i = grid_position + direction_vector
 	var in_front: Entity = GridWorld.get_entity_at(target_cell)
@@ -32,8 +34,10 @@ func try_move() -> void:
 	if path.is_empty():
 		return
 	GridWorld.move_entity(self, path.back())
-	slide_along(path, SPEED)
-	await active_tween.finished
+	if _is_move_visible(path):
+		slide_along(path, SPEED)
+	else:
+		position = GridWorld.cell_to_world(grid_position)
 
 ## Flips the sprite to match the facing direction.
 func update_animation() -> void:
@@ -41,3 +45,11 @@ func update_animation() -> void:
 		sprite.flip_h = true
 	if facing == Direction.RIGHT:
 		sprite.flip_h = false
+
+func take_hit(damage: int = 1) -> void:
+	AudioManager.play_sfx(SKELETON_DAMAGED, randf_range(.6,1.0), .3)
+	super()
+
+func die() -> void:
+	AudioManager.play_sfx(SKELETON_DEATH, randf_range(.6,1.0), .3)
+	super()
