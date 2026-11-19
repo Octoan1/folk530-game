@@ -31,6 +31,7 @@ var grid_position: Vector2i = Vector2i(0, 0) ## The position of the entity in re
 var takes_turns: bool = true ## Whether UpdateManager should call take_turn() on this entity.The player turns this off, since it acts from input instead.
 var is_killable: bool = false ## True if the player can attack them, false otherwise
 var is_animating: bool = false
+var blocks_vision: bool = false
 var active_tween: Tween ## The entity's active tween
 var direction_vector: Vector2i: ## The [Vector2i] that corresponds to the entity's [member facing]
 	get:

@@ -125,6 +125,7 @@ func get_sight_direction(from: Vector2i, to: Vector2i, max_range: int) -> Vector
 	var direction: Vector2i = (to - from).sign()
 	for i: int in range(distance):
 		var target: Vector2i = from + (direction * i)
-		if wall_map.get_cell_tile_data(target) != null:
+		var ent: Entity = get_entity_at(target)
+		if wall_map.get_cell_tile_data(target) != null or (ent != null and ent.blocks_vision):
 			return Vector2i.ZERO
 	return direction

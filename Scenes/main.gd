@@ -20,7 +20,7 @@ func load_level(index: int) -> void:
 	UpdateManager.animation_started()
 	await black_fade.fade_out(0.0)
 	if current_level != null:
-		remove_child(current_level)
+		level_container.remove_child(current_level)
 		current_level.queue_free()
 	var scene: PackedScene = levels[index]
 	var level: Level = scene.instantiate() as Level
@@ -40,4 +40,4 @@ func next_level() -> void:
 
 ## Reloads the current level from scratch, keeping the checkpoint.
 func restart_level() -> void:
-	get_tree().reload_current_scene.call_deferred()
+	load_level(current_index)

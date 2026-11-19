@@ -5,6 +5,7 @@ extends Entity
 func _init() -> void:
 	takes_turns = false
 	is_killable = true
+	blocks_vision = true
 
 ## Snaps the rock to its starting cell.
 func _ready() -> void:
