@@ -46,7 +46,8 @@ func update_animation() -> void:
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]
 	sprite.play(anim_name)
 
-func play_attack_animation(cell: Vector2i) -> void:
+
+func play_attack_animation(cells: Array[Vector2i]) -> void:
 	if facing == Direction.DOWN:
 		sprite.play("AttackDown")
 	elif facing == Direction.UP:
@@ -55,10 +56,12 @@ func play_attack_animation(cell: Vector2i) -> void:
 		sprite.play("AttackLeft")
 	elif facing == Direction.RIGHT:
 		sprite.play("AttackRight")
-	
-	attack.play_at(cell)
+
+	sprite.play("Attack")
+	var attacks: Array[Attack] = spawn_attack_markers(cells)
 	await get_tree().create_timer(0.1).timeout
-	attack.end_attack()
+	for att: Attack in attacks:
+		att.end_attack()
 
 ## Moves the player one step, sliding further if the path includes ice.
 ## If the step is blocked, nothing happens and no turn is spent.
@@ -88,27 +91,33 @@ func try_move(direction: Vector2i) -> void:
 		if not health_component.is_dead:
 			CheckpointManager.has_checkpoint = false
 			LevelManager.next_level()
-			
-	if facing == Direction.DOWN:
-		sprite.play("StepDownLeft" if step_left else "StepDownRight")
-		step_left = not step_left
-	elif facing == Direction.UP:
-		sprite.play("StepUpLeft" if step_left else "StepUpRight")
-		step_left = not step_left
-	elif facing == Direction.LEFT:
-		sprite.play("StepLeft")
-	elif facing == Direction.RIGHT:
-		sprite.play("StepRight")
+	
+	if path.size() > 2:
+		sprite.play("Slide")
+		await active_tween.finished
+		update_animation()
+	else:
+		if facing == Direction.DOWN:
+			sprite.play("StepDownLeft" if step_left else "StepDownRight")
+			step_left = not step_left
+		elif facing == Direction.UP:
+			sprite.play("StepUpLeft" if step_left else "StepUpRight")
+			step_left = not step_left
+		elif facing == Direction.LEFT:
+			sprite.play("StepLeft")
+		elif facing == Direction.RIGHT:
+			sprite.play("StepRight")
 
 ## The player attacks the tile right next to them
 ## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]
 func try_attack() -> void:
 	_set_animating(true)
-	var attack_cell: Vector2i = grid_position + DIRECTION_VECTORS[facing]
-	var entity_status: Entity = GridWorld.get_entity_at(attack_cell)
-	if entity_status != null and entity_status.is_killable:
-		entity_status.take_hit()
-	await play_attack_animation(attack_cell)
+	var attack_cells: Array[Vector2i] = get_attack_cells()
+	for attack_cell: Vector2i in attack_cells:
+		var entity_status: Entity = GridWorld.get_entity_at(attack_cell)
+		if entity_status != null and entity_status.is_killable:
+			entity_status.take_hit()
+	await play_attack_animation(attack_cells)
 	UpdateManager.run_turn()
 
 ## Converts an input event into a grid direction.
@@ -143,13 +152,5 @@ func die() -> void:
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	#var walk_anim: Array[String] = [
-		#"StepDownLeft",
-		#"StepDownRight"
-	#]
 	if sprite.animation.begins_with("Step"):
 		update_animation()
-		
-func slide_along(path: Array[Vector2i], step_duration: float) -> void: 
-	super(path, step_duration)
-	sprite.play("Slide")

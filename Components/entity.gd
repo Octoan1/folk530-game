@@ -13,6 +13,8 @@ const DIRECTION_VECTORS: Dictionary[Direction, Vector2i] = {
 
 var anim_player: AnimationPlayer
 
+@export var attack_pattern: AttackPattern = preload("res://Data/Attack Patterns/front_1.tres") ## The attack pattern this enemy uses. Pick one from the list, or drag a pattern file in.
+@export var damage: int = 1 ## How much damage the enemy does
 @export var priority: int = 0 ## Lower numbers act first when UpdateManager runs a turn.
 @export var attack_scene: PackedScene ## The entity's attack sprite
 @export var facing: Direction = Direction.RIGHT: ## The direction that the player is facing
@@ -98,7 +100,7 @@ func get_opposite_direction(dir: Direction) -> Direction:
 	return Direction.LEFT
 
 ## How the entity reacts to taking a hit
-func take_hit(damage: int = 1) -> void:
+func take_hit(_damage: int = 1) -> void:
 	health_component.damage_health(damage)
 	play_take_damage()
 
@@ -131,6 +133,32 @@ func get_slide_path(start: Vector2i, direction: Vector2i) -> Array[Vector2i]:
 		if not GridWorld.is_ice(current):
 			break
 	return cells
+
+## Converts attack_tiles into grid cells for the direction the enemy is facing now.
+## [return] The cells this enemy would attack, in the same order as attack_tiles.
+func get_attack_cells() -> Array[Vector2i]:
+	var forward: Vector2i = direction_vector
+	var side: Vector2i = Vector2i(-forward.y, forward.x)
+	var cells: Array[Vector2i] = []
+	for offset: Vector2i in attack_pattern.tiles:
+		var cell: Vector2i = grid_position + forward * offset.x + side * offset.y
+		cells.append(cell)
+	return cells
+
+## Spawns one attack marker on each given cell.
+## [param cells] The cells to mark.
+## [return] The marker nodes that were created, so the caller can free them later.
+func spawn_attack_markers(cells: Array[Vector2i]) -> Array[Attack]:
+	assert(attack_scene != null, "%s has no attack_scene assigned" % name)
+	var attack_markers: Array[Attack]
+	for cell: Vector2i in cells:
+		#if not GridWorld.is_walkable(cell):
+			#continue
+		var marker: Attack = attack_scene.instantiate() as Attack
+		get_parent().add_child(marker)
+		marker.play_at(cell, direction_vector)
+		attack_markers.append(marker)
+	return attack_markers
 
 ## Updates this entity's animating flag and keeps UpdateManager's count in sync.
 ## Only reports when the value actually changes, so it can't double count.

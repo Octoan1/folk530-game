@@ -1,7 +1,7 @@
 extends Node
 
 const LEVELS: Array[String] = [
-	"res://Scenes/tutorial_map.tscn",
+	"res://Scenes/Levels/tutorial_map.tscn",
 	"res://Scenes/Testing/test_map.tscn"
 ]
 

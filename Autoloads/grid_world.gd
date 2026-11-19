@@ -3,6 +3,7 @@ extends Node
 var map: TileMapLayer
 var wall_map: TileMapLayer
 var occupants: Dictionary[Vector2i, Entity] = {}
+var player: Player
 
 ## Stores the map layers for the current level.
 ## [param ground] The layer used for coordinate conversion and ground checks.
@@ -109,3 +110,21 @@ func is_goal(cell: Vector2i) -> bool:
 	if tile.get_custom_data("is_goal"):
 		return true
 	return false
+
+## Looks from one cell toward another along a straight row or column.
+## [param from] The cell doing the looking.
+## [param to] The cell being looked for.
+## [param max_range] The farthest distance, in cells, that can be seen.
+## [return] The direction to face to see the target, or Vector2i.ZERO if it can't be seen.
+func get_sight_direction(from: Vector2i, to: Vector2i, max_range: int) -> Vector2i:
+	if from.x != to.x and from.y != to.y:
+		return Vector2i.ZERO
+	var distance: int = abs(from.y - to.y) if from.x == to.x else abs(from.x - to.x)
+	if distance > max_range:
+		return Vector2i.ZERO
+	var direction: Vector2i = (to - from).sign()
+	for i: int in range(distance):
+		var target: Vector2i = from + (direction * i)
+		if wall_map.get_cell_tile_data(target) != null:
+			return Vector2i.ZERO
+	return direction
