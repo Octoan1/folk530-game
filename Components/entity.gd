@@ -175,6 +175,17 @@ func _set_animating(value: bool) -> void:
 	else:
 		UpdateManager.animation_finished()
 
+## Plays the taking damage animation
 func play_take_damage() -> void:
 	if anim_player != null:
 		anim_player.play("TakeDamage")
+
+## Returns whether the entity, or any cell on its path, is on or near the screen.
+## [param path] The cells the entity is about to pass through.
+## [return] True if any part of the move could be seen.
+func _is_move_visible(path: Array[Vector2i]) -> bool:
+	var view: Rect2 = get_canvas_transform().affine_inverse() * get_viewport_rect()
+	for cell: Vector2i in path:
+		if view.has_point(GridWorld.cell_to_world(cell)):
+			return true
+	return false
