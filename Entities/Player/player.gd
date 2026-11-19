@@ -53,7 +53,15 @@ func update_animation() -> void:
 
 ## Plays the attack animation, spawns the attacks markers
 func play_attack_animation(cells: Array[Vector2i]) -> void:
-	sprite.play("Attack")
+	if facing == Direction.DOWN:
+		sprite.play("AttackDown")
+	elif facing == Direction.UP:
+		sprite.play("AttackUp")
+	elif facing == Direction.LEFT:
+		sprite.play("AttackLeft")
+	elif facing == Direction.RIGHT:
+		sprite.play("AttackRight")
+
 	var attacks: Array[Attack] = spawn_attack_markers(cells)
 	await get_tree().create_timer(0.1).timeout
 	for att: Attack in attacks:
@@ -137,6 +145,7 @@ func _get_direction(event: InputEvent) -> Vector2i:
 		return Vector2i(0, 1)
 	return Vector2i.ZERO
 
+
 func take_hit(_amount: int = 1) -> void:
 	if self.health_component.health == 1:
 			AudioManager.play_sfx(PLAYER_DEATH, randf_range(.9,1.0), .05)
@@ -152,7 +161,7 @@ func die() -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if sprite.animation.begins_with("Step"):
 		update_animation()
-	if sprite.animation == "Attack":
+	if sprite.animation.begins_with("Attack"):
 		_set_animating(false)
 		update_animation()
 	
