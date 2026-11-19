@@ -9,10 +9,6 @@ extends Node2D
 signal completed
 signal restart_requested
 
-func _unhandled_key_input(event: InputEvent) -> void:
-	if event.is_action_pressed("level_restart"):
-		restart_requested.emit()
-
 func _enter_tree() -> void:
 	GridWorld.setup(map, wall_map)
 	GridWorld.player = player

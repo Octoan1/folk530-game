@@ -12,8 +12,11 @@ var is_transitioning: bool = false
 
 func _ready() -> void:
 	load_level(start_index, 0.0)
-	
 
+func _unhandled_key_input(event: InputEvent) -> void:
+	if event.is_action_pressed("level_restart"):
+		restart_level()
+	
 ## Fades out, replaces the current level with the one at the given index, replaces the current index, then fades in.
 ## [param index] The position in levels to load.
 ## [param fade_our_dur] How long it takes to fade out. Default is 0.5
