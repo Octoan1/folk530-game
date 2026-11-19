@@ -4,6 +4,7 @@
 [ext_resource type="TileSet" uid="uid://c01s0xnf4gmg5" path="res://Data/TileSets/test_tile_set.tres" id="2_vu266"]
 [ext_resource type="TileSet" uid="uid://csl2mysee65vv" path="res://Data/TileSets/entity_set.tres" id="3_7nkd4"]
 [ext_resource type="PackedScene" uid="uid://vv40gfq7vlvh" path="res://Entities/Player/player.tscn" id="4_v6bnm"]
+[ext_resource type="Resource" uid="uid://368y0ud5mhw8" path="res://Data/Attack Patterns/front_3.tres" id="5_f85kj"]
 [ext_resource type="PackedScene" uid="uid://pw47f5bomorg" path="res://Entities/Skeleton/skeleton.tscn" id="5_ynmcx"]
 [ext_resource type="PackedScene" uid="uid://dexrbkkkyxvhe" path="res://Entities/Skeleton/Attack/TileAttack.tscn" id="6_dsl1i"]
 
@@ -27,6 +28,7 @@ tile_set = ExtResource("3_7nkd4")
 
 [node name="Player" parent="." unique_id=605168488 instance=ExtResource("4_v6bnm")]
 position = Vector2(-16, -23)
+attack_pattern = ExtResource("5_f85kj")
 priority = null
 facing = null
 

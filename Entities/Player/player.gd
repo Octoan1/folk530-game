@@ -8,7 +8,8 @@ var step_left: bool = false
 const PLAYER_ATTACK:AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerAttack.wav")
 const SNOW_WALK: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SnowWalk.wav")
 
-signal restart
+signal restart ## Emitted when the player wants the level to restart, such as dying
+signal reached_goal ## emitted when the player reaches the goal
 
 const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
 	Direction.LEFT: "IdleLeft",
@@ -24,18 +25,15 @@ func _init() -> void:
 
 ## Snaps the player to its starting grid cell.
 func _ready() -> void:
-	position = GridWorld.cell_to_world(grid_position)
-	attack = attack_scene.instantiate() as Attack
-	add_sibling.call_deferred(attack)
+	super()
 	update_animation()
-	sprite.animation_finished.connect(_on_attack_finish)
 	anim_player = $AnimationPlayer
 	anim_player.play("RESET")
 
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
 func _unhandled_input(event: InputEvent) -> void:
-	if health_component.is_dead or UpdateManager.is_busy() or LevelManager.is_transitioning:
+	if health_component.is_dead or UpdateManager.is_busy():
 		return
 
 	var direction: Vector2i = _get_direction(event)
@@ -45,10 +43,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("player_attack") and not event.is_echo():
 		try_attack()
 
+## updates the idle animation to the direction the player is facing
 func update_animation() -> void:
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]
 	sprite.play(anim_name)
 
+## Plays the attack animation, spawns the attacks markers
 func play_attack_animation(cells: Array[Vector2i]) -> void:
 	sprite.play("Attack")
 	var attacks: Array[Attack] = spawn_attack_markers(cells)
@@ -79,25 +79,30 @@ func try_move(direction: Vector2i) -> void:
 	slide_along(path, SPEED)
 	UpdateManager.run_turn()
 	
-	if GridWorld.is_goal(path.back()):
+	if path.size() > 2:
+		sprite.play("Slide")
 		await active_tween.finished
+		update_animation()
+	else:
+		if facing == Direction.DOWN:
+			sprite.play("StepDownLeft" if step_left else "StepDownRight")
+			step_left = not step_left
+		elif facing == Direction.UP:
+			sprite.play("StepUpLeft" if step_left else "StepUpRight")
+			step_left = not step_left
+		elif facing == Direction.LEFT:
+			sprite.play("StepLeft")
+		elif facing == Direction.RIGHT:
+			sprite.play("StepRight")
+	
+	if GridWorld.is_goal(path.back()):
+		if active_tween.is_running():
+			await active_tween.finished
 		if not health_component.is_dead:
-			CheckpointManager.has_checkpoint = false
-			LevelManager.next_level()
-			
-	if facing == Direction.DOWN:
-		sprite.play("StepDownLeft" if step_left else "StepDownRight")
-		step_left = not step_left
-	elif facing == Direction.UP:
-		sprite.play("StepUpLeft" if step_left else "StepUpRight")
-		step_left = not step_left
-	elif facing == Direction.LEFT:
-		sprite.play("StepLeft")
-	elif facing == Direction.RIGHT:
-		sprite.play("StepRight")
+			reached_goal.emit()
 
-## The player attacks the tile right next to them
-## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]
+## The player attacks according to their attack pattern
+## If there is an [Entity] that [Entity] will run [member Entity.take_hit()]
 func try_attack() -> void:
 	_set_animating(true)
 	AudioManager.play_sfx(PLAYER_ATTACK,randf_range(.8,1.0), .2)
@@ -129,25 +134,18 @@ func _get_direction(event: InputEvent) -> Vector2i:
 		return Vector2i(0, 1)
 	return Vector2i.ZERO
 
-## Unlocks input and and hides attack when the attack animation ends
-func _on_attack_finish() -> void:
-	if sprite.animation == "Attack":
-		_set_animating(false)
-		update_animation()
-
+## Restarts the level from the start or previous checkpoint
 func die() -> void:
-	health_component.is_dead = true
 	restart.emit()
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	#var walk_anim: Array[String] = [
-		#"StepDownLeft",
-		#"StepDownRight"
-	#]
 	if sprite.animation.begins_with("Step"):
 		update_animation()
-		
+	if sprite.animation == "Attack":
+		_set_animating(false)
+		update_animation()
+	
 func slide_along(path: Array[Vector2i], step_duration: float) -> void:
 	AudioManager.play_sfx(SNOW_WALK,randf_range(.4,.8))
 	super(path, step_duration)
