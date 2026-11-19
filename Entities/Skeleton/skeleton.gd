@@ -2,8 +2,9 @@ class_name Skeleton
 extends Enemy
 
 @onready var sprite: Sprite2D = $Sprite2D
+const SKELETON_DEATH: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SkeletonDeath.wav")
 
-## Sets up the sprite and the animation player.
+## preload("uid://typniyua3q75")Sets up the sprite and the animation player.
 func _ready() -> void:
 	super._ready()
 	update_animation()
@@ -41,3 +42,7 @@ func update_animation() -> void:
 		sprite.flip_h = true
 	if facing == Direction.RIGHT:
 		sprite.flip_h = false
+
+func die() -> void:
+	AudioManager.play_sfx(SKELETON_DEATH)
+	super()

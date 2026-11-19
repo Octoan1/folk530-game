@@ -9,6 +9,8 @@ var active_sfx : int = 0
 var music_player: AudioStreamPlayer
 
 # Music Tracks
+const ICY_DEMO: AudioStreamWAV = preload("res://Assets/Sounds/Music/IcyDemo.wav")
+
 
 # Repeating SFX
 
@@ -18,6 +20,7 @@ func _ready() -> void:
 	music_player.bus = MUSIC_BUS
 	#music_player
 	add_child(music_player)
+	play_music(ICY_DEMO)
 
 #region VOLUME
 
