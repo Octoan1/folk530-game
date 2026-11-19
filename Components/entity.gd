@@ -19,34 +19,37 @@ var anim_player: AnimationPlayer
 @export var attack_scene: PackedScene ## The entity's attack sprite
 @export var facing: Direction = Direction.RIGHT: ## The direction that the player is facing
 	set(value):
-			facing = value  # 1. Update the actual value first
-			
-			# 2. Trigger the animation immediately if the node is ready
-			if is_node_ready(): 
-				update_animation()
+		facing = value
+		
+		if is_node_ready(): 
+			update_animation()
 
 var health_component: HealthComponent
-var attack: Attack
 var grid_position: Vector2i = Vector2i(0, 0) ## The position of the entity in relation to the map
 var takes_turns: bool = true ## Whether UpdateManager should call take_turn() on this entity.The player turns this off, since it acts from input instead.
 var is_killable: bool = false ## True if the player can attack them, false otherwise
-var is_animating: bool = false
+var is_animating: bool = false ## True if the entity is animating, false otherwise
+var blocks_vision: bool = false ## True if the entity blocks other entities vision when calling [member GridWorld.get_sight_direction()], false otherwise
 var active_tween: Tween ## The entity's active tween
 var direction_vector: Vector2i: ## The [Vector2i] that corresponds to the entity's [member facing]
 	get:
 		return DIRECTION_VECTORS[facing]
 
+## Sets up HealthComponent
+func _init() -> void:
+	health_component = HealthComponent.new()
+	health_component.died.connect(die)
+
 ## Registers this entity with the UpdateManager when it enters the scene tree.
+## Gives the entity their grid position.
 func _enter_tree() -> void:
 	grid_position = GridWorld.world_to_cell(global_position)
 	GridWorld.place_entity(self, grid_position)
 	if takes_turns:
 		UpdateManager.register(self)
-	
-## Sets up HealthComponent
-func _init() -> void:
-	health_component = HealthComponent.new()
-	health_component.died.connect(die)
+
+func _ready() -> void:
+	position = GridWorld.cell_to_world(grid_position)
 
 ## Unregisters this entity from the UpdateManager when it leaves the scene tree.
 func _exit_tree() -> void:
@@ -100,14 +103,14 @@ func get_opposite_direction(dir: Direction) -> Direction:
 	return Direction.LEFT
 
 ## How the entity reacts to taking a hit
-func take_hit(damage: int = 1) -> void:
-	health_component.damage_health(damage)
+func take_hit(_amount: int = 1) -> void:
+	health_component.damage_health(_amount)
 	play_take_damage()
 
 ## Removes the entity from the scene
 func die() -> void:
 	GridWorld.remove_entity(self)
-	self.queue_free()
+	queue_free()
 
 ## Called when another entity tries to walk into this one.
 ## Subclasses override this to be pushable, open, etc.
@@ -152,11 +155,11 @@ func spawn_attack_markers(cells: Array[Vector2i]) -> Array[Attack]:
 	assert(attack_scene != null, "%s has no attack_scene assigned" % name)
 	var attack_markers: Array[Attack]
 	for cell: Vector2i in cells:
-		if not GridWorld.is_walkable(cell):
-			continue
+		#if not GridWorld.is_walkable(cell):
+			#continue
 		var marker: Attack = attack_scene.instantiate() as Attack
 		get_parent().add_child(marker)
-		marker.play_at(cell)
+		marker.play_at(cell, direction_vector)
 		attack_markers.append(marker)
 	return attack_markers
 
@@ -173,4 +176,5 @@ func _set_animating(value: bool) -> void:
 		UpdateManager.animation_finished()
 
 func play_take_damage() -> void:
-	anim_player.play("TakeDamage")
+	if anim_player != null:
+		anim_player.play("TakeDamage")
