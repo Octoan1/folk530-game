@@ -191,7 +191,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"AttackDown",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -205,7 +205,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"AttackLeft",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -219,7 +219,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"AttackRight",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -233,7 +233,7 @@ animations = [{
 }],
 "loop": 0,
 "name": &"AttackUp",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 20.0,
@@ -369,8 +369,10 @@ attack_scene = ExtResource("2_5c2io")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=222711314]
 sprite_frames = SubResource("SpriteFrames_bd4fl")
-animation = &"AttackUp"
+animation = &"AttackDown"
 autoplay = "IdleDown"
+frame = 2
+frame_progress = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2140788422]
 visible = false

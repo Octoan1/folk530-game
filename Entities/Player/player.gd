@@ -47,6 +47,15 @@ func update_animation() -> void:
 	sprite.play(anim_name)
 
 func play_attack_animation(cell: Vector2i) -> void:
+	if facing == Direction.DOWN:
+		sprite.play("AttackDown")
+	elif facing == Direction.UP:
+		sprite.play("AttackUp")
+	elif facing == Direction.LEFT:
+		sprite.play("AttackLeft")
+	elif facing == Direction.RIGHT:
+		sprite.play("AttackRight")
+	
 	attack.play_at(cell)
 	await get_tree().create_timer(0.1).timeout
 	attack.end_attack()
@@ -101,15 +110,6 @@ func try_attack() -> void:
 		entity_status.take_hit()
 	await play_attack_animation(attack_cell)
 	UpdateManager.run_turn()
-	
-	if facing == Direction.DOWN:
-		sprite.play("AttackDown")
-	elif facing == Direction.UP:
-		sprite.play("AttackUp")
-	elif facing == Direction.LEFT:
-		sprite.play("AttackLeft")
-	elif facing == Direction.RIGHT:
-		sprite.play("AttackRight")
 
 ## Converts an input event into a grid direction.
 ## [param event] The input event to interpret.
@@ -133,7 +133,7 @@ func _get_direction(event: InputEvent) -> Vector2i:
 
 ## Unlocks input and and hides attack when the attack animation ends
 func _on_attack_finish() -> void:
-	if sprite.animation == "Attack":
+	if sprite.animation.begins_with("Attack"):
 		_set_animating(false)
 		update_animation()
 
@@ -147,7 +147,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		#"StepDownLeft",
 		#"StepDownRight"
 	#]
-	if sprite.animation.begins_with("Step") or sprite.animation.begins_with("Attack"):
+	if sprite.animation.begins_with("Step"):
 		update_animation()
 		
 func slide_along(path: Array[Vector2i], step_duration: float) -> void: 
