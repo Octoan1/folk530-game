@@ -7,6 +7,9 @@ var step_left: bool = false
 
 const PLAYER_ATTACK:AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerAttack.wav")
 const SNOW_WALK: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SnowWalk.wav")
+const PLAYER_DAMAGED: AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerDamaged.wav")
+const PLAYER_DEATH: AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerDeath.wav")
+
 
 signal restart ## Emitted when the player wants the level to restart, such as dying
 signal reached_goal ## emitted when the player reaches the goal
@@ -134,10 +137,17 @@ func _get_direction(event: InputEvent) -> Vector2i:
 		return Vector2i(0, 1)
 	return Vector2i.ZERO
 
+func take_hit(_amount: int = 1) -> void:
+	if self.health_component.health == 1:
+			AudioManager.play_sfx(PLAYER_DEATH, randf_range(.9,1.0), .05)
+	else:
+		AudioManager.play_sfx(PLAYER_DAMAGED, randf_range(.9,1.0), .05)
+	
+	super()
+
 ## Restarts the level from the start or previous checkpoint
 func die() -> void:
 	restart.emit()
-
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if sprite.animation.begins_with("Step"):
