@@ -9,7 +9,7 @@ func _init() -> void:
 
 ## Snaps the rock to its starting cell.
 func _ready() -> void:
-	position = GridWorld.cell_to_world(grid_position)
+	super()
 
-func take_hit(_damage: int = 1) -> void:
+func take_hit(_amount: int = 1) -> void:
 	die()

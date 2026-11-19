@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://8uw00jefxvfr"]
 
-[ext_resource type="Script" uid="uid://bttj0vs1yqpdc" path="res://Scenes/Testing/level.gd" id="1_gtn6y"]
+[ext_resource type="Script" uid="uid://bttj0vs1yqpdc" path="res://Components/level.gd" id="1_gtn6y"]
 [ext_resource type="TileSet" uid="uid://c01s0xnf4gmg5" path="res://Data/TileSets/test_tile_set.tres" id="1_phepx"]
 [ext_resource type="PackedScene" uid="uid://vv40gfq7vlvh" path="res://Entities/Player/player.tscn" id="2_1njcr"]
 [ext_resource type="TileSet" uid="uid://csl2mysee65vv" path="res://Data/TileSets/entity_set.tres" id="3_mqm71"]
@@ -53,4 +53,5 @@ attack_pattern = ExtResource("10_wr4o1")
 
 [node name="FollowEnemy" parent="." unique_id=1909940509 instance=ExtResource("10_60cyn")]
 position = Vector2(56, 38)
+damage = 2
 attack_scene = ExtResource("6_hqjqb")

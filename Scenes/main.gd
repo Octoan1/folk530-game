@@ -19,7 +19,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	
 ## Fades out, replaces the current level with the one at the given index, replaces the current index, then fades in.
 ## [param index] The position in levels to load.
-## [param fade_our_dur] How long it takes to fade out. Default is 0.5
+## [param fade_out_dur] How long it takes to fade out. Default is 0.5
 ## [param fade_in_dur] How long it takes to fade in. Default is 0.5
 func load_level(index: int, fade_out_dur: float = 0.5, fade_in_dur: float = 0.5) -> void:
 	assert(index < levels.size() and index >= 0, "Index is out of bounds for levels!")
@@ -42,9 +42,8 @@ func load_level(index: int, fade_out_dur: float = 0.5, fade_in_dur: float = 0.5)
 	await black_fade.fade_in(fade_in_dur)
 	UpdateManager.animation_finished()
 	is_transitioning = false
-	
 
-## Loads the level after the current one, or handles reaching the end.
+## Loads the level after the current one, wraps around at the end.
 func next_level() -> void:
 	CheckpointManager.clear()
 	load_level((current_index + 1) % levels.size())

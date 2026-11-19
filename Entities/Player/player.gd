@@ -5,8 +5,8 @@ extends Entity
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 var step_left: bool = false
 
-signal restart
-signal reached_goal
+signal restart ## Emitted when the player wants the level to restart, such as dying
+signal reached_goal ## emitted when the player reaches the goal
 
 const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
 	Direction.LEFT: "IdleLeft",
@@ -22,11 +22,8 @@ func _init() -> void:
 
 ## Snaps the player to its starting grid cell.
 func _ready() -> void:
-	position = GridWorld.cell_to_world(grid_position)
-	attack = attack_scene.instantiate() as Attack
-	add_sibling.call_deferred(attack)
+	super()
 	update_animation()
-	sprite.animation_finished.connect(_on_attack_finish)
 	anim_player = $AnimationPlayer
 	anim_player.play("RESET")
 
@@ -43,10 +40,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("player_attack") and not event.is_echo():
 		try_attack()
 
+## updates the idle animation to the direction the player is facing
 func update_animation() -> void:
 	var anim_name: String = DIRECTION_ANIMATIONS[facing]
 	sprite.play(anim_name)
 
+## Plays the attack animation, spawns the attacks markers
 func play_attack_animation(cells: Array[Vector2i]) -> void:
 	sprite.play("Attack")
 	var attacks: Array[Attack] = spawn_attack_markers(cells)
@@ -77,11 +76,6 @@ func try_move(direction: Vector2i) -> void:
 	slide_along(path, SPEED)
 	UpdateManager.run_turn()
 	
-	if GridWorld.is_goal(path.back()):
-		await active_tween.finished
-		if not health_component.is_dead:
-			reached_goal.emit()
-	
 	if path.size() > 2:
 		sprite.play("Slide")
 		await active_tween.finished
@@ -97,9 +91,15 @@ func try_move(direction: Vector2i) -> void:
 			sprite.play("StepLeft")
 		elif facing == Direction.RIGHT:
 			sprite.play("StepRight")
+	
+	if GridWorld.is_goal(path.back()):
+		if active_tween.is_running():
+			await active_tween.finished
+		if not health_component.is_dead:
+			reached_goal.emit()
 
-## The player attacks the tile right next to them
-## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]
+## The player attacks according to their attack pattern
+## If there is an [Entity] that [Entity] will run [member Entity.take_hit()]
 func try_attack() -> void:
 	_set_animating(true)
 	var attack_cells: Array[Vector2i] = get_attack_cells()
@@ -130,17 +130,14 @@ func _get_direction(event: InputEvent) -> Vector2i:
 		return Vector2i(0, 1)
 	return Vector2i.ZERO
 
-## Unlocks input and and hides attack when the attack animation ends
-func _on_attack_finish() -> void:
-	if sprite.animation == "Attack":
-		_set_animating(false)
-		update_animation()
-
+## Restarts the level from the start or previous checkpoint
 func die() -> void:
-	health_component.is_dead = true
 	restart.emit()
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if sprite.animation.begins_with("Step"):
+		update_animation()
+	if sprite.animation == "Attack":
+		_set_animating(false)
 		update_animation()

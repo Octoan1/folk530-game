@@ -14,6 +14,7 @@ func setup(ground: TileMapLayer, walls: TileMapLayer) -> void:
 
 ## Clears the map references, for use when a level is unloaded.
 func clear() -> void:
+	player = null
 	map = null
 	wall_map = null
 	occupants.clear()
@@ -34,7 +35,7 @@ func world_to_cell(world_position: Vector2) -> Vector2i:
 	var cell: Vector2i = map.local_to_map(map.to_local(world_position))
 	return cell
 
-## Returns whether the player is allowed to step into the given cell.
+## Returns whether the entity is allowed to step into the given cell.
 ## [param cell] The grid coordinate to test.
 ## [return] True if the cell is free to walk on, false if it is blocked.
 func is_walkable(cell: Vector2i) -> bool:
@@ -82,32 +83,28 @@ func remove_entity(entity: Entity) -> void:
 ## [param cell] The grid coordinate to test.
 ## [return] True if the cell has a ground tile marked as ice.
 func is_ice(cell: Vector2i) -> bool:
-	var tile: TileData = map.get_cell_tile_data(cell)
-	if tile == null:
-		return false
-	if tile.get_custom_data("is_ice"):
-		return true
-	return false
+	return _check_custom_data(cell, "is_ice")
 
 ## Returns whether the ground at the given cell is a checkpoint.
 ## [param cell] The grid coordinate to test.
 ## [return] True if the cell has a ground tile marked as checkpoint.
 func is_checkpoint(cell: Vector2i) -> bool:
-	var tile: TileData = map.get_cell_tile_data(cell)
-	if tile == null:
-		return false
-	if tile.get_custom_data("is_checkpoint"):
-		return true
-	return false
+	return _check_custom_data(cell, "is_checkpoint")
 
 ## Returns whether the ground at the given cell is a goal.
 ## [param cell] The grid coordinate to test.
 ## [return] True if the cell has a ground tile marked as goal.
 func is_goal(cell: Vector2i) -> bool:
+	return _check_custom_data(cell, "is_goal")
+
+## Helper function for the is_(data_name) functions.
+## [param cell] The cell the function is checking
+## [param data_name] The custom_data_name to check
+func _check_custom_data(cell: Vector2i, data_name: String) -> bool:
 	var tile: TileData = map.get_cell_tile_data(cell)
 	if tile == null:
 		return false
-	if tile.get_custom_data("is_goal"):
+	if tile.get_custom_data(data_name):
 		return true
 	return false
 
@@ -119,11 +116,11 @@ func is_goal(cell: Vector2i) -> bool:
 func get_sight_direction(from: Vector2i, to: Vector2i, max_range: int) -> Vector2i:
 	if from.x != to.x and from.y != to.y:
 		return Vector2i.ZERO
-	var distance: int = abs(from.y - to.y) if from.x == to.x else abs(from.x - to.x)
+	var distance: int = absi(from.y - to.y) if from.x == to.x else absi(from.x - to.x)
 	if distance > max_range:
 		return Vector2i.ZERO
 	var direction: Vector2i = (to - from).sign()
-	for i: int in range(distance):
+	for i: int in range(1, distance):
 		var target: Vector2i = from + (direction * i)
 		var ent: Entity = get_entity_at(target)
 		if wall_map.get_cell_tile_data(target) != null or (ent != null and ent.blocks_vision):

@@ -6,8 +6,8 @@ extends Node2D
 @export var wall_map: TileMapLayer ## The map of tiles that are not walkable
 @export var player: Player ## The player, used to reach the camera and to listen for death
 
-signal completed
-signal restart_requested
+signal completed ## Called when the [member player] emits [member Player.reached_goal]
+signal restart_requested ## Called when the [member player] emits [member Player.restart]
 
 func _enter_tree() -> void:
 	GridWorld.setup(map, wall_map)
@@ -17,7 +17,7 @@ func _ready() -> void:
 	_apply_camera_limits()
 	player.restart.connect(restart_requested.emit)
 	player.reached_goal.connect(completed.emit)
-	if CheckpointManager.has_checkpoint_here():
+	if CheckpointManager.has_checkpoint:
 		GridWorld.move_entity(player, CheckpointManager.checkpoint_cell)
 		player.position = GridWorld.cell_to_world(player.grid_position)
 		player.camera.reset_smoothing()

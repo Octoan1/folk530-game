@@ -7,7 +7,7 @@ func play_at(cell: Vector2i, facing: Vector2i) -> void:
 	position = GridWorld.cell_to_world(cell)
 
 func end_attack() -> void:
-	visible = false
+	queue_free()
 
 func _rotate_by_vector(facing: Vector2i) -> void:
 	if facing == Vector2i(1, 0):

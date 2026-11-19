@@ -5,7 +5,7 @@ extends Enemy
 
 ## Sets up the sprite and the animation player.
 func _ready() -> void:
-	super._ready()
+	super()
 	update_animation()
 	anim_player = $AnimationPlayer
 	anim_player.play("RESET")
@@ -16,7 +16,7 @@ func take_turn() -> void:
 		resolve_telegraph()
 		return
 
-	await try_move()
+	try_move()
 
 	var target_cell: Vector2i = grid_position + direction_vector
 	var in_front: Entity = GridWorld.get_entity_at(target_cell)
@@ -33,7 +33,6 @@ func try_move() -> void:
 		return
 	GridWorld.move_entity(self, path.back())
 	slide_along(path, SPEED)
-	await active_tween.finished
 
 ## Flips the sprite to match the facing direction.
 func update_animation() -> void:
