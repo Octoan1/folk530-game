@@ -5,6 +5,9 @@ extends Entity
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 var step_left: bool = false
 
+const PLAYER_ATTACK:AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerAttack.wav")
+const SNOW_WALK: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SnowWalk.wav")
+
 signal restart
 
 const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
@@ -97,6 +100,7 @@ func try_move(direction: Vector2i) -> void:
 ## If there is an [Entity] that where [member Entity.is_killable] == true, then that entity will run [member Entity.die()]
 func try_attack() -> void:
 	_set_animating(true)
+	AudioManager.play_sfx(PLAYER_ATTACK,randf_range(.8,1.0), .2)
 	var attack_cells: Array[Vector2i] = get_attack_cells()
 	for attack_cell: Vector2i in attack_cells:
 		var entity_status: Entity = GridWorld.get_entity_at(attack_cell)
@@ -144,6 +148,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	if sprite.animation.begins_with("Step"):
 		update_animation()
 		
-func slide_along(path: Array[Vector2i], step_duration: float) -> void: 
+func slide_along(path: Array[Vector2i], step_duration: float) -> void:
+	AudioManager.play_sfx(SNOW_WALK,randf_range(.4,.8))
 	super(path, step_duration)
 	sprite.play("Slide")

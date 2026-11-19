@@ -8,11 +8,11 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _on_mouse_entered() -> void:
-	AudioManager.play_sfx(UI_HOVER)
+	AudioManager.play_sfx(UI_HOVER, 1.0, .2)
 	
 func  _on_focus_entered() -> void:
-	AudioManager.play_sfx(UI_HOVER)
+	AudioManager.play_sfx(UI_HOVER, 1.0, .2)
 
 func  _on_pressed() -> void:
-	AudioManager.play_sfx(UI_SELECT)
+	AudioManager.play_sfx(UI_SELECT, 1.0, .3)
 	

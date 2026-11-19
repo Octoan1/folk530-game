@@ -3,6 +3,7 @@ extends Enemy
 
 @onready var sprite: Sprite2D = $Sprite2D
 const SKELETON_DEATH: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SkeletonDeath.wav")
+const SKELETON_DAMAGED: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SkeletonDamaged.wav")
 
 ## preload("uid://typniyua3q75")Sets up the sprite and the animation player.
 func _ready() -> void:
@@ -43,6 +44,10 @@ func update_animation() -> void:
 	if facing == Direction.RIGHT:
 		sprite.flip_h = false
 
+func take_hit(damage: int = 1) -> void:
+	AudioManager.play_sfx(SKELETON_DAMAGED, randf_range(.6,1.0), .3)
+	super()
+
 func die() -> void:
-	AudioManager.play_sfx(SKELETON_DEATH)
+	AudioManager.play_sfx(SKELETON_DEATH, randf_range(.6,1.0), .3)
 	super()

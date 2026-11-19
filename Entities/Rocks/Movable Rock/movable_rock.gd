@@ -1,6 +1,8 @@
 class_name MovableRock
 extends Entity
 
+const ROCK_MOVE: AudioStreamWAV = preload("res://Assets/Sounds/SFX/RockMove.wav")
+
 ## Rocks never act on their own, so they stay out of the turn list.
 func _init() -> void:
 	takes_turns = false
@@ -23,6 +25,7 @@ func on_bumped(direction: Vector2i) -> bool:
 
 		GridWorld.move_entity(self, path.back())
 		slide_along(path, SPEED)
+		AudioManager.play_sfx(ROCK_MOVE, .6, .4)
 		return true
 	
 	return false
