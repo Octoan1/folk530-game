@@ -33,7 +33,10 @@ func try_move() -> void:
 	if path.is_empty():
 		return
 	GridWorld.move_entity(self, path.back())
-	slide_along(path, SPEED)
+	if _is_move_visible(path):
+		slide_along(path, SPEED)
+	else:
+		position = GridWorld.cell_to_world(grid_position)
 
 ## Flips the sprite to match the facing direction.
 func update_animation() -> void:
