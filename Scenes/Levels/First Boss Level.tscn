@@ -35,6 +35,7 @@ tile_set = ExtResource("3_uerpq")
 
 [node name="Player" parent="." unique_id=605168488 instance=ExtResource("4_mgcu0")]
 position = Vector2(60, 54)
+attack_pattern = ExtResource("8_ylkgl")
 priority = null
 facing = 3
 
