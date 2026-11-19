@@ -80,7 +80,6 @@ func try_move(direction: Vector2i) -> void:
 	if GridWorld.is_goal(path.back()):
 		await active_tween.finished
 		if not health_component.is_dead:
-			CheckpointManager.has_checkpoint = false
 			reached_goal.emit()
 	
 	if path.size() > 2:
