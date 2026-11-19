@@ -57,7 +57,6 @@ func play_attack_animation(cells: Array[Vector2i]) -> void:
 	elif facing == Direction.RIGHT:
 		sprite.play("AttackRight")
 
-	sprite.play("Attack")
 	var attacks: Array[Attack] = spawn_attack_markers(cells)
 	await get_tree().create_timer(0.1).timeout
 	for att: Attack in attacks:

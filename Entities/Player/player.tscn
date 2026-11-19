@@ -368,11 +368,10 @@ script = ExtResource("1_kk56y")
 attack_scene = ExtResource("2_5c2io")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=222711314]
+z_index = 1
 sprite_frames = SubResource("SpriteFrames_bd4fl")
-animation = &"AttackDown"
+animation = &"IdleDown"
 autoplay = "IdleDown"
-frame = 2
-frame_progress = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2140788422]
 visible = false
