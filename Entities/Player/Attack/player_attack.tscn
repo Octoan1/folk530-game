@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://wvklsiw5gkks" path="res://Entities/attack_def.png" id="2_qlnce"]
 
 [node name="PlayerAttack" type="Node2D" unique_id=2033589436]
+visible = false
 script = ExtResource("1_13rqx")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=120875722]
