@@ -1,14 +1,14 @@
 [gd_scene format=4 uid="uid://8uw00jefxvfr"]
 
-[ext_resource type="Script" uid="uid://bttj0vs1yqpdc" path="res://Scenes/Testing/level.gd" id="1_gtn6y"]
+[ext_resource type="Script" uid="uid://bttj0vs1yqpdc" path="res://Components/level.gd" id="1_gtn6y"]
 [ext_resource type="TileSet" uid="uid://c01s0xnf4gmg5" path="res://Data/TileSets/test_tile_set.tres" id="1_phepx"]
 [ext_resource type="PackedScene" uid="uid://vv40gfq7vlvh" path="res://Entities/Player/player.tscn" id="2_1njcr"]
 [ext_resource type="TileSet" uid="uid://csl2mysee65vv" path="res://Data/TileSets/entity_set.tres" id="3_mqm71"]
 [ext_resource type="PackedScene" uid="uid://pw47f5bomorg" path="res://Entities/Skeleton/skeleton.tscn" id="3_tfjqa"]
 [ext_resource type="PackedScene" uid="uid://dexrbkkkyxvhe" path="res://Entities/Skeleton/Attack/TileAttack.tscn" id="6_hqjqb"]
 [ext_resource type="Resource" uid="uid://bskjj3jqfv1fa" path="res://Data/Attack Patterns/line_2.tres" id="6_wr4o1"]
-[ext_resource type="Resource" uid="uid://368y0ud5mhw8" path="res://Data/Attack Patterns/front_3.tres" id="8_60cyn"]
 [ext_resource type="Script" uid="uid://dqvct5oo6moev" path="res://Components/attack_pattern.gd" id="9_c07ng"]
+[ext_resource type="PackedScene" uid="uid://d4brf0u8ls687" path="res://Entities/FollowEnemy/follow_enemy.tscn" id="10_60cyn"]
 [ext_resource type="Resource" uid="uid://wj5dx4awad3y" path="res://Data/Attack Patterns/line_8.tres" id="10_wr4o1"]
 
 [sub_resource type="Resource" id="Resource_rwc0h"]
@@ -41,12 +41,6 @@ priority = 1
 attack_scene = ExtResource("6_hqjqb")
 facing = 2
 
-[node name="Skeleton2" parent="." unique_id=1938260570 instance=ExtResource("3_tfjqa")]
-position = Vector2(23, 39)
-attack_pattern = ExtResource("8_60cyn")
-priority = 1
-attack_scene = ExtResource("6_hqjqb")
-
 [node name="Skeleton3" parent="." unique_id=380927411 instance=ExtResource("3_tfjqa")]
 position = Vector2(170, 37)
 attack_pattern = SubResource("Resource_rwc0h")
@@ -56,3 +50,8 @@ attack_scene = ExtResource("6_hqjqb")
 [node name="Player" parent="." unique_id=605168488 instance=ExtResource("2_1njcr")]
 position = Vector2(41, 56)
 attack_pattern = ExtResource("10_wr4o1")
+
+[node name="FollowEnemy" parent="." unique_id=1909940509 instance=ExtResource("10_60cyn")]
+position = Vector2(56, 38)
+damage = 2
+attack_scene = ExtResource("6_hqjqb")

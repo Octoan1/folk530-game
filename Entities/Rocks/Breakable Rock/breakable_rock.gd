@@ -5,10 +5,11 @@ extends Entity
 func _init() -> void:
 	takes_turns = false
 	is_killable = true
+	blocks_vision = true
 
 ## Snaps the rock to its starting cell.
 func _ready() -> void:
-	position = GridWorld.cell_to_world(grid_position)
+	super()
 
-func take_hit(damage: int = 1) -> void:
+func take_hit(_amount: int = 1) -> void:
 	die()
