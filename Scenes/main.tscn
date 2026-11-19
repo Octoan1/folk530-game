@@ -1,13 +1,15 @@
 [gd_scene format=3 uid="uid://6lleoe8shpt1"]
 
 [ext_resource type="Script" uid="uid://cb3w15mhfpc2u" path="res://Scenes/main.gd" id="1_bo1nx"]
-[ext_resource type="PackedScene" uid="uid://8uw00jefxvfr" path="res://Scenes/Testing/test_map.tscn" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://0ijff727r4ad" path="res://UI/Black Fade/black_fade.tscn" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://cujydggancv5j" path="res://Scenes/Levels/tutorial_map.tscn" id="3_jjvhh"]
+[ext_resource type="PackedScene" uid="uid://gj8kt82s2xsx" path="res://Scenes/Levels/Level 1(mock).tscn" id="4_6bp64"]
+[ext_resource type="PackedScene" uid="uid://baw3libijh8lc" path="res://Scenes/Levels/First Boss Level.tscn" id="5_344ge"]
+[ext_resource type="PackedScene" uid="uid://5fuq5uimmhjc" path="res://Scenes/Levels/Level 2(mock).tscn" id="6_ynf5e"]
 
 [node name="Main" type="Node" unique_id=258118944]
 script = ExtResource("1_bo1nx")
-levels = Array[PackedScene]([ExtResource("1_jjgbg"), ExtResource("3_jjvhh")])
+levels = Array[PackedScene]([ExtResource("3_jjvhh"), ExtResource("4_6bp64"), ExtResource("5_344ge"), ExtResource("6_ynf5e")])
 
 [node name="LevelContainer" type="Node" parent="." unique_id=1427037722]
 
