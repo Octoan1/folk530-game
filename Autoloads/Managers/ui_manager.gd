@@ -3,7 +3,10 @@ extends CanvasLayer
 var paused : bool = false
 
 @onready var pause_menu: PackedScene = preload("uid://bga18orbjq57d")
+@onready var dialog_screen: PackedScene = preload("uid://d4jc7npoer6kq")
+
 var current_pause_menu: Control = null
+var current_dialog_screen: DialogBox = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -27,6 +30,8 @@ func toggle_pause() -> void:
 		paused = true
 		get_tree().paused = true
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
+func start_dialog(data: DialogData) -> void:
+	current_dialog_screen = dialog_screen.instantiate()
+	current_dialog_screen.start(data)
+	add_child(current_dialog_screen)
+	

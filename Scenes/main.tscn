@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://gj8kt82s2xsx" path="res://Scenes/Levels/Level 1(mock).tscn" id="4_6bp64"]
 [ext_resource type="PackedScene" uid="uid://baw3libijh8lc" path="res://Scenes/Levels/First Boss Level.tscn" id="5_344ge"]
 [ext_resource type="PackedScene" uid="uid://5fuq5uimmhjc" path="res://Scenes/Levels/Level 2(mock).tscn" id="6_ynf5e"]
+[ext_resource type="PackedScene" uid="uid://d4jc7npoer6kq" path="res://UI/Dialog/dialog_box.tscn" id="7_6bp64"]
 
 [node name="Main" type="Node" unique_id=258118944]
 script = ExtResource("1_bo1nx")
@@ -14,3 +15,5 @@ levels = Array[PackedScene]([ExtResource("3_jjvhh"), ExtResource("4_6bp64"), Ext
 [node name="LevelContainer" type="Node" parent="." unique_id=1427037722]
 
 [node name="BlackFade" parent="." unique_id=1217026584 instance=ExtResource("3_8gbba")]
+
+[node name="DialogBox" parent="." unique_id=816025234 instance=ExtResource("7_6bp64")]

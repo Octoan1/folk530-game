@@ -1,6 +1,8 @@
 class_name Player
 extends Entity
 
+@export var temp_data: DialogData
+
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 var step_left: bool = false
@@ -38,6 +40,9 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if health_component.is_dead or UpdateManager.is_busy():
 		return
+	
+	if event.is_action_pressed("player_interact"):
+		UiManager.start_dialog(temp_data)
 
 	var direction: Vector2i = _get_direction(event)
 	if direction != Vector2i.ZERO:

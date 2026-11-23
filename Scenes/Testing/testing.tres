@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogData" format=3 uid="uid://bw5g8net87jsm"]
+
+[ext_resource type="Script" uid="uid://b0xvcvwjdvcd2" path="res://Components/dialog_data.gd" id="1_4ily2"]
+
+[resource]
+script = ExtResource("1_4ily2")
+speaker = "Testing Name"
+lines = PackedStringArray("Line 1 :)", "Line 2 :|", "Line 3 :(")
+metadata/_custom_type_script = "uid://b0xvcvwjdvcd2"

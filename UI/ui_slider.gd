@@ -13,7 +13,7 @@ func _on_mouse_entered() -> void:
 func  _on_focus_entered() -> void:
 	AudioManager.play_sfx(UI_HOVER, 1.0, .2)
 	
-func _on_value_changed(value: float) -> void:
+func _on_value_changed(_value: float) -> void:
 	AudioManager.play_sfx(UI_HOVER, 1.0, .2)
 
 func  _on_drag_started() -> void:

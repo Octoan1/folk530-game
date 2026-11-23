@@ -10,6 +10,7 @@
 [ext_resource type="FontFile" uid="uid://bk05fq260avks" path="res://UI/Fonts/UndeadPixelLight8/Undead Pixel 8.ttf" id="8_f5bqe"]
 [ext_resource type="PackedScene" uid="uid://c5rvjj5xhh2ch" path="res://Entities/Raven/raven.tscn" id="8_fsic1"]
 [ext_resource type="Resource" uid="uid://368y0ud5mhw8" path="res://Data/Attack Patterns/front_3.tres" id="8_rlump"]
+[ext_resource type="Resource" uid="uid://bw5g8net87jsm" path="res://Scenes/Testing/testing.tres" id="8_vhgrh"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_mqm71"]
 scenes/1/scene = ExtResource("3_f6tfk")
@@ -50,6 +51,7 @@ facing = 0
 
 [node name="Player" parent="." unique_id=605168488 instance=ExtResource("6_qsoc6")]
 position = Vector2(41, 58)
+temp_data = ExtResource("8_vhgrh")
 attack_pattern = ExtResource("8_rlump")
 
 [node name="HelgiRevengeLabel" type="Label" parent="." unique_id=523424598]
