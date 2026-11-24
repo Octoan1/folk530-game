@@ -128,6 +128,12 @@ func can_interact() -> bool:
 func interact() -> void:
 	pass
 
+func show_prompt() -> void:
+	pass
+
+func hide_prompt() -> void:
+	pass
+
 ## Works out where an entity ends up after stepping in a direction,
 ## including any sliding on ice.
 ## [param start] The cell the entity is leaving.

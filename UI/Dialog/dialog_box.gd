@@ -15,7 +15,8 @@ var curr_index: int = 0
 signal finished
 
 func _ready() -> void:
-	continue_label.text = "Press " + InputMap.action_get_events("player_interact")[0].as_text().substr(0,1) + " to continue. . ."
+	process_mode = Node.PROCESS_MODE_PAUSABLE
+	continue_label.text = "Press " + UiManager.get_action_key_text("player_interact") + " to continue. . ."
 
 ## Shows the conversation and starts the first line.
 ## [param data] The conversation to display.
@@ -24,6 +25,8 @@ func start(data: DialogData) -> void:
 	curr_index = 0
 	visible = true
 	name_label.text = data.speaker
+	if data.lines.is_empty():
+		finished.emit()
 	play_line(curr_index)
 
 func play_line(index: int) -> void:
@@ -32,7 +35,7 @@ func play_line(index: int) -> void:
 	dialog_box.text = dialog.lines[index]
 	dynamic_typing(dialog_box.text.length() / CHARS_PER_SEC)
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("player_interact"):
 		if is_typing:
 			_on_tween_end()
@@ -40,6 +43,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			play_line(curr_index)
 		else:
 			finished.emit()
+		get_viewport().set_input_as_handled()
 	
 
 func dynamic_typing(duration: float) -> void:

@@ -32,6 +32,8 @@ func toggle_pause() -> void:
 		get_tree().paused = true
 
 func start_dialog(data: DialogData) -> void:
+	if is_dialog_open:
+		return
 	current_dialog_screen = dialog_screen.instantiate()
 	add_child(current_dialog_screen)
 	current_dialog_screen.finished.connect(end_dialog)
@@ -43,4 +45,17 @@ func end_dialog() -> void:
 		current_dialog_screen.queue_free()
 		current_dialog_screen = null
 	is_dialog_open = false
+
+## Returns the name of the key currently bound to an input action.
+## [param action] The action to look up.
+## [return] The key's display name, or "?" if the action has no keyboard binding.
+func get_action_key_text(action: StringName) -> String:
+	var keys: Array[InputEvent] = InputMap.action_get_events(action)
+	if keys == null:
+		return ""
+	var key: InputEvent = keys[0]
+	if key is InputEventKey:
+		return (key as InputEventKey).as_text_physical_keycode()
+	else:
+		return key.as_text()
 	

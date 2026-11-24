@@ -52,8 +52,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("player_attack") and not event.is_echo():
 		try_attack()
-	
-	_update_interactable()
 
 ## updates the idle animation to the direction the player is facing
 func update_animation() -> void:
@@ -144,10 +142,10 @@ func _update_interactable() -> void:
 	var new_entity: Entity = GridWorld.get_entity_at(grid_position + direction_vector)
 	if focus_entity == new_entity:
 		return
-	if focus_entity is npc:
+	if focus_entity != null:
 		focus_entity.hide_prompt()
 	focus_entity = new_entity
-	if focus_entity != null and focus_entity is npc and focus_entity.can_interact():
+	if focus_entity != null and focus_entity.can_interact():
 		focus_entity.show_prompt()
 
 ## Converts an input event into a grid direction.
@@ -158,15 +156,19 @@ func _get_direction(event: InputEvent) -> Vector2i:
 		return Vector2i.ZERO
 	if event.is_action_pressed("player_left"):
 		facing = Direction.LEFT
+		_update_interactable()
 		return Vector2i(-1, 0)
 	if event.is_action_pressed("player_right"):
 		facing = Direction.RIGHT
+		_update_interactable()
 		return Vector2i(1, 0)
 	if event.is_action_pressed("player_up"):
 		facing = Direction.UP
+		_update_interactable()
 		return Vector2i(0, -1)
 	if event.is_action_pressed("player_down"):
 		facing = Direction.DOWN
+		_update_interactable()
 		return Vector2i(0, 1)
 	return Vector2i.ZERO
 
@@ -194,3 +196,7 @@ func slide_along(path: Array[Vector2i], step_duration: float) -> void:
 	AudioManager.play_sfx(SNOW_WALK,randf_range(.4,.8))
 	super(path, step_duration)
 	sprite.play("Slide")
+
+func _on_tween_end() -> void:
+	_update_interactable()
+	super()

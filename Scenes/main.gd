@@ -14,7 +14,7 @@ func _ready() -> void:
 	load_level(start_index, 0.0)
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if event.is_action_pressed("level_restart"):
+	if event.is_action_pressed("level_restart") and not UiManager.is_dialog_open:
 		restart_level()
 	
 ## Fades out, replaces the current level with the one at the given index, replaces the current index, then fades in.
