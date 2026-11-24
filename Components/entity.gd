@@ -119,6 +119,15 @@ func die() -> void:
 func on_bumped(_direction: Vector2i) -> bool:
 	return false
 
+## Returns whether the player can talk to or use this entity.
+## [return] True if this entity responds to the interact button.
+func can_interact() -> bool:
+	return false
+
+## Called when the player presses interact while facing this entity.
+func interact() -> void:
+	pass
+
 ## Works out where an entity ends up after stepping in a direction,
 ## including any sliding on ice.
 ## [param start] The cell the entity is leaving.

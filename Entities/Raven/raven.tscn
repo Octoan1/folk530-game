@@ -1,10 +1,17 @@
 [gd_scene format=3 uid="uid://c5rvjj5xhh2ch"]
 
-[ext_resource type="Script" uid="uid://cv6atdrcehpp" path="res://Entities/Rocks/Breakable Rock/breakable_rock.gd" id="1_650pp"]
+[ext_resource type="Script" uid="uid://dmd3bdol7kvcl" path="res://Components/npc.gd" id="1_q0dcs"]
 [ext_resource type="Texture2D" uid="uid://dogee5r0vqxr5" path="res://Entities/Raven/Raven.png" id="2_q0dcs"]
+[ext_resource type="PackedScene" uid="uid://c1yf1gaou0joc" path="res://UI/Dialog/interact_label.tscn" id="3_lr6qw"]
 
 [node name="Raven" type="Node2D" unique_id=78769268]
-script = ExtResource("1_650pp")
+script = ExtResource("1_q0dcs")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1596359149]
 texture = ExtResource("2_q0dcs")
+
+[node name="InteractLabel" parent="." unique_id=698523624 instance=ExtResource("3_lr6qw")]
+offset_left = -13.0
+offset_top = -16.0
+offset_right = 21.0
+offset_bottom = -9.0

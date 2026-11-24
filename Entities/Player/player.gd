@@ -5,7 +5,9 @@ extends Entity
 
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 var step_left: bool = false
+var focus_entity: Entity
 
 const PLAYER_ATTACK:AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerAttack.wav")
 const SNOW_WALK: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SnowWalk.wav")
@@ -38,11 +40,11 @@ func _ready() -> void:
 ## Handles input: validates a step, commits it, then advances the world.
 ## [param event] The input event received this frame.
 func _unhandled_input(event: InputEvent) -> void:
-	if health_component.is_dead or UpdateManager.is_busy():
+	if health_component.is_dead or UpdateManager.is_busy() or UiManager.is_dialog_open:
 		return
 	
 	if event.is_action_pressed("player_interact"):
-		UiManager.start_dialog(temp_data)
+		try_interact()
 
 	var direction: Vector2i = _get_direction(event)
 	if direction != Vector2i.ZERO:
@@ -50,6 +52,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("player_attack") and not event.is_echo():
 		try_attack()
+	
+	_update_interactable()
 
 ## updates the idle animation to the direction the player is facing
 func update_animation() -> void:
@@ -129,6 +133,22 @@ func try_attack() -> void:
 			entity_status.take_hit()
 	await play_attack_animation(attack_cells)
 	UpdateManager.run_turn()
+
+
+func try_interact() -> void:
+	var ent: Entity = GridWorld.get_entity_at(grid_position + direction_vector)
+	if ent != null and ent.can_interact():
+		ent.interact()
+
+func _update_interactable() -> void:
+	var new_entity: Entity = GridWorld.get_entity_at(grid_position + direction_vector)
+	if focus_entity == new_entity:
+		return
+	if focus_entity is npc:
+		focus_entity.hide_prompt()
+	focus_entity = new_entity
+	if focus_entity != null and focus_entity is npc and focus_entity.can_interact():
+		focus_entity.show_prompt()
 
 ## Converts an input event into a grid direction.
 ## [param event] The input event to interpret.

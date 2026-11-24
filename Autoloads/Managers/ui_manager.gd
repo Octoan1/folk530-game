@@ -7,6 +7,7 @@ var paused : bool = false
 
 var current_pause_menu: Control = null
 var current_dialog_screen: DialogBox = null
+var is_dialog_open: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,6 +33,14 @@ func toggle_pause() -> void:
 
 func start_dialog(data: DialogData) -> void:
 	current_dialog_screen = dialog_screen.instantiate()
-	current_dialog_screen.start(data)
 	add_child(current_dialog_screen)
+	current_dialog_screen.finished.connect(end_dialog)
+	current_dialog_screen.start(data)
+	is_dialog_open = true
+
+func end_dialog() -> void:
+	if current_dialog_screen != null:
+		current_dialog_screen.queue_free()
+		current_dialog_screen = null
+	is_dialog_open = false
 	

@@ -66,7 +66,8 @@ horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="Raven" parent="." unique_id=78769268 instance=ExtResource("8_fsic1")]
-position = Vector2(74, 20)
+position = Vector2(38, 18)
+dialog = ExtResource("8_vhgrh")
 
 [node name="Raven2" parent="." unique_id=1936852239 instance=ExtResource("8_fsic1")]
 position = Vector2(1240, 46)

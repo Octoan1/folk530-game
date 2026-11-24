@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c1yf1gaou0joc"]
+
+[node name="InteractLabel" type="Label" unique_id=698523624]
+visible = false
+theme_override_font_sizes/font_size = 4
+text = "Press To Interact"

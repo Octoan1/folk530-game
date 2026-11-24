@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://bw524rgivvdc3" path="res://UI/Dialog/dialog_box.gd" id="1_ocdso"]
 
 [node name="DialogBox" type="Control" unique_id=816025234]
-visible = false
 layout_mode = 3
 anchors_preset = 12
 anchor_top = 1.0
@@ -17,7 +16,10 @@ script = ExtResource("1_ocdso")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = -75.0
+offset_left = 4.0
+offset_top = -50.0
+offset_right = -3.0
+offset_bottom = -3.0
 grow_horizontal = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Panel" unique_id=1277302676]
@@ -27,17 +29,27 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 3.0
-offset_top = -60.0
+offset_top = -39.0
 offset_right = -3.0
 offset_bottom = -3.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/normal_font_size = 8
 
-[node name="Label" type="Label" parent="Panel" unique_id=1378927857]
+[node name="NameLabel" type="Label" parent="Panel" unique_id=1378927857]
 layout_mode = 0
 offset_left = 2.0
 offset_top = 1.0
-offset_right = 253.0
-offset_bottom = 13.0
-theme_override_font_sizes/font_size = 8
+offset_right = 178.0
+offset_bottom = 11.0
+theme_override_font_sizes/font_size = 6
+text = "NAME"
+
+[node name="ContinueLabel" type="Label" parent="Panel" unique_id=1354364500]
+layout_mode = 0
+offset_left = 179.0
+offset_top = 2.0
+offset_right = 246.0
+offset_bottom = 11.0
+theme_override_font_sizes/font_size = 6
+text = " Press X to Continue. . ."
