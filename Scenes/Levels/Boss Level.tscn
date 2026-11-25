@@ -15,7 +15,7 @@ font = ExtResource("9_m3ejt")
 font_size = 8
 shadow_size = 0
 
-[node name="Aidan\'sSpecialFunhouse2" type="Node2D" unique_id=2081082940 node_paths=PackedStringArray("map", "wall_map", "player")]
+[node name="Boss Level" type="Node2D" unique_id=2081082940 node_paths=PackedStringArray("map", "wall_map", "player")]
 script = ExtResource("1_e6rf2")
 map = NodePath("FloorLayer")
 wall_map = NodePath("WallLayer")
