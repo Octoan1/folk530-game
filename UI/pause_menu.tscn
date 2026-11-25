@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://b4ic1w2dtf6kj" path="res://UI/pause_menu.gd" id="1_jfm1e"]
 [ext_resource type="Theme" uid="uid://bcvvv3fsgbe4" path="res://UI/ui_theme.tres" id="1_ltd3m"]
+[ext_resource type="Texture2D" uid="uid://dqkkc56m11ne5" path="res://UI/PauseBG.png" id="2_03fe5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_61hl2"]
+font_size = 8
+
+[sub_resource type="Theme" id="Theme_adp76"]
 
 [node name="PauseMenu" type="Control" unique_id=237532825 node_paths=PackedStringArray("resume_button", "music_slider", "sfx_slider")]
 layout_mode = 3
@@ -11,24 +17,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jfm1e")
-resume_button = NodePath("PauseContainer/ResumeButton")
-music_slider = NodePath("PauseContainer/MusicSlider")
-sfx_slider = NodePath("PauseContainer/SFXSlider")
+resume_button = NodePath("PauseContainer/PauseContainer2/ResumeButton")
+music_slider = NodePath("PauseContainer/PauseContainer2/MusicSlider")
+sfx_slider = NodePath("PauseContainer/PauseContainer2/SFXSlider")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1001814895]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -38.0
-offset_top = -49.0
-offset_right = 38.0
-offset_bottom = 49.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.19607843)
+[node name="TextureRect" type="TextureRect" parent="." unique_id=20287437]
+layout_mode = 0
+offset_left = 78.0
+offset_top = 2.0
+offset_right = 178.0
+offset_bottom = 142.0
+texture = ExtResource("2_03fe5")
 
 [node name="PauseContainer" type="VBoxContainer" parent="." unique_id=780390034]
 layout_mode = 1
@@ -44,6 +43,7 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_ltd3m")
+theme_override_constants/separation = 12
 
 [node name="PauseLabel" type="Label" parent="PauseContainer" unique_id=1644636843]
 layout_mode = 2
@@ -51,21 +51,41 @@ theme = ExtResource("1_ltd3m")
 theme_type_variation = &"HeaderSmall"
 text = "Paused!"
 
-[node name="ResumeButton" type="Button" parent="PauseContainer" unique_id=132990176]
+[node name="PauseContainer2" type="VBoxContainer" parent="PauseContainer" unique_id=477256251]
+layout_mode = 2
+theme = ExtResource("1_ltd3m")
+
+[node name="ResumeButton" type="Button" parent="PauseContainer/PauseContainer2" unique_id=132990176]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../MusicSlider")
 focus_next = NodePath("../MusicSlider")
 theme = ExtResource("1_ltd3m")
+theme_override_font_sizes/font_size = 12
 text = "RESUME"
 
-[node name="MusicSlider" type="HSlider" parent="PauseContainer" unique_id=2110935419]
+[node name="Music" type="Label" parent="PauseContainer/PauseContainer2" unique_id=1649685879]
+layout_mode = 2
+theme = ExtResource("1_ltd3m")
+theme_type_variation = &"HeaderSmall"
+text = "Music"
+label_settings = SubResource("LabelSettings_61hl2")
+
+[node name="MusicSlider" type="HSlider" parent="PauseContainer/PauseContainer2" unique_id=2110935419]
 layout_mode = 2
 
-[node name="SFXSlider" type="HSlider" parent="PauseContainer" unique_id=1757931488]
+[node name="SFX" type="Label" parent="PauseContainer/PauseContainer2" unique_id=232057842]
+layout_mode = 2
+theme = ExtResource("1_ltd3m")
+theme_type_variation = &"HeaderSmall"
+text = "SFX"
+label_settings = SubResource("LabelSettings_61hl2")
+
+[node name="SFXSlider" type="HSlider" parent="PauseContainer/PauseContainer2" unique_id=1757931488]
 process_mode = 3
 layout_mode = 2
+theme = SubResource("Theme_adp76")
 step = 5.0
 
-[connection signal="pressed" from="PauseContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="value_changed" from="PauseContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
-[connection signal="value_changed" from="PauseContainer/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="PauseContainer/PauseContainer2/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="value_changed" from="PauseContainer/PauseContainer2/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="PauseContainer/PauseContainer2/SFXSlider" to="." method="_on_sfx_slider_value_changed"]

@@ -2,5 +2,26 @@
 
 [ext_resource type="FontFile" uid="uid://bk05fq260avks" path="res://UI/Fonts/UndeadPixelLight8/Undead Pixel 8.ttf" id="1_it55r"]
 
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_it55r"]
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+vertical = true
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_nben2"]
+color = Color(1, 1, 1, 1)
+grow_begin = 0.0
+grow_end = 0.0
+vertical = true
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s437d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p8160"]
+
 [resource]
 default_font = ExtResource("1_it55r")
+Button/colors/font_outline_color = Color(0, 0, 0, 0)
+Button/styles/focus = SubResource("StyleBoxLine_it55r")
+Button/styles/hover = SubResource("StyleBoxLine_nben2")
+Button/styles/normal = SubResource("StyleBoxEmpty_s437d")
+Button/styles/pressed = SubResource("StyleBoxEmpty_p8160")
