@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dxha5v6r8hmus" path="res://Entities/Player/player.gd" id="1_kk56y"]
 [ext_resource type="PackedScene" uid="uid://dfop2xbvm74h3" path="res://Entities/Player/Attack/player_attack.tscn" id="2_5c2io"]
 [ext_resource type="Texture2D" uid="uid://cl43cjoivfvmm" path="res://Entities/Player/player-Sheet.png" id="3_5c2io"]
+[ext_resource type="Texture2D" uid="uid://cnxv4ij8htgca" path="res://Entities/Player/Attack/Chicken Red.png" id="4_01a4e"]
 [ext_resource type="Texture2D" uid="uid://bdvxb1cxioje5" path="res://Entities/Player/icon.png" id="5_5c2io"]
 [ext_resource type="PackedScene" uid="uid://b6ofspxi4atgv" path="res://UI/Health/health_bar.tscn" id="6_01a4e"]
 [ext_resource type="AnimationLibrary" uid="uid://cnomtpl6jd7ib" path="res://Data/Animations/EntityAnimation.res" id="6_4wf4l"]
@@ -98,6 +99,14 @@ region = Rect2(0, 288, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_owvpp"]
 atlas = ExtResource("3_5c2io")
 region = Rect2(48, 288, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0bw0x"]
+atlas = ExtResource("4_01a4e")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d17g3"]
+atlas = ExtResource("4_01a4e")
+region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xr8lj"]
 atlas = ExtResource("3_5c2io")
@@ -281,6 +290,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_0bw0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d17g3")
+}],
+"loop": 0,
+"name": &"Shoot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_xr8lj")
 }, {
 "duration": 1.0,
@@ -370,8 +390,10 @@ attack_scene = ExtResource("2_5c2io")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=222711314]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_bd4fl")
-animation = &"StepRight"
+animation = &"Shoot"
 autoplay = "IdleDown"
+frame = 1
+frame_progress = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2140788422]
 visible = false

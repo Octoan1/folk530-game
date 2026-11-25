@@ -1,19 +1,17 @@
 class_name Player
 extends Entity
 
-@export var temp_data: DialogData
-
 @onready var camera: Camera2D = $Camera2D
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 var step_left: bool = false
 var focus_entity: Entity
 
-const PLAYER_ATTACK:AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerAttack.wav")
+const PROJECTILE_SCENE: PackedScene = preload("res://Entities/Projectile/projectile.tscn")
+const PLAYER_ATTACK: AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerAttack.wav")
 const SNOW_WALK: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SnowWalk.wav")
 const PLAYER_DAMAGED: AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerDamaged.wav")
 const PLAYER_DEATH: AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerDeath.wav")
-
 
 signal restart ## Emitted when the player wants the level to restart, such as dying
 signal reached_goal ## emitted when the player reaches the goal
@@ -52,6 +50,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("player_attack") and not event.is_echo():
 		try_attack()
+	
+	if event.is_action_pressed("player_shoot"): 
+		try_shoot()
 
 ## updates the idle animation to the direction the player is facing
 func update_animation() -> void:
@@ -73,6 +74,9 @@ func play_attack_animation(cells: Array[Vector2i]) -> void:
 	await get_tree().create_timer(0.1).timeout
 	for att: Attack in attacks:
 		att.end_attack()
+
+func _play_attack_sprite() -> void:
+	sprite.play("Shoot")
 
 ## Moves the player one step, sliding further if the path includes ice.
 ## If the step is blocked, nothing happens and no turn is spent.
@@ -130,6 +134,29 @@ func try_attack() -> void:
 		if entity_status != null and entity_status.is_killable:
 			entity_status.take_hit()
 	await play_attack_animation(attack_cells)
+	UpdateManager.run_turn()
+
+## Fires a projectile in the facing direction, or hits whatever is directly in front.
+## Does nothing, and costs no turn, if the cell in front is a wall.
+func try_shoot() -> void:
+	assert(PROJECTILE_SCENE != null, "Player has no projectile_scene assigned")
+	var cell: Vector2i = grid_position + direction_vector
+	if not GridWorld.is_walkable(cell):
+		return
+
+	_set_animating(true)
+	_play_attack_sprite()
+
+	var target: Entity = GridWorld.get_entity_at(cell)
+	if target != null:
+		if target.is_killable:
+			target.take_hit(damage)
+	else:
+		var projectile: Projectile = PROJECTILE_SCENE.instantiate() as Projectile
+		projectile.position = GridWorld.cell_to_world(cell)
+		projectile.facing = facing
+		get_parent().add_child(projectile)
+
 	UpdateManager.run_turn()
 
 
@@ -190,6 +217,8 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		update_animation()
 	if sprite.animation.begins_with("Attack"):
 		_set_animating(false)
+		update_animation()
+	if sprite.animation.begins_with("Shoot"):
 		update_animation()
 	
 func slide_along(path: Array[Vector2i], step_duration: float) -> void:

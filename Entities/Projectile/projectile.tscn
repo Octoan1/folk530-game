@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dkg2gjc58x5g2"]
+
+[ext_resource type="Script" uid="uid://m51s5k4bquma" path="res://Entities/Projectile/projectile.gd" id="1_run57"]
+[ext_resource type="Texture2D" uid="uid://ddlc0vcbeaev8" path="res://Assets/Objects/Baby Chicken Yellow.png" id="2_gk7te"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0t4wu"]
+atlas = ExtResource("2_gk7te")
+region = Rect2(32, 32, 16, 16)
+
+[node name="Projectile" type="Node2D" unique_id=2074424140]
+script = ExtResource("1_run57")
+metadata/_custom_type_script = "uid://m51s5k4bquma"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=202753471]
+texture = SubResource("AtlasTexture_0t4wu")

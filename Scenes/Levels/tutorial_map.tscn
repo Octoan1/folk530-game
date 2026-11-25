@@ -51,7 +51,6 @@ facing = 0
 
 [node name="Player" parent="." unique_id=605168488 instance=ExtResource("6_qsoc6")]
 position = Vector2(28, 55)
-temp_data = ExtResource("8_vhgrh")
 attack_pattern = ExtResource("8_rlump")
 
 [node name="HelgiRevengeLabel" type="Label" parent="." unique_id=523424598]
