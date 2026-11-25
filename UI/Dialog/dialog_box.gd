@@ -25,8 +25,6 @@ func start(data: DialogData) -> void:
 	curr_index = 0
 	visible = true
 	name_label.text = data.speaker
-	if data.lines.is_empty():
-		finished.emit()
 	play_line(curr_index)
 
 func play_line(index: int) -> void:

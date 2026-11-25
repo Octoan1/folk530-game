@@ -14,7 +14,7 @@ func _ready() -> void:
 	prompt.text = "Press " + UiManager.get_action_key_text("player_interact") + " to Talk!"
 
 func can_interact() -> bool:
-	return dialog != null
+	return dialog != null and not dialog.lines.is_empty()
 
 func interact() -> void:
 	UiManager.start_dialog(dialog)
