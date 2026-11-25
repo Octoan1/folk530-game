@@ -11,8 +11,9 @@ var music_player: AudioStreamPlayer
 # Music Tracks
 const ICY_DEMO: AudioStreamWAV = preload("res://Assets/Sounds/Music/IcyDemo.wav")
 
-
 # Repeating SFX
+const ICE_SLIDE_LOOP: AudioStreamWAV = preload("res://Assets/Sounds/SFX/IceSlideLoop.wav")
+var IceSlide: AudioStreamPlayer = create_sfx_adv(ICE_SLIDE_LOOP)
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -21,7 +22,9 @@ func _ready() -> void:
 	#music_player
 	add_child(music_player)
 	play_music(ICY_DEMO, .2)
-
+	
+	#repeating sfx
+	
 #region VOLUME
 
 func set_master_volume(volume: float) -> void:
@@ -89,15 +92,15 @@ func play_sfx(stream: AudioStream, pitch_scale: float = 1.0, volume_lin: float =
 
 func create_sfx_adv(stream: AudioStream, pitch_scale: float = 1.0, volume_lin: float = 1.0) -> AudioStreamPlayer:
 	# NOTE: YOU MUST MANUALLY FREED AND PLAYED THE NODE WHEN DONE
-
+	
 	var player: AudioStreamPlayer = AudioStreamPlayer.new()
 	player.stream = stream
 	player.bus = SFX_BUS
 	player.pitch_scale = pitch_scale
 	player.volume_linear = volume_lin
-
+	
 	add_child(player)
-
+	
 	active_sfx += 1
 	return player
 	#endregion

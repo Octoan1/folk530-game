@@ -14,7 +14,6 @@ const SNOW_WALK: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SnowWalk.wav"
 const PLAYER_DAMAGED: AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerDamaged.wav")
 const PLAYER_DEATH: AudioStreamWAV = preload("res://Assets/Sounds/SFX/PlayerDeath.wav")
 
-
 signal restart ## Emitted when the player wants the level to restart, such as dying
 signal reached_goal ## emitted when the player reaches the goal
 
@@ -196,7 +195,12 @@ func slide_along(path: Array[Vector2i], step_duration: float) -> void:
 	AudioManager.play_sfx(SNOW_WALK,randf_range(.4,.8))
 	super(path, step_duration)
 	sprite.play("Slide")
+	#RepeatingIceSlideSound
+	AudioManager.IceSlide.play()
+	get_tree().create_timer(step_duration).timeout
+	AudioManager.IceSlide.stop()
 
 func _on_tween_end() -> void:
 	_update_interactable()
 	super()
+
