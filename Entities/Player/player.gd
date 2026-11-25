@@ -215,10 +215,8 @@ func die() -> void:
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if sprite.animation.begins_with("Step"):
 		update_animation()
-	if sprite.animation.begins_with("Attack"):
+	if sprite.animation.begins_with("Attack") or sprite.animation.begins_with("Shoot"):
 		_set_animating(false)
-		update_animation()
-	if sprite.animation.begins_with("Shoot"):
 		update_animation()
 	
 func slide_along(path: Array[Vector2i], step_duration: float) -> void:

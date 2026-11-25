@@ -29,7 +29,7 @@ tile_map_data = PackedByteArray("AAAEAAMAAAAAAAAAAQAFAAMAAAAAAAAAAQAGAAMAAAAAAAA
 tile_set = ExtResource("3_mqm71")
 
 [node name="Skeleton" parent="." unique_id=1630202754 instance=ExtResource("3_tfjqa")]
-position = Vector2(230, 20)
+position = Vector2(231, 153)
 attack_pattern = ExtResource("6_wr4o1")
 priority = 1
 attack_scene = ExtResource("6_hqjqb")
