@@ -1,9 +1,17 @@
 class_name Skeleton
 extends Enemy
 
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 const SKELETON_DEATH: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SkeletonDeath.wav")
 const SKELETON_DAMAGED: AudioStreamWAV = preload("res://Assets/Sounds/SFX/SkeletonDamaged.wav")
+var step_left: bool = false
+
+const DIRECTION_ANIMATIONS: Dictionary[Direction, String] = {
+	Direction.LEFT: "IdleLeft",
+	Direction.RIGHT: "IdleRight",
+	Direction.UP: "IdleUp",
+	Direction.DOWN: "IdleDown"
+}
 
 ## preload("uid://typniyua3q75")Sets up the sprite and the animation player.
 func _ready() -> void:
@@ -38,13 +46,27 @@ func try_move() -> void:
 		slide_along(path, SPEED)
 	else:
 		position = GridWorld.cell_to_world(grid_position)
+		
+	if path.size() > 2:
+		#sprite.play("Slide")
+		#await active_tween.finished
+		#update_animation()
+		pass
+	else:
+		if facing == Direction.DOWN:
+			sprite.play("WalkDown1" if step_left else "WalkDown2")
+		elif facing == Direction.UP:
+			sprite.play("WalkUp1" if step_left else "WalkUp2")
+		elif facing == Direction.LEFT:
+			sprite.play("WalkLeft1" if step_left else "WalkLeft2")
+		elif facing == Direction.RIGHT:
+			sprite.play("WalkRight1" if step_left else "WalkRight2")
+		step_left = not step_left
 
 ## Flips the sprite to match the facing direction.
 func update_animation() -> void:
-	if facing == Direction.LEFT:
-		sprite.flip_h = true
-	if facing == Direction.RIGHT:
-		sprite.flip_h = false
+	var anim_name: String = DIRECTION_ANIMATIONS[facing]
+	sprite.play(anim_name)
 
 func take_hit(damage: int = 1) -> void:
 	AudioManager.play_sfx(SKELETON_DAMAGED, randf_range(.6,1.0), .3)
@@ -53,3 +75,8 @@ func take_hit(damage: int = 1) -> void:
 func die() -> void:
 	AudioManager.play_sfx(SKELETON_DEATH, randf_range(.6,1.0), .3)
 	super()
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if sprite.animation.begins_with("Walk"):
+		update_animation()
