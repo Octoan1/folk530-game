@@ -12,6 +12,7 @@ var is_transitioning: bool = false
 
 func _ready() -> void:
 	load_level(start_index, 0.0)
+	UiManager.pause_restart_UI.connect(restart_level)
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("level_restart") and not UiManager.is_dialog_open:

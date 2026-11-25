@@ -203,4 +203,3 @@ func slide_along(path: Array[Vector2i], step_duration: float) -> void:
 func _on_tween_end() -> void:
 	_update_interactable()
 	super()
-

@@ -3,6 +3,7 @@ extends Control
 @export var resume_button: Button
 @export var music_slider: HSlider
 @export var sfx_slider: HSlider
+@export var main_node: Node
 
 #Button script
 const UiButton: GDScript = preload("res://UI/ui_button.gd")
@@ -44,6 +45,9 @@ func _ready() -> void:
 	
 func _on_resume_button_pressed() -> void:
 	UiManager.toggle_pause()
+	
+func _on_respawn_button_pressed() -> void:
+	UiManager.pause_restart_UI.emit()
 	
 func _on_music_slider_value_changed(value: float) -> void:
 	AudioManager.set_music_volume(snappedf(value,.20))

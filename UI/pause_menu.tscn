@@ -49,6 +49,7 @@ theme_override_constants/separation = 12
 layout_mode = 2
 theme = ExtResource("1_ltd3m")
 theme_type_variation = &"HeaderSmall"
+theme_override_font_sizes/font_size = 18
 text = "Paused!"
 
 [node name="PauseContainer2" type="VBoxContainer" parent="PauseContainer" unique_id=477256251]
@@ -86,6 +87,16 @@ layout_mode = 2
 theme = SubResource("Theme_adp76")
 step = 5.0
 
+[node name="RespawnButton" type="Button" parent="PauseContainer/PauseContainer2" unique_id=484531991]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../MusicSlider")
+focus_next = NodePath("../MusicSlider")
+theme = ExtResource("1_ltd3m")
+theme_override_font_sizes/font_size = 12
+text = "Respawn"
+
 [connection signal="pressed" from="PauseContainer/PauseContainer2/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="value_changed" from="PauseContainer/PauseContainer2/MusicSlider" to="." method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="PauseContainer/PauseContainer2/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="PauseContainer/PauseContainer2/RespawnButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseContainer/PauseContainer2/RespawnButton" to="." method="_on_respawn_button_pressed"]

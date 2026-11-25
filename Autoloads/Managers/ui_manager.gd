@@ -9,6 +9,8 @@ var current_pause_menu: Control = null
 var current_dialog_screen: DialogBox = null
 var is_dialog_open: bool = false
 
+signal pause_restart_UI
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
