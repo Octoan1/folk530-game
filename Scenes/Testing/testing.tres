@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_4ily2")
 speaker = "Testing Name"
-lines = PackedStringArray("Line 11111111111111111111111111111111111 :)", "Line 22222222222222222222222222222 :|", "Line 33333333333333333333333333333 :(")
+lines = PackedStringArray("Line 11111111111111111111111111111111111 :)", "Line 22222222222222222222222222222 :|", "Fline 33333333333333333333333333333 :(")
 metadata/_custom_type_script = "uid://b0xvcvwjdvcd2"
